@@ -1,6 +1,8 @@
 # 更新日志
 
-按日期记录已完成的内容、界面与功能调整。后续每次更新均在本文件新增或补充对应日期条目，并随修改一起提交。
+按日期倒序记录内容、界面、功能与部署调整。本文件为统一更新日志入口；README只保留入口链接，设计及验证文件保留专项细节。后续更新追加记录，不覆盖历史条目。
+
+历史条目依据GitHub提交及当时的README、引用文件补录，日期采用北京时间。仓库没有独立的早期日志或Release；2026-10-14以前的基础资料整理时间不作为仓库发布记录。
 
 ## 2026-10-19
 
@@ -23,8 +25,31 @@
 - 首页简介更新为“从手上的史料出发，找到合适的工具，了解具体的处理方法。”，桌面端单行显示，小屏自然换行。
 - 底部保留“汇聚115个数字人文平台”和“最新更新：2026-10-19”。
 
+### 日志与主分支记录
+- 新增统一更新日志，并依据仓库提交补录10月14日历史。
+- 主分支单独将README标题改为“数字人文研究工具指南”（[8a257df](https://github.com/boringhxy/history-tools-handbook/commit/8a257df389bb4ca44130d7f5c8fa6e26de8bd54c)）；本日其余改版内容位于[草稿PR #1](https://github.com/boringhxy/history-tools-handbook/pull/1)，合并状态以PR为准。
+
 ### 验证与交付
 - 5项结构测试、8个路由与分页断言、JavaScript语法检查通过。
 - 浏览器确认导航、比较子栏目及旧平台深链接定位。
 - 更新提交至现有草稿PR #1，待后续审阅；未合并至主分支。
 - 平台实际处理效果、跨平台直连和实际PDF分页未实测，具体口径见 docs/verification.md。
+
+## 2026-10-14 — 仓库建立与初版上传（历史补录）
+
+### 仓库与初版内容
+- 建立仓库并添加初始README（[6eeaa96](https://github.com/boringhxy/history-tools-handbook/commit/6eeaa96df975a945b4311579557e457f56c32feb)）。
+- 首次上传自包含网页、机器可读引用文件和发布指南，并补充README（[c4d89fe](https://github.com/boringhxy/history-tools-handbook/commit/c4d89fe23f696e55d16966ba570a4255bbe71818)）。
+- 当时内容包括23个核心平台、115项工具目录、8阶段史料处理生命周期、5项互操作标准、4种典型研究流程、6类研究空白及8部分综述提纲；支持关键词、层级、生命周期、材料类型和核实状态筛选，以及离线阅读和打印。规模依据[当时的README](https://github.com/boringhxy/history-tools-handbook/blob/783dd2f0cd174d62858addd346e053284db57efa/README.md)记录，不套用后续的25平台数据。
+- 引用文件标注版本为1.1.0、发布日期为2026-10-14；这是首次上传文件中的既有标记，不据此推定仓库曾发布1.0.0或存在对应Release。
+
+### 部署
+- 添加GitHub Pages自动发布工作流（[6d5e1e3](https://github.com/boringhxy/history-tools-handbook/commit/6d5e1e370dbec600e813a1f700d849463e41c038)）。
+- 添加`.nojekyll`，关闭Jekyll处理（[a3a1700](https://github.com/boringhxy/history-tools-handbook/commit/a3a1700762a57d607d8feb773196523608fb4920)）。
+
+### 文档
+- 重写README，补充项目目标、核心成果、使用方式、资料口径、引用、目录结构与部署说明（[783dd2f](https://github.com/boringhxy/history-tools-handbook/commit/783dd2f0cd174d62858addd346e053284db57efa)）。
+
+## 历史补录说明
+
+本次核对范围：主分支截至8a257df的全部6条提交、草稿PR #1分支文件、GitHub Release列表。未发现此前独立的CHANGELOG、版本日志文件或Release；原README的内容与部署信息按实际提交日期归入上述条目。设计和验证文档不作为重复更新日志搬移，统一通过本文件及README入口查阅。
