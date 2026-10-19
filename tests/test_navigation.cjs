@@ -1,0 +1,18 @@
+const {readFileSync}=require('node:fs');
+const {join}=require('node:path');
+const vm=require('node:vm');
+const assert=require('node:assert/strict');
+const html=readFileSync(join(__dirname,'../index.html'),'utf8');
+const utilities=html.match(/\/\/ CHAPTER_UTILITIES_BEGIN([\s\S]*?)\/\/ CHAPTER_UTILITIES_END/);
+assert.ok(utilities,'navigation utilities are present');
+const ctx={};vm.createContext(ctx);vm.runInContext(utilities[1],ctx);
+const result=(x)=>JSON.parse(JSON.stringify(x));
+assert.deepEqual(result(ctx.routeTarget('#profile-dedu',{'profile-dedu':'profiles',home:'home'})),{id:'profile-dedu',page:'profiles'});
+assert.deepEqual(result(ctx.routeTarget('#%E0%A4%A',{home:'home'})),{id:'home',page:'home'});
+assert.deepEqual(result(ctx.routeTarget('#unknown',{home:'home'})),{id:'home',page:'home'});
+assert.deepEqual(result(ctx.routeTarget('#__proto__',{home:'home'})),{id:'home',page:'home'});
+assert.deepEqual(result(ctx.pageWindow(115,10,12)),{page:10,pages:10,start:108,end:115});
+assert.deepEqual(result(ctx.pageWindow(25,99,6)),{page:5,pages:5,start:24,end:25});
+assert.deepEqual(result(ctx.pageWindow(0,3,12)),{page:1,pages:1,start:0,end:0});
+assert.deepEqual(result(ctx.pageWindow(25,0,6)),{page:1,pages:5,start:0,end:6});
+console.log('Routing and pagination: 8 assertions passed');
