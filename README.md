@@ -1,4 +1,4 @@
-# 文史哲史料处理工具 · 交互式学术手册
+# 数字人文研究工具指南
 
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-deployed-2ea44f)
 ![Offline](https://img.shields.io/badge/offline-available-1d70bc)
