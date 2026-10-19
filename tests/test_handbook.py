@@ -36,10 +36,10 @@ class HandbookChecks(unittest.TestCase):
 
     def test_chapter_structure(self):
         pages=re.findall(r'<div class="chapter-page" data-page="([^"]+)"',HTML)
-        self.assertEqual(set(pages),{'home','intro','comparison','reading','profiles','catalog','workflows','methods'})
-        self.assertEqual(len(pages),8)
+        self.assertEqual(set(pages),{'home','intro','comparison','reading','catalog','workflows','methods'})
+        self.assertEqual(len(pages),7)
         nav=re.findall(r'data-primary-page="([^"]+)"',HTML)
-        self.assertEqual(len(nav),8)
+        self.assertEqual(len(nav),7)
         self.assertEqual(set(nav),set(pages))
         for key in ['print-all','profiles-pager','catalog-pager','profile-search']:
             self.assertTrue('id="'+key+'"' in HTML,key)
