@@ -24,6 +24,16 @@ class HandbookChecks(unittest.TestCase):
                 self.assertIn(cell['evidence'],['官方说明','公开证据不足'])
                 self.assertTrue(cell['note'])
                 self.assertTrue(cell['source'] < len(p['sources']))
+    def test_material_interpretation(self):
+        materials=data('material-reading-data')
+        self.assertEqual(len(materials),7)
+        for item in materials:
+            self.assertEqual(len(item['platforms']),5)
+            for field in ['unit','question','limit','context']:
+                self.assertTrue(item[field])
+        self.assertIn('id="material-reading"',HTML)
+        self.assertIn('id="reading-example"',HTML)
+
     def test_links_and_cases(self):
         ids=re.findall(r'\bid="([^"]+)"',HTML)
         self.assertEqual(len(ids),len(set(ids)))
