@@ -407,6 +407,34 @@
       .home-tasks { display:block; }
     }
 
+
+    /* Quiet landing page: introduction and four figures, with the original navy palette. */
+    .chapter-mode .hero { padding:clamp(38px,7vh,88px) 0; background:radial-gradient(ellipse at 92% 80%,rgba(48,136,218,.25),transparent 55%),linear-gradient(125deg,var(--navy-950) 0%,var(--navy-900) 48%,var(--blue-700) 100%); }
+    .hero::before { content:""; position:absolute; inset:0; pointer-events:none; background-image:linear-gradient(rgba(186,217,248,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(186,217,248,.035) 1px,transparent 1px); background-size:54px 54px; mask-image:linear-gradient(90deg,transparent 15%,black 100%); }
+    .hero::after { width:850px; height:850px; right:-310px; top:-340px; border-color:rgba(192,225,255,.2); box-shadow:0 0 0 115px rgba(157,201,246,.035),0 0 0 230px rgba(157,201,246,.025),0 0 130px rgba(88,166,241,.1); pointer-events:none; }
+    .chapter-mode .hero-grid { grid-template-columns:minmax(0,1.55fr) minmax(260px,1fr); align-items:center; gap:clamp(28px,4vw,68px); }
+    .hero-grid::before { content:""; position:absolute; width:440px; height:440px; right:0; top:50%; transform:translateY(-50%); border-radius:50%; background:radial-gradient(circle,rgba(97,174,246,.14),transparent 70%); pointer-events:none; z-index:-1; animation:home-glow 12s ease-in-out infinite alternate; }
+    .chapter-mode .hero h1 { font-size:clamp(2.05rem,3.7vw,4rem); line-height:1.08; margin:24px 0; text-shadow:0 4px 28px rgba(0,0,0,.2); }
+    .chapter-mode .hero .kicker { font-size:clamp(.7rem,1.05vw,.92rem); letter-spacing:.16em; }
+    .chapter-mode .hero-lead { font-size:clamp(1rem,1.35vw,1.2rem); line-height:1.85; margin:0 0 24px; color:#e4effb; }
+    .chapter-mode .hero-meta { font-size:clamp(.75rem,.95vw,.86rem); line-height:1.9; gap:10px 20px; }
+    .chapter-mode .hero-stats { grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; max-width:none; }
+    .chapter-mode .hero-stat { position:relative; overflow:hidden; min-height:clamp(124px,17vh,170px); padding:clamp(20px,2.2vw,30px); border:1px solid rgba(202,228,255,.28); background:linear-gradient(135deg,rgba(205,231,255,.13),rgba(169,214,255,.055)); box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 14px 36px rgba(0,17,42,.1); backdrop-filter:blur(16px); transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease; }
+    .hero-stat::after { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(115deg,rgba(255,255,255,.06),transparent 55%); }
+    .chapter-mode .hero-stat:hover { transform:translateY(-4px); border-color:rgba(220,240,255,.55); box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 20px 42px rgba(0,17,42,.18); }
+    .chapter-mode .hero-stat strong { font-size:clamp(2.2rem,3.2vw,3.5rem); font-weight:500; }
+    .chapter-mode .hero-stat span { font-size:clamp(.82rem,1.05vw,1rem); margin-top:18px; line-height:1.6; text-wrap:balance; }
+    @keyframes home-glow { from { opacity:.45; } to { opacity:1; } }
+    @media screen {
+      body[data-current-page=home] #chapter-toolbar,body[data-current-page=home]>footer { display:none!important; }
+      body[data-current-page=home] main { padding-bottom:0; }
+      body[data-current-page=home] .hero { min-height:calc(100svh - 70px); display:flex; align-items:center; }
+    }
+    @media screen and (max-width:900px) { body[data-current-page=home] .hero { min-height:calc(100svh - 94px); } }
+    @media(max-width:640px) { .chapter-mode .hero-grid { grid-template-columns:1fr; gap:30px; } .chapter-mode .hero { padding:32px 0; } .chapter-mode .hero h1 { font-size:2.2rem; margin:20px 0; } .chapter-mode .hero-stat { min-height:112px; padding:20px; } .chapter-mode .hero-stat strong { font-size:2.3rem; } .chapter-mode .hero-stat span { font-size:.82rem; margin-top:12px; } .hero::after { right:-590px; top:-220px; } }
+    @media(prefers-reduced-motion:reduce) { .hero-grid::before { animation:none; } .chapter-mode .hero-stat { transition:none; } .chapter-mode .hero-stat:hover { transform:none; } }
+    @media print { .chapter-mode .hero-lead,.chapter-mode .hero .kicker,.chapter-mode .hero-meta,.chapter-mode .hero-stat span { color:#222!important; } .chapter-mode .hero-stat:hover { transform:none; } .hero::before,.hero-grid::before,.hero-stat::after { display:none!important; } .chapter-mode .hero { background:white!important; padding:12mm 0; } .chapter-mode .hero h1 { text-shadow:none; } .chapter-mode .hero-stat { backdrop-filter:none; box-shadow:none; background:white; border-color:#999; } }
+
   </style>
 </head>
 <body data-total="115" data-core-count="25">
@@ -428,7 +456,7 @@
         <div class="hero-stat"><strong>5</strong><span>互操作与保存标准</span></div>
       </div>
     </div>
-  </header><section class="home-content"><div class="wrap"><h2>你现在想做什么？</h2><div class="home-tasks"><a href="#focus-comparison"><strong>选一个合适的平台 ↗</strong><span>按任务比较五个平台，明确权限与成果去向。</span></a><a href="#material-reading"><strong>按史料类型做对读 ↗</strong><span>从古籍、报刊、档案或记忆材料进入不同解读。</span></a><a href="#catalog"><strong>找到处理工具 ↗</strong><span>按功能、材料与生命周期筛选115项工具。</span></a><a href="#workflows"><strong>走通研究流程 ↗</strong><span>查看从材料到复核、分析与成果的完整步骤。</span></a></div><h2>手册目录</h2><div class="home-directory"><a href="#home"><strong>首页</strong><span>从这里选择任务与章节</span></a><a href="#overview"><strong>研究入门</strong><span>研究范围、阅读方法与史料生命周期</span></a><a href="#focus-comparison"><strong>平台比较</strong><span>全局矩阵与五平台任务深比</span></a><a href="#material-reading"><strong>按史料对读</strong><span>七类史料的比较方法与解释边界</span></a><a href="#profiles"><strong>平台档案</strong><span>搜索25个平台，查看流程与来源</span></a><a href="#catalog"><strong>工具目录</strong><span>筛选115项工具，按需查找</span></a><a href="#workflows"><strong>研究工作流</strong><span>四种通用流程与三组专题案例</span></a><a href="#standards"><strong>方法与来源</strong><span>技术标准、研究问题与官方资料</span></a></div><p class="home-note">五平台专题与史料解读更新于2026-10-19。功能依据官方资料，未登录实测；未知条件和建议路径已分别标明。<a href="#sources">查看资料口径与来源 →</a></p></div></section></div>
+  </header></div>
 <div class="chapter-page" data-page="intro" id="page-intro"><nav class="page-subnav screen-only" aria-label="章节子目录"><div class="wrap"><a data-subnav href="#overview">研究说明</a><a data-subnav href="#lifecycle">生命周期</a></div></nav><section class="section" data-subpanel id="overview"><div class="wrap">
       <div class="section-head"><div class="section-number">01</div><div><h2>研究范围与阅读方法</h2><p>本手册把软件、平台、数据库、标准与专题智能体分层处理。25 个核心平台用于理解方法链条，其余条目用于扩展检索和项目选型。云四库与DEDU为目录外新增核心平台；DocuSky由原目录提升为核心平台。原始 115 项目录中已有“云四库智能问答小程序”条目，目录记录保持不变。</p></div></div>
       <div class="overview-grid">
@@ -821,7 +849,7 @@
       document.title = `${titles[route.page]}｜文史哲史料处理工具手册`;
       document.body.dataset.currentPage = route.page;
       document.getElementById('route-status').textContent = `当前章节：${titles[route.page]}`;
-      const changed = activePage !== route.page;
+      const changed = activePage !== null && activePage !== route.page;
       activePage = route.page;
       requestAnimationFrame(() => {
         const deep = target?.matches('.profile-card, .material-card, .reading-example, .combo-card, .topic-case');
