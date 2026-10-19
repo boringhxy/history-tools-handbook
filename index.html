@@ -434,6 +434,10 @@
     @media(prefers-reduced-motion:reduce) { .hero-grid::before { animation:none; } .chapter-mode .hero-stat { transition:none; } .chapter-mode .hero-stat:hover { transform:none; } }
     @media print { .chapter-mode .hero-lead,.chapter-mode .hero .kicker,.chapter-mode .hero-meta,.chapter-mode .hero-stat span { color:#222!important; } .chapter-mode .hero-stat:hover { transform:none; } .hero::before,.hero-grid::before,.hero-stat::after { display:none!important; } .chapter-mode .hero { background:white!important; padding:12mm 0; } .chapter-mode .hero h1 { text-shadow:none; } .chapter-mode .hero-stat { backdrop-filter:none; box-shadow:none; background:white; border-color:#999; } }
 
+
+    /* Home now presents only the introduction and the two user-specified metadata lines. */
+    .chapter-mode .hero-grid { display:block; }
+    .chapter-mode .hero-grid>div { max-width:960px; }
   </style>
 </head>
 <body data-total="115" data-core-count="25">
@@ -446,14 +450,9 @@
         <span class="kicker">Digital Humanities · Research Handbook</span>
         <h1>文史哲史料处理工具<br>交互式学术手册</h1>
         <p class="hero-lead">从研究任务出发，选择平台、辨析史料、组织可核查的研究流程。</p>
-        <div class="hero-meta"><span>基于 115 项目录整理</span><span>基础目录 2026-10-11 · 专题更新 2026-10-19</span><span>离线可用 · 可打印</span></div>
+        <div class="hero-meta"><span>汇聚115个数字人文平台</span><span>最新更新：2026-10-19</span></div>
       </div>
-      <div class="hero-stats" aria-label="手册统计">
-        <div class="hero-stat"><strong>115</strong><span>完整工具目录</span></div>
-        <div class="hero-stat"><strong>25</strong><span>核心平台档案</span></div>
-        <div class="hero-stat"><strong>8</strong><span>史料生命周期环节</span></div>
-        <div class="hero-stat"><strong>5</strong><span>互操作与保存标准</span></div>
-      </div>
+
     </div>
   </header></div>
 <div class="chapter-page" data-page="intro" id="page-intro"><nav class="page-subnav screen-only" aria-label="章节子目录"><div class="wrap"><a data-subnav href="#overview">研究说明</a><a data-subnav href="#lifecycle">生命周期</a></div></nav><section class="section" data-subpanel id="overview"><div class="wrap">
