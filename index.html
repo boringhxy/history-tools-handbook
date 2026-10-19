@@ -345,10 +345,9 @@
 
 
     /* Chapter navigation: static content remains readable when JavaScript is unavailable. */
-    .nav-inner { display:flex; align-items:center; gap:24px; }
-    .site-brand { flex-shrink:0; font-weight:800; color:white; text-decoration:none; padding:18px 0; }
+    .nav-inner { display:flex; align-items:center; gap:0; }
     .nav-inner .nav-scroll { flex:1; width:0; }
-    .top-nav a[aria-current=page] { background:rgba(255,255,255,.1); color:white; border-bottom:3px solid #d8a24c; }
+    .top-nav a[aria-current=page] { background:rgba(200,60,45,.14); color:white; border-bottom:3px solid var(--vermilion); }
     .chapter-toolbar { border-bottom:1px solid var(--line); background:white; padding:12px 0; }
     .chapter-toolbar>.wrap { display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:.88rem; }
     .chapter-toolbar button { padding:7px 12px; font-size:.82rem; }
@@ -393,7 +392,7 @@
     .chapter-mode .hero-stat span { font-size:.76rem; }
     .chapter-mode .hero-meta { font-size:.76rem; }
     @media screen { .chapter-mode [hidden] { display:none!important; } }
-    @media(max-width:900px) { .nav-inner { display:block; } .site-brand { display:block; padding:10px 0 0; font-size:.9rem; } .nav-inner .nav-scroll { width:100%; } .home-tasks,.home-directory { grid-template-columns:repeat(2,minmax(0,1fr)); } .chapter-page { scroll-margin-top:112px; } }
+    @media(max-width:900px) { .nav-inner { display:block; } .nav-inner .nav-scroll { width:100%; } .home-tasks,.home-directory { grid-template-columns:repeat(2,minmax(0,1fr)); } .chapter-page { scroll-margin-top:112px; } }
     @media(max-width:600px) { .chapter-mode .hero-grid { grid-template-columns:1fr; } .chapter-mode .hero-stats { grid-template-columns:repeat(4,minmax(0,1fr)); } .chapter-mode .hero-stat { padding:10px; min-height:72px; } .chapter-mode .hero-stat strong { font-size:1.4rem; } .chapter-toolbar>.wrap { align-items:flex-start; flex-direction:column; } .home-tasks,.home-directory { gap:10px; } .home-tasks a,.home-directory a { padding:14px; } .chapter-mode .material-card>dl { display:block; } .chapter-mode .material-card dt { margin-top:14px; } .chapter-mode .material-platforms li { grid-template-columns:75px 1fr; } .pager { gap:12px; } }
     @media print {
       .chapter-toolbar,.page-subnav,.workflow-nav,.pager,.home-directory { display:none!important; }
@@ -428,9 +427,9 @@
     @media screen {
       body[data-current-page=home] #chapter-toolbar,body[data-current-page=home]>footer { display:none!important; }
       body[data-current-page=home] main { padding-bottom:0; }
-      body[data-current-page=home] .hero { min-height:calc(100svh - 70px); display:flex; align-items:center; }
+      body[data-current-page=home] .hero { min-height:calc(100svh - 60px); display:flex; align-items:center; }
     }
-    @media screen and (max-width:900px) { body[data-current-page=home] .hero { min-height:calc(100svh - 94px); } }
+    @media screen and (max-width:900px) { body[data-current-page=home] .hero { min-height:calc(100svh - 60px); } }
     @media(max-width:640px) { .chapter-mode .hero-grid { grid-template-columns:1fr; gap:30px; } .chapter-mode .hero { padding:32px 0; } .chapter-mode .hero h1 { font-size:2.2rem; margin:20px 0; } .chapter-mode .hero-stat { min-height:112px; padding:20px; } .chapter-mode .hero-stat strong { font-size:2.3rem; } .chapter-mode .hero-stat span { font-size:.82rem; margin-top:12px; } .hero::after { right:-590px; top:-220px; } }
     @media(prefers-reduced-motion:reduce) { .hero-grid::before { animation:none; } .chapter-mode .hero-stat { transition:none; } .chapter-mode .hero-stat:hover { transform:none; } }
     @media print { .chapter-mode .hero-lead,.chapter-mode .hero .kicker,.chapter-mode .hero-meta,.chapter-mode .hero-stat span { color:#222!important; } .chapter-mode .hero-stat:hover { transform:none; } .hero::before,.hero-grid::before,.hero-stat::after { display:none!important; } .chapter-mode .hero { background:white!important; padding:12mm 0; } .chapter-mode .hero h1 { text-shadow:none; } .chapter-mode .hero-stat { backdrop-filter:none; box-shadow:none; background:white; border-color:#999; } }
@@ -440,7 +439,7 @@
 <body data-total="115" data-core-count="25">
   <a class="skip-link" href="#main">跳到主要内容</a>
   
-  <nav class="top-nav screen-only" aria-label="章节导航"><div class="wrap nav-inner"><a class="site-brand" href="#home">文史哲 · 工具手册</a><div class="nav-scroll"><a data-primary-page="home" href="#home">首页</a><a data-primary-page="intro" href="#overview">研究入门</a><a data-primary-page="comparison" href="#focus-comparison">平台比较</a><a data-primary-page="reading" href="#material-reading">按史料对读</a><a data-primary-page="profiles" href="#profiles">平台档案</a><a data-primary-page="catalog" href="#catalog">工具目录</a><a data-primary-page="workflows" href="#workflows">研究工作流</a><a data-primary-page="methods" href="#standards">方法与来源</a></div></div></nav>
+  <nav class="top-nav screen-only" aria-label="章节导航"><div class="wrap nav-inner"><div class="nav-scroll"><a data-primary-page="home" href="#home">首页</a><a data-primary-page="intro" href="#overview">研究入门</a><a data-primary-page="comparison" href="#focus-comparison">平台比较</a><a data-primary-page="reading" href="#material-reading">按史料对读</a><a data-primary-page="profiles" href="#profiles">平台档案</a><a data-primary-page="catalog" href="#catalog">工具目录</a><a data-primary-page="workflows" href="#workflows">研究工作流</a><a data-primary-page="methods" href="#standards">方法与来源</a></div></div></nav>
   <div class="chapter-toolbar screen-only" id="chapter-toolbar" hidden><div class="wrap"><span>手册 / <strong id="chapter-title">首页</strong></span><div><button type="button" id="print-button" class="button secondary">打印当前章节</button><button type="button" id="print-all" class="button secondary">打印完整手册</button></div></div><p class="sr-only" id="route-status" aria-live="polite"></p></div><main id="main"><div class="chapter-page" data-page="home" id="page-home"><header class="hero" id="home">
     <div class="wrap hero-grid">
       <div>
