@@ -438,6 +438,25 @@
     /* Home now presents only the introduction and the two user-specified metadata lines. */
     .chapter-mode .hero-grid { display:block; }
     .chapter-mode .hero-grid>div { max-width:960px; }
+
+    /* Large left-centred introduction; metadata keeps its existing type size. */
+    @media screen {
+      .chapter-mode .hero { padding:60px 0 116px; }
+      .chapter-mode .hero-grid .home-copy { width:60%; max-width:none; }
+      .chapter-mode .hero h1 { font-size:clamp(2.65rem,5.1vw,5.7rem); line-height:1.1; margin:26px 0; }
+      .chapter-mode .hero .kicker { font-size:clamp(.82rem,1.2vw,1.05rem); }
+      .chapter-mode .hero-lead { font-size:clamp(1.1rem,1.55vw,1.5rem); line-height:1.8; margin:0; text-wrap:balance; }
+      .hero-bottom { position:absolute; left:50%; bottom:30px; transform:translateX(-50%); z-index:2; }
+    }
+    @media screen and (max-width:640px) {
+      .chapter-mode .hero { padding:44px 0 112px; }
+      .chapter-mode .hero-grid .home-copy { width:100%; }
+      .chapter-mode .hero h1 { font-size:clamp(2.25rem,7.7vw,3.5rem); }
+      .chapter-mode .hero .kicker { font-size:.76rem; }
+      .chapter-mode .hero-lead { font-size:1.05rem; }
+      .hero-bottom { bottom:24px; }
+    }
+
   </style>
 </head>
 <body data-total="115" data-core-count="25">
@@ -446,14 +465,15 @@
   <nav class="top-nav screen-only" aria-label="章节导航"><div class="wrap nav-inner"><div class="nav-scroll"><a data-primary-page="home" href="#home">首页</a><a data-primary-page="intro" href="#overview">研究入门</a><a data-primary-page="comparison" href="#focus-comparison">平台比较</a><a data-primary-page="reading" href="#material-reading">按史料对读</a><a data-primary-page="profiles" href="#profiles">平台档案</a><a data-primary-page="catalog" href="#catalog">工具目录</a><a data-primary-page="workflows" href="#workflows">研究工作流</a><a data-primary-page="methods" href="#standards">方法与来源</a></div></div></nav>
   <div class="chapter-toolbar screen-only" id="chapter-toolbar" hidden><div class="wrap"><span>手册 / <strong id="chapter-title">首页</strong></span><div><button type="button" id="print-button" class="button secondary">打印当前章节</button><button type="button" id="print-all" class="button secondary">打印完整手册</button></div></div><p class="sr-only" id="route-status" aria-live="polite"></p></div><main id="main"><div class="chapter-page" data-page="home" id="page-home"><header class="hero" id="home">
     <div class="wrap hero-grid">
-      <div>
+      <div class="home-copy">
         <span class="kicker">Digital Humanities · Research Handbook</span>
         <h1>文史哲史料处理工具<br>交互式学术手册</h1>
         <p class="hero-lead">从研究任务出发，选择平台、辨析史料、组织可核查的研究流程。</p>
-        <div class="hero-meta"><span>汇聚115个数字人文平台</span><span>最新更新：2026-10-19</span></div>
+        
       </div>
 
     </div>
+<div class="wrap hero-meta hero-bottom"><span>汇聚115个数字人文平台</span><span>最新更新：2026-10-19</span></div>
   </header></div>
 <div class="chapter-page" data-page="intro" id="page-intro"><nav class="page-subnav screen-only" aria-label="章节子目录"><div class="wrap"><a data-subnav href="#overview">研究说明</a><a data-subnav href="#lifecycle">生命周期</a></div></nav><section class="section" data-subpanel id="overview"><div class="wrap">
       <div class="section-head"><div class="section-number">01</div><div><h2>研究范围与阅读方法</h2><p>本手册把软件、平台、数据库、标准与专题智能体分层处理。25 个核心平台用于理解方法链条，其余条目用于扩展检索和项目选型。云四库与DEDU为目录外新增核心平台；DocuSky由原目录提升为核心平台。原始 115 项目录中已有“云四库智能问答小程序”条目，目录记录保持不变。</p></div></div>
