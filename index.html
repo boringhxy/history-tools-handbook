@@ -509,6 +509,21 @@
     }
 
 @media screen { #page-intro>.page-subnav { display:flex; flex-direction:column; min-height:calc(100svh - 160px); } #page-intro .guide-update { margin-top:auto; padding:48px 16px 0; color:#9a8b84; font-size:11px; line-height:1.9; letter-spacing:.02em; } } @media screen and (max-width:520px) { #page-intro>.page-subnav { min-height:0; } #page-intro .guide-update { padding:20px 12px; } } @media print { .guide-update { display:none; } }
+
+@media screen {
+ #page-intro #flow-carousel { display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; overscroll-behavior-x:contain; border:0; border-radius:0; background:transparent; padding:0 0 15px; scrollbar-width:thin; scrollbar-color:#b73d32 #f4e8e4; }
+ #page-intro #flow-carousel:focus-visible { outline:2px solid #b7372d; outline-offset:5px; }
+ #page-intro #flow-carousel .life-step { flex:0 0 100%; box-sizing:border-box; scroll-snap-align:start; scroll-snap-stop:always; background:#a9342b; border:0; border-radius:6px; padding:32px 38px; min-width:0; }
+ #page-intro #flow-carousel .life-step small { color:#f2c8c1; font-size:.85rem; }
+ #page-intro #flow-carousel .life-step strong { display:block; color:#fff; font-size:1.7rem; margin:14px 0 22px; }
+ #page-intro #flow-carousel .life-step p { color:#fff6f3; font-size:1rem; line-height:1.9; }
+ #page-intro #flow-carousel .life-step b { color:#fff; }
+ #page-intro .flow-carousel-controls { display:flex; align-items:center; justify-content:space-between; margin:0 0 14px; color:#a9342b; font-size:.86rem; font-variant-numeric:tabular-nums; }
+ #page-intro .flow-carousel-controls button { width:36px; height:32px; margin-left:6px; border:1px solid #d9b5ae; background:white; color:#a9342b; border-radius:3px; cursor:pointer; font-size:1.1rem; }
+ #page-intro .flow-carousel-controls button:disabled { opacity:.35; cursor:default; }
+}
+@media screen and (max-width:520px) { #page-intro #flow-carousel .life-step { padding:24px; } }
+@media print { #page-intro #flow-carousel { display:block!important; overflow:visible!important; } #page-intro #flow-carousel .life-step { background:white!important; color:black!important; break-inside:avoid; } }
 </style>
 </head>
 <body data-total="115" data-core-count="26">
@@ -540,7 +555,7 @@
 <article class="prose-card"><h3>手上已有具体史料</h3><p>进入<a href="#material-reading">史料处理参考</a>，选择古籍异本、报刊、档案、日记书信等材料类型。先明确比较单位和解读问题，再看平台分工；同样的文本差异，在不同史料中可能有不同含义。</p></article>
 </div><div class="research-alert"><strong>第一次使用：</strong>选一小份有代表性的材料 → 保留来源与原件 → 试用并人工复核 → 检查能否导出结果及修订记录 → 再决定是否扩大处理规模。功能证据、互操作标准和资料来源见<a href="#standards">方法与来源</a>。</div>
 </div></section><section class="section paper" data-subpanel id="lifecycle"><div class="wrap"><div class="section-head"><div class="section-number">03</div><div><h2>AI时代的史料处理流程参考</h2><p>AI可以参与识别、整理、检索和分析，但各环节仍需保留材料出处与人工判断。下面是一条可按项目取舍、往返修订的流程，不要求使用全部工具，也不要求将每一步交给AI。</p></div></div>
-<div class="lifecycle-strip" aria-label="史料处理的八个参考环节"><article class="life-step"><small>01</small><strong>确认来源与范围</strong><p>确定材料出处、版本、卷页、年代、权利和研究范围。</p><p><b>AI可辅助：</b>辅助整理已有书目信息，提出检索词和待查线索。</p><p><b>人工核查：</b>逐项核实书目与链接；未核到的文献保持待查，不将模型生成的书目当作来源。</p></article><article class="life-step"><small>02</small><strong>数字化与识别</strong><p>将影像、手稿或录音转为可检索文本，保留原页或时间位置。</p><p><b>AI可辅助：</b>辅助OCR、手写识别、版面分析及语音转写。</p><p><b>人工核查：</b>检查缺页、漏行、栏序、异体字、人名和数字；识别文本必须能回到原件。</p></article><article class="life-step"><small>03</small><strong>校订与整理</strong><p>区分原始转录、人工校订和为检索制作的规范化文本。</p><p><b>AI可辅助：</b>提出纠错、去重、标点和格式统一的候选修改。</p><p><b>人工核查：</b>保留原字与修改记录；不因词句陌生就改成常见表达，也不无说明地合并异体字。</p></article><article class="life-step"><small>04</small><strong>检索与标注</strong><p>按研究问题标记人物、地点、时间、概念及待考段落。</p><p><b>AI可辅助：</b>提出实体、关系、主题或相似段落候选，辅助建立初步索引。</p><p><b>人工核查：</b>结合上下文核对同名异人、年代与指代；明确标注规则，允许不确定和多种解释。</p></article><article class="life-step"><small>05</small><strong>建库与关联</strong><p>将文本、出处和标注组织成可查阅、可修订的数据。</p><p><b>AI可辅助：</b>辅助转换格式、草拟字段和整理关联候选。</p><p><b>人工核查：</b>检查字段含义、记录标识与来源是否保留；推测关系与史料明言的关系分开记录。</p></article><article class="life-step"><small>06</small><strong>分析与解释</strong><p>结合细读开展词频、文本比较、空间或关系分析，检验研究问题。</p><p><b>AI可辅助：</b>协助探索模式、归纳候选主题和生成分析代码。</p><p><b>人工核查：</b>检查样本、缺失、参数和代码结果；相似不等于引用，共现不等于因果，模型归纳需回到具体史料。</p></article><article class="life-step"><small>07</small><strong>引用与呈现</strong><p>将研究论证、引文和图表对应到可查证的材料与处理过程。</p><p><b>AI可辅助：</b>辅助草拟说明、整理已有引文和调整表达。</p><p><b>人工核查：</b>逐条核实引文、页码及图表，说明必要的AI使用与人工复核；研究者对最终表述负责。</p></article><article class="life-step"><small>08</small><strong>保存与复用</strong><p>保存原始材料、校订文本、标注、处理参数及输出文件。</p><p><b>AI可辅助：</b>辅助编写数据说明、检查文件清单和转换格式。</p><p><b>人工核查：</b>检查导出是否完整、备份能否打开、权限是否合适；分享链接不能替代本地保存。</p></article></div>
+<div class="flow-carousel-controls screen-only"><span id="flow-progress" aria-live="polite">01 / 08</span><div><button type="button" id="flow-prev" aria-label="上一个环节">←</button><button type="button" id="flow-next" aria-label="下一个环节">→</button></div></div><div class="lifecycle-strip" id="flow-carousel" tabindex="0" role="region" aria-label="史料处理的八个参考环节，左右滑动查看"><article class="life-step"><small>01</small><strong>确认来源与范围</strong><p>确定材料出处、版本、卷页、年代、权利和研究范围。</p><p><b>AI可辅助：</b>辅助整理已有书目信息，提出检索词和待查线索。</p><p><b>人工核查：</b>逐项核实书目与链接；未核到的文献保持待查，不将模型生成的书目当作来源。</p></article><article class="life-step"><small>02</small><strong>数字化与识别</strong><p>将影像、手稿或录音转为可检索文本，保留原页或时间位置。</p><p><b>AI可辅助：</b>辅助OCR、手写识别、版面分析及语音转写。</p><p><b>人工核查：</b>检查缺页、漏行、栏序、异体字、人名和数字；识别文本必须能回到原件。</p></article><article class="life-step"><small>03</small><strong>校订与整理</strong><p>区分原始转录、人工校订和为检索制作的规范化文本。</p><p><b>AI可辅助：</b>提出纠错、去重、标点和格式统一的候选修改。</p><p><b>人工核查：</b>保留原字与修改记录；不因词句陌生就改成常见表达，也不无说明地合并异体字。</p></article><article class="life-step"><small>04</small><strong>检索与标注</strong><p>按研究问题标记人物、地点、时间、概念及待考段落。</p><p><b>AI可辅助：</b>提出实体、关系、主题或相似段落候选，辅助建立初步索引。</p><p><b>人工核查：</b>结合上下文核对同名异人、年代与指代；明确标注规则，允许不确定和多种解释。</p></article><article class="life-step"><small>05</small><strong>建库与关联</strong><p>将文本、出处和标注组织成可查阅、可修订的数据。</p><p><b>AI可辅助：</b>辅助转换格式、草拟字段和整理关联候选。</p><p><b>人工核查：</b>检查字段含义、记录标识与来源是否保留；推测关系与史料明言的关系分开记录。</p></article><article class="life-step"><small>06</small><strong>分析与解释</strong><p>结合细读开展词频、文本比较、空间或关系分析，检验研究问题。</p><p><b>AI可辅助：</b>协助探索模式、归纳候选主题和生成分析代码。</p><p><b>人工核查：</b>检查样本、缺失、参数和代码结果；相似不等于引用，共现不等于因果，模型归纳需回到具体史料。</p></article><article class="life-step"><small>07</small><strong>引用与呈现</strong><p>将研究论证、引文和图表对应到可查证的材料与处理过程。</p><p><b>AI可辅助：</b>辅助草拟说明、整理已有引文和调整表达。</p><p><b>人工核查：</b>逐条核实引文、页码及图表，说明必要的AI使用与人工复核；研究者对最终表述负责。</p></article><article class="life-step"><small>08</small><strong>保存与复用</strong><p>保存原始材料、校订文本、标注、处理参数及输出文件。</p><p><b>AI可辅助：</b>辅助编写数据说明、检查文件清单和转换格式。</p><p><b>人工核查：</b>检查导出是否完整、备份能否打开、权限是否合适；分享链接不能替代本地保存。</p></article></div>
 <div class="research-alert"><strong>贯穿全程的做法：</strong>原件与处理结果分开保存；记录工具、模型或版本、日期及关键设置；说明哪些内容经人工核查，哪些仍有疑问。涉及未公开档案或个人信息时，先确认授权与平台数据处理规则，再决定是否上传。</div><p>具体的平台组合见<a href="#workflows">研究流程参考</a>；不同材料的解读问题见<a href="#material-reading">史料处理参考</a>。这里提供总体路径，不能替代史料批判和具体研究方法。</p></div></section></div>
 <div class="chapter-page" data-page="comparison" id="page-comparison"><nav class="page-subnav screen-only" aria-label="章节子目录"><div class="wrap"><a data-subnav href="#matrix">26平台比较</a><a data-subnav href="#profiles">平台档案</a><a data-subnav href="#focus-comparison">五平台专题</a></div></nav><section class="section focus-section" data-subpanel id="focus-comparison"><div class="wrap">
 <div class="section-head"><div class="section-number">专题</div><div><h2>五平台：从研究任务到工作流</h2><p>识典古籍 · 南京大学数智文献处理平台 · DocuSky · 吾与点 · DEDU 对读</p></div></div>
@@ -989,6 +1004,32 @@
   renderProfiles();
   renderCatalog(toolCatalog);
   initChapters();
+
+  function initFlowCarousel() {
+    const track=document.getElementById('flow-carousel');
+    const cards=[...track.querySelectorAll('.life-step')];
+    const prev=document.getElementById('flow-prev'),next=document.getElementById('flow-next'),progress=document.getElementById('flow-progress');
+    let index=0;
+    function sync() {
+      const width=cards[0].getBoundingClientRect().width+20;
+      if(width<=20)return;
+      index=Math.max(0,Math.min(cards.length-1,Math.round(track.scrollLeft/width)));
+      progress.textContent=String(index+1).padStart(2,'0')+' / '+String(cards.length).padStart(2,'0');
+      prev.disabled=index===0;next.disabled=index===cards.length-1;
+    }
+    function move(delta) {
+      const target=Math.max(0,Math.min(cards.length-1,index+delta));
+      track.scrollTo({left:target*(cards[0].getBoundingClientRect().width+20),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+    }
+    prev.addEventListener('click',()=>move(-1));next.addEventListener('click',()=>move(1));
+    track.addEventListener('scroll',sync,{passive:true});
+    track.addEventListener('keydown',event=>{if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();move(event.key==='ArrowRight'?1:-1);}});
+    window.addEventListener('resize',sync);
+    window.addEventListener('hashchange',()=>requestAnimationFrame(sync));
+    prev.disabled=true;
+  }
+  initFlowCarousel();
+
 })();
   </script>
 </body>
