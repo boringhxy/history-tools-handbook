@@ -4,6 +4,18 @@
 
 ## 2026-10-21 — 正式发布
 
+### 当日最终增补与上线
+
+- MARKUS／COMPARATIVUS加入核心平台档案与功能比较矩阵，核心平台从26项增至27项。
+- 工具目录新增COMPARATIVUS、Scrivener、Epsilon、EMLO，从115项增至119项；保留已有MARKUS、CBDB、Palladio条目和编号，避免重复收录。
+- 平台档案页新增“配套工具与机构方法案例”：CBDB、Scrivener作为核查和成文工具，Palladio、Epsilon、EMLO作为方法案例；补充官方来源、建议流程及适用边界。五平台专题保持原范围。
+- 修正MARKUS与COMPARATIVUS的目录层级，确保“核心平台”筛选可以找到两项工具。
+- 同步首页及栏目计数、README和内容检查。6项Python检查与8项导航／分页断言通过；浏览器核对MARKUS档案搜索、119项目录及案例显示。
+- 已推送至main并完成GitHub Pages发布；线上核验27项核心平台、119项目录及本次新增内容。官方功能说明已核对，未进行平台登录或样本处理实测。
+- 内容提交：[91ad555](https://github.com/boringhxy/history-tools-handbook/commit/91ad5556840d26045c8d5ec2c2582ce8ef331832)；筛选修正：[e96a24c](https://github.com/boringhxy/history-tools-handbook/commit/e96a24ce457f9ba5fcf40f053e87985b32927778)；[成功发布记录](https://github.com/boringhxy/history-tools-handbook/actions/runs/39624666345)。
+
+### 当日此前更新
+
 - 删除“关于本指南”中的收录范围说明（115项目录、26个核心平台、五平台专题及数字解释），保留平台目录等实际栏目。
 
 - “关于本指南”删除“阅读口径”标签，将功能证据与使用条件说明并入上一段正文，取消独立提示框。
@@ -71,9 +83,3 @@
 
 ### 文档
 - 重写README，补充项目目标、核心成果、使用方式、资料口径、引用、目录结构与部署说明（[783dd2f](https://github.com/boringhxy/history-tools-handbook/commit/783dd2f0cd174d62858addd346e053284db57efa)）。
-
-## 2026-10-21：研究方案平台增补
-
-- MARKUS／COMPARATIVUS进入核心档案及矩阵，核心平台增至27项。
-- 目录新增COMPARATIVUS、Scrivener、Epsilon、EMLO，增至119项；保留已有MARKUS、CBDB、Palladio条目及编号。
-- 在网站平台档案页面补充配套工具和机构方法案例、官方来源及研究边界；不改变五平台专题范围。
