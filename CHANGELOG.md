@@ -4,6 +4,8 @@
 
 ## 2026-10-21 — 正式发布
 
+- 统一README正式访问入口为GitHub Pages，移除独立旧站的可点击入口，并修正残留的八栏目说明；浏览器确认线上已显示七栏目新版。
+
 - 将[PR #1](https://github.com/boringhxy/history-tools-handbook/pull/1)合并到`main`，发布七栏目架构、25平台比较、五平台专题与史料研究流程等累计更新。
 - 合并提交：[1173f04](https://github.com/boringhxy/history-tools-handbook/commit/1173f044709141be39b104d91571769071ab9531)。GitHub Pages由`main`分支自动部署。
 
