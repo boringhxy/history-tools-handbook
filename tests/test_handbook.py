@@ -8,11 +8,20 @@ def data(name):
 class HandbookChecks(unittest.TestCase):
     def test_core_and_catalog(self):
         core=data('core-platforms-data'); catalog=data('tool-catalog-data')
-        self.assertEqual(len(core),26)
-        self.assertEqual(re.search(r'data-core-count="(\d+)"',HTML)[1],'26')
-        self.assertEqual(len({p['id'] for p in core}),26)
-        self.assertEqual(len(catalog),115)
-        self.assertTrue({'docusky','dedu','texta'} <= {p['id'] for p in core})
+        self.assertEqual(len(core),27)
+        self.assertEqual(re.search(r'data-core-count="(\d+)"',HTML)[1],'27')
+        self.assertEqual(len({p['id'] for p in core}),27)
+        self.assertEqual(len(catalog),119)
+        self.assertTrue({'docusky','dedu','texta','markus'} <= {p['id'] for p in core})
+    def test_added_platforms(self):
+        catalog=data('tool-catalog-data')
+        self.assertEqual(len({t['id'] for t in catalog}),len(catalog))
+        for name in ['MARKUS','COMPARATIVUS','Scrivener','Palladio','Epsilon','EMLO']:
+            self.assertEqual(sum(t['name']==name for t in catalog),1,name)
+        self.assertIn('id="supporting-platforms"',HTML)
+        self.assertIn('配套工具与机构方法案例',HTML)
+        self.assertIn('汇聚119个数字人文平台',HTML)
+
     def test_comparison_evidence(self):
         topic=data('focus-platforms-data')
         self.assertEqual(len(topic),5)

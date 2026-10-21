@@ -71,3 +71,9 @@
 
 ### 文档
 - 重写README，补充项目目标、核心成果、使用方式、资料口径、引用、目录结构与部署说明（[783dd2f](https://github.com/boringhxy/history-tools-handbook/commit/783dd2f0cd174d62858addd346e053284db57efa)）。
+
+## 2026-10-21：研究方案平台增补
+
+- MARKUS／COMPARATIVUS进入核心档案及矩阵，核心平台增至27项。
+- 目录新增COMPARATIVUS、Scrivener、Epsilon、EMLO，增至119项；保留已有MARKUS、CBDB、Palladio条目及编号。
+- 在网站平台档案页面补充配套工具和机构方法案例、官方来源及研究边界；不改变五平台专题范围。
