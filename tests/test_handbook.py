@@ -18,6 +18,7 @@ class HandbookChecks(unittest.TestCase):
         self.assertEqual(len({t['id'] for t in catalog}),len(catalog))
         for name in ['MARKUS','COMPARATIVUS','Scrivener','Palladio','Epsilon','EMLO']:
             self.assertEqual(sum(t['name']==name for t in catalog),1,name)
+        self.assertTrue(all(t['layer']=='核心平台' for t in catalog if t['name'] in ['MARKUS','COMPARATIVUS']))
         self.assertIn('id="supporting-platforms"',HTML)
         self.assertIn('配套工具与机构方法案例',HTML)
         self.assertIn('汇聚119个数字人文平台',HTML)
