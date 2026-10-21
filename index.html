@@ -460,13 +460,64 @@
     }
 
 
-  </style>
+  
+    /* Editorial guide: white paper, red navigation, compact utilities. */
+    @media screen {
+      body:not([data-current-page="home"]) { background:#fff; color:#292523; }
+      body:not([data-current-page="home"]) .top-nav { background:#fff; border-bottom:1px solid #e8dedb; box-shadow:none; }
+      body:not([data-current-page="home"]) .top-nav a { color:#514843; }
+      body:not([data-current-page="home"]) .top-nav a[aria-current="page"] { color:#aa3028; background:#fff; border-bottom-color:#b7372d; }
+      .chapter-mode .chapter-toolbar { position:absolute; top:70px; right:max(24px,calc((100vw - 1280px)/2)); z-index:3; padding:0; border:0; background:transparent; }
+      .chapter-mode .chapter-toolbar>.wrap { width:auto; max-width:none; padding:0; }
+      .chapter-mode .chapter-toolbar button { font-size:12px; padding:3px 7px; border:0; border-radius:0; color:#82716b; background:transparent; box-shadow:none; }
+      .chapter-mode .chapter-toolbar button:hover { color:#a52f28; text-decoration:underline; }
+      .chapter-mode #page-intro:not([hidden]) { display:grid; grid-template-columns:205px minmax(0,1fr); gap:52px; max-width:1280px; margin:0 auto; padding:66px 28px 70px; align-items:start; }
+      #page-intro>.page-subnav { grid-column:1; grid-row:1; position:sticky; top:90px; padding:2px 0; }
+      #page-intro>.page-subnav>.wrap { display:flex; flex-direction:column; gap:0; width:100%; padding:0; }
+      #page-intro>.page-subnav a { border:0; border-left:2px solid #ebdfdb; border-radius:0; padding:12px 15px; background:transparent; color:#75635c; line-height:1.65; font-size:.9rem; }
+      #page-intro>.page-subnav a[aria-current="page"] { color:#aa3028; background:#fcf5f2; border-left-color:#b7372d; font-weight:600; }
+      #page-intro>.section { grid-column:2; grid-row:1; padding:0; background:#fff; }
+      #page-intro>.section>.wrap { width:100%; max-width:none; padding:0; }
+      #page-intro .section-head { display:block; margin-bottom:30px; border-bottom:1px solid #e8dedb; padding-bottom:24px; }
+      #page-intro .section-number { display:none; }
+      #page-intro h2 { color:#9f3028; font-size:clamp(1.8rem,2.6vw,2.4rem); margin:0 0 14px; }
+      #page-intro h3 { color:#44352e; font-size:1.12rem; margin:0 0 16px; }
+      #page-intro p { line-height:1.95; }
+      #page-intro .section-head p { color:#756a65; max-width:none; }
+      #page-intro .overview-grid { display:block; }
+      #page-intro .prose-card,#page-intro .scope-card { border:0; border-radius:0; box-shadow:none; padding:0; background:#fff; margin-bottom:32px; }
+      #page-intro .scope-card { border-top:1px solid #e8dedb; padding-top:24px; }
+      #page-intro .scope-list { display:block; }
+      #page-intro .scope-list li { display:grid; grid-template-columns:46px 1fr; gap:15px; margin:18px 0; }
+      #page-intro .scope-list b { border-radius:0; background:none; color:#ad3329; width:auto; height:auto; font-family:var(--serif); font-size:1.35rem; }
+      #page-intro .eyebrow { color:#a33229; }
+      #page-intro a { color:#a33229; }
+      #page-intro .research-alert { border-left:2px solid #bd4033; border-radius:0; background:#fcf7f4; padding:15px 20px; margin:24px 0; }
+      #page-intro .lifecycle-strip { grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 32px; }
+      #page-intro .life-step { border:0; border-top:1px solid #e4d8d3; border-radius:0; padding:22px 0; box-shadow:none; background:#fff; }
+      #page-intro .life-step::after { display:none; }
+      #page-intro .life-step small { color:#aa3028; }
+      #page-intro .life-step strong { color:#45342e; }
+      #page-intro .life-step p { color:#625751; font-size:.94rem; }
+    }
+    @media screen and (max-width:760px) {
+      .chapter-mode .chapter-toolbar { top:70px; right:12px; }
+      .chapter-mode #page-intro:not([hidden]) { grid-template-columns:145px minmax(0,1fr); gap:22px; padding:60px 20px; }
+      #page-intro .lifecycle-strip { grid-template-columns:1fr; }
+    }
+    @media screen and (max-width:520px) {
+      .chapter-mode #page-intro:not([hidden]) { display:block; padding:60px 20px 36px; }
+      #page-intro>.page-subnav { position:static; margin-bottom:30px; border-bottom:1px solid #e8dedb; }
+      #page-intro>.page-subnav a { padding:9px 12px; }
+    }
+
+</style>
 </head>
 <body data-total="115" data-core-count="26">
   <a class="skip-link" href="#main">跳到主要内容</a>
   
   <nav class="top-nav screen-only" aria-label="章节导航"><div class="wrap nav-inner"><div class="nav-scroll"><a data-primary-page="home" href="#home">首页</a><a data-primary-page="intro" href="#overview">使用指南</a><a data-primary-page="catalog" href="#catalog">平台目录</a><a data-primary-page="comparison" href="#matrix">核心平台比较</a><a data-primary-page="workflows" href="#workflows">研究流程参考</a><a data-primary-page="reading" href="#material-reading">史料处理参考</a><a data-primary-page="methods" href="#standards">方法与来源</a></div></div></nav>
-  <div class="chapter-toolbar screen-only" id="chapter-toolbar" hidden><div class="wrap"><span>手册 / <strong id="chapter-title">首页</strong></span><div><button type="button" id="print-button" class="button secondary">打印当前章节</button><button type="button" id="print-all" class="button secondary">打印完整手册</button></div></div><p class="sr-only" id="route-status" aria-live="polite"></p></div><main id="main"><div class="chapter-page" data-page="home" id="page-home"><header class="hero" id="home">
+  <div class="chapter-toolbar screen-only" id="chapter-toolbar" hidden><div class="wrap"><span id="chapter-title" class="sr-only">首页</span><div><button type="button" id="print-button" class="button secondary">打印本章</button><button type="button" id="print-all" class="button secondary">打印全文</button></div></div><p class="sr-only" id="route-status" aria-live="polite"></p></div><main id="main"><div class="chapter-page" data-page="home" id="page-home"><header class="hero" id="home">
     <div class="wrap hero-grid">
       <div class="home-copy">
         <span class="kicker">Digital Humanities · Research Handbook</span>
