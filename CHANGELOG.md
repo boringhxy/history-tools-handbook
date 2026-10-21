@@ -2,6 +2,11 @@
 
 本文件为统一更新日志入口；README只保留入口链接，设计及验证文件保留专项细节。后续更新追加记录，不覆盖历史条目。
 
+## 2026-10-21 — 正式发布
+
+- 将[PR #1](https://github.com/boringhxy/history-tools-handbook/pull/1)合并到`main`，发布七栏目架构、25平台比较、五平台专题与史料研究流程等累计更新。
+- 合并提交：[1173f04](https://github.com/boringhxy/history-tools-handbook/commit/1173f044709141be39b104d91571769071ab9531)。GitHub Pages由`main`分支自动部署。
+
 ## 2026-10-19
 
 ### 内容
