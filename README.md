@@ -8,6 +8,30 @@
 
 > 它不是一张「工具清单」，而是一幅从材料采集到长期保存的完整研究地图——帮助研究者选对工具、走通流程，并让数据不被平台锁死。
 
+## 双平台研究选型助手（2026-10-22）
+
+“核心平台比较”现在默认进入朱红与暖白的双平台工作台：从 **122项工具与资源**中选择两个，并排查看10个维度及已有专题任务证据。122项由原119项目录加云四库、DEDU、Texta组成；原目录和27份核心档案继续保留，数量口径不同。MARKUS、COMPARATIVUS独立归属能力。
+
+支持名称／别名搜索、键盘选择、交换、任务筛选、只看差异、分享链接、复制完整报告和打印。桌面为2:1分栏；手机切换“平台对比／研究助手”。保留原矩阵、专题、档案及旧锚点。资料不足明确标注，研究方法建议与官方说明区分，不提供性能排名。
+
+本地预览：在项目目录运行 `python3 -m server.app --port 8765`，打开 [双平台工作台](http://127.0.0.1:8765/#compare)。无需第三方Python依赖。直接打开 `index.html` 可离线使用基础比较。
+
+在线问答需要服务端密钥、模型、稳定Cookie签名密钥和预算配置。未配置、超额或服务不可用时，界面如实提示，基础比较仍可用。问答不模拟回答；每匿名浏览器每天5轮，另有IP／频率／持久预算控制。详见 [问答服务部署说明](server/README.md) 和 [环境配置示例](server/.env.example)。本次未使用付费模型，真实模型质量和供应商权限需配置后验证。
+
+GitHub Pages只支持静态部分。要公开问答，应在同一站点通过HTTPS反向代理提供 `/api/*`，或把完整页面与服务一并部署到同一域名。保留 `comparison-api-base` 元信息为空即可走同源接口；只有确认同站点Cookie和CORS配置后才填写其他API地址。不要直接把GitHub Pages和不相关域名服务拼接后声称匿名额度已可靠启用。
+
+维护与验证：
+
+```sh
+python3 scripts/build_comparison.py
+python3 scripts/build_comparison.py --check
+python3 -m unittest discover -s tests -v
+node tests/test_comparison.cjs
+node tests/test_navigation.cjs
+```
+
+源文件位于 `comparison/`；构建将样式、脚本和资料全部内嵌到 `index.html`。不要直接编辑生成区。资料来自现有原始JSON块，`data/platforms.json`供服务端使用；新增功能声明应先补充来源，方法建议不能标记为实测。浏览器验收运行 `node tests/test_comparison_browser.cjs`，需安装Playwright及Chrome；可用 `PLAYWRIGHT_MODULE`指定依赖路径，`PREVIEW_URL`指定预览地址。
+
 ## 这个项目解决什么
 
 数字人文研究里最实际的四个问题，这里都有一份成体系的答案：

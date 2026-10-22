@@ -1,0 +1,35 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const file = path.join(__dirname, '../comparison/engine.js');
+assert.ok(fs.existsSync(file), 'comparison engine must exist');
+const C = require(file);
+const field = text => ({text, evidence:'资料待补充', sources:[], checkedAt:null});
+const data = {dimensions:[{key:'position',label:'定位'},{key:'input',label:'输入'},{key:'output',label:'输出'}],platforms:[
+ {id:'a',name:'识典古籍',aliases:['shidian'],kind:'处理工具',fields:{position:field('古籍阅读'),input:field('图像'),output:field('资料待补充')}},
+ {id:'b',name:'DEDU',aliases:['对读'],kind:'处理工具',fields:{position:field('平行文本'),input:field('图像'),output:field('资料待补充')}}]};
+assert.equal(C.findPlatforms(data.platforms,'SHIDIAN')[0].id,'a');
+assert.equal(C.findPlatforms(data.platforms,'对读')[0].id,'b');
+assert.equal(C.findPlatforms(data.platforms,'不存在').length,0);
+assert.equal(C.validPair(data.platforms,['a','a']),false);
+assert.equal(C.validPair(data.platforms,['a','__proto__']),false);
+assert.equal(C.validPair(data.platforms,['a','b']),true);
+assert.deepEqual(C.comparisonRows(data,['a','b'],{differences:true}).map(x=>x.key),['position']);
+assert.ok(C.comparisonRows(data,['a','b'],{task:'export'}).some(x=>x.key==='output'));
+assert.equal(C.safeURL('javascript:alert(1)'),null);
+assert.equal(C.safeURL('https://example.org'), 'https://example.org/');
+assert.deepEqual(C.selectionFromURL('https://example.org/?ca=b&cb=a#compare',data.platforms),['b','a']);
+assert.deepEqual(C.selectionFromURL('https://example.org/?ca=a&cb=a#compare',data.platforms),null);
+assert.match(C.report(data,['a','b'],{}),/资料待补充/);
+assert.match(C.report(data,['a','b'],{}),/识典古籍/);
+console.log('Comparison engine: 14 assertions passed');
+const enriched = JSON.parse(JSON.stringify(data));enriched.platforms[0].tasks=Array.from({length:12},(_,i)=>({mode:'平台内完成',note:'专门任务'+i,evidence:'官方说明',sources:[],checkedAt:'2026-10-19'}));
+assert.equal(C.comparisonTasks(enriched,['a','b'],{}).length,12);
+assert.equal(C.comparisonTasks(enriched,['a','b'],{task:'export'}).length,2);
+assert.match(C.report(enriched,['a','b'],{}),/专门任务11/);
+const longHistory=Array.from({length:8},(_,i)=>({role:i%2?'assistant':'user',content:'甲'.repeat(i%2?5000:2000)}));
+const bounded=C.boundedHistory(longHistory);
+assert.ok(bounded.length<=8&&bounded.reduce((n,m)=>n+m.content.length,0)<=12000);
+assert.ok(bounded.every(m=>m.content.length<=4000));
+assert.equal(longHistory[1].content.length,5000);
+console.log('Task evidence and history bounds: 6 assertions passed');

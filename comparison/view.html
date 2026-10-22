@@ -1,0 +1,36 @@
+<section class="compare-workbench" data-subpanel id="compare" aria-labelledby="compare-heading">
+  <div class="cmp-wrap">
+    <header class="cmp-intro"><div><p class="cmp-kicker">RESEARCH TOOL COMPARISON <span>研究选型工作台</span></p><h2 id="compare-heading">让工具，回应你的<span>研究问题。</span></h2><p class="cmp-lead">从 <strong>122</strong> 项工具与资源中，选择两个。看清差异，再走通研究流程。</p></div><div class="cmp-seal" aria-hidden="true">比较<br>有据</div></header>
+    <div class="cmp-selectors" aria-label="选择两个平台">
+      <div class="cmp-picker" data-picker="0"><label for="cmp-search-a"><span>01</span> 平台 A</label><div class="cmp-searchbox"><input id="cmp-search-a" type="search" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cmp-options-a" placeholder="搜索平台名称或别名"><span aria-hidden="true">⌕</span></div><ul id="cmp-options-a" role="listbox" hidden></ul><p class="cmp-platform-kind" id="cmp-kind-a"></p></div>
+      <button type="button" id="cmp-swap" class="cmp-swap" aria-label="交换两个平台" title="交换两个平台">⇄</button>
+      <div class="cmp-picker" data-picker="1"><label for="cmp-search-b"><span>02</span> 平台 B</label><div class="cmp-searchbox"><input id="cmp-search-b" type="search" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cmp-options-b" placeholder="搜索平台名称或别名"><span aria-hidden="true">⌕</span></div><ul id="cmp-options-b" role="listbox" hidden></ul><p class="cmp-platform-kind" id="cmp-kind-b"></p></div>
+      <div class="cmp-examples"><span>试试这些组合</span><button type="button" data-cmp-example="shidian,dedu">古籍阅读 × 平行对读</button><button type="button" data-cmp-example="wuyudian,docusky">信息抽取 × 专题建库</button><button type="button" data-cmp-example="zotero,tropy">文献管理 × 档案整理</button></div>
+    </div>
+    <p id="cmp-notice" class="cmp-notice" role="status" aria-live="polite"></p>
+    <div class="cmp-mobile-tabs" role="tablist" aria-label="工作台视图"><button type="button" role="tab" id="cmp-tab-table" aria-controls="cmp-table-panel" aria-selected="true" tabindex="0">平台对比</button><button type="button" role="tab" id="cmp-tab-chat" aria-controls="cmp-chat-panel" aria-selected="false" tabindex="-1">研究助手</button></div>
+    <div class="cmp-workspace" data-mobile-view="table">
+      <section class="cmp-table-panel" id="cmp-table-panel" aria-labelledby="cmp-table-title"><header class="cmp-panel-heading"><div><p class="cmp-kicker">SIDE BY SIDE</p><h3 id="cmp-table-title">同一维度，看清差异</h3></div><span class="cmp-count" id="cmp-dimension-count">10 项维度</span></header>
+        <div class="cmp-filters"><label class="cmp-check"><input type="checkbox" id="cmp-diff">只看差异</label><label for="cmp-task" class="sr-only">按研究任务查看</label><select id="cmp-task"><option value="">全部研究任务</option><option value="discovery">发现与检索资源</option><option value="ocr">OCR 与转录校订</option><option value="annotation">信息抽取与标注</option><option value="compare">版本与平行文本对读</option><option value="database">专题建库</option><option value="analysis">分析与可视化</option><option value="export">输出、协作与保存</option></select><button type="button" class="cmp-text-button" id="cmp-reset-filters">重置</button></div>
+        <div class="cmp-table-scroll"><table class="cmp-table"><caption class="sr-only">两个平台的功能、条件与来源对比</caption><thead id="cmp-thead"></thead><tbody id="cmp-tbody"></tbody></table></div>
+        <p class="cmp-empty" id="cmp-no-diff" hidden>当前维度的资料说明相同。资料同为待补充不表示能力相同，可取消“只看差异”查看完整内容。</p>
+        <details class="cmp-task-details" id="cmp-task-details"><summary id="cmp-task-summary">研究任务细比</summary><div class="cmp-table-scroll"><table class="cmp-table"><caption class="sr-only">专题任务的具体条件与证据</caption><thead id="cmp-task-head"></thead><tbody id="cmp-task-body"></tbody></table></div></details>
+        <footer class="cmp-table-note">依据现有资料整理，非性能排名。缺少说明不等于不支持；来源可访问不代表功能已实测。</footer>
+      </section>
+      <aside class="cmp-chat-panel" id="cmp-chat-panel" aria-labelledby="cmp-chat-title"><header class="cmp-panel-heading"><div><p class="cmp-kicker">YOUR RESEARCH, FIRST</p><h3 id="cmp-chat-title">从你的任务出发</h3></div><span class="cmp-ai-mark" aria-hidden="true">✳</span></header><p class="cmp-chat-lead">比较的不只是功能，还有它们如何进入你的研究。</p>
+        <p id="cmp-chat-pair" class="cmp-chat-pair"></p>
+        <div class="cmp-service-status" id="cmp-service-status" role="status" aria-live="polite">正在检查问答服务…</div>
+        <button type="button" id="cmp-reconnect" class="cmp-reconnect">重新检查问答服务 ↻</button>
+        <form id="cmp-chat-form"><div class="cmp-context-fields"><label for="cmp-material">你手上的材料<input id="cmp-material" maxlength="300" placeholder="如：晚清日记，约 200 页"></label><label for="cmp-goal">你希望完成的任务<input id="cmp-goal" maxlength="300" placeholder="如：提取人物与交往关系"></label><label for="cmp-constraints">使用条件 <span>选填</span><input id="cmp-constraints" maxlength="500" placeholder="如：不编程、需本地保存、三人协作"></label></div>
+          <div class="cmp-question-examples"><button type="button" data-cmp-question="这两个平台对我的研究任务分别适合做什么？有哪些局限？">如何选择？</button><button type="button" data-cmp-question="如果组合使用这两个平台，建议按什么步骤进行？请说明哪些数据交接尚未验证。">如何配合？</button></div>
+          <label for="cmp-question">描述问题或继续追问</label><textarea id="cmp-question" rows="3" maxlength="2000" placeholder="告诉助手你想完成什么，以及目前遇到的困难。"></textarea><button type="submit" class="cmp-primary" id="cmp-send" disabled>生成选型建议 <span aria-hidden="true">↗</span></button><p class="cmp-privacy">公开限额体验 · 每日最多 5 轮 · 刷新清空对话<br>问题将发送至问答服务，请勿输入未获授权的敏感史料。</p>
+        </form>
+        <div id="cmp-chat-log" class="cmp-chat-log" role="log" aria-label="研究助手对话" aria-live="polite"></div>
+      </aside>
+    </div>
+    <div class="cmp-report-actions"><div><strong>把比较带回研究中</strong><span>保留来源、证据状态和待确认事项。</span></div><div><button type="button" id="cmp-share">复制对比链接</button><button type="button" id="cmp-copy">复制完整报告</button><button type="button" id="cmp-print">打印 / 保存 PDF</button></div></div>
+    <div class="cmp-print-conversation" id="cmp-print-conversation"></div>
+    <footer class="cmp-reference-links"><span>继续查阅</span><a href="#matrix">27平台原始矩阵 ↗</a><a href="#profiles">完整平台档案 ↗</a><a href="#focus-comparison">五平台专题 ↗</a><a href="#case-edition">案例工作流 ↗</a></footer>
+    <noscript><p>双平台交互比较需要启用 JavaScript。仍可使用上方参考入口阅读原始矩阵、专题及案例。</p></noscript>
+  </div>
+</section>
