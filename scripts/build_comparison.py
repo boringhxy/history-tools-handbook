@@ -34,9 +34,8 @@ def main():
         runtime+='<script>\n'+code+'\n</script>\n'
     html=replace_block(html,'COMPARISON_RUNTIME',runtime,'</body>')
     html=html.replace('<a data-primary-page="comparison" href="#matrix">','<a data-primary-page="comparison" href="#compare">')
-    nav='<a data-subnav href="#matrix">27平台比较</a>'
-    if '<a data-subnav href="#compare">' not in html:
-        html=html.replace(nav,'<a data-subnav href="#compare">双平台对比</a>'+nav,1)
+    html=re.sub(r'(<div class="chapter-page" data-page="comparison" id="page-comparison">)<nav class="page-subnav screen-only".*?</nav>',r'\1',html,count=1,flags=re.S)
+    html=html.replace('<a data-primary-page="comparison" href="#compare">核心平台比较</a>','<a data-primary-page="comparison" href="#compare">平台对比</a>')
     html=html.replace("route.page === 'comparison' ? document.getElementById('matrix')", "route.page === 'comparison' ? document.getElementById('compare')")
     html=html.replace('<a href="#matrix"><span>03</span>', '<a href="#compare"><span>03</span>')
     config='<meta name="comparison-api-base" content="">'

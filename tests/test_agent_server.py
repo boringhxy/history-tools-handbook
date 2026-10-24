@@ -47,6 +47,14 @@ class AgentServerTests(unittest.TestCase):
 
     def payload(self): return {'platformIds':['a','b'],'question':'如何选择？','history':[]}
 
+    def test_research_framework_in_prompt(self):
+        self.agent.chat(self.payload(),'framework-user','framework-ip')
+        instructions=self.calls[0]['instructions']
+        for term in ['网站角色','材料资源','处理工具','共同条件','平台提供的材料','用户自有材料']:
+            self.assertIn(term,instructions)
+        packet=json.loads(self.calls[0]['input'][0]['content'])
+        self.assertIn('comparisonDimensions',packet)
+
     def test_fail_closed(self):
         for key in ['OPENAI_API_KEY','OPENAI_MODEL','COOKIE_SECRET','APP_DAILY_BUDGET_USD','REQUEST_MAX_COST_USD']:
             env=dict(self.env);env.pop(key)

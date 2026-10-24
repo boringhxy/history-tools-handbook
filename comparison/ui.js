@@ -35,8 +35,13 @@
     header.querySelectorAll('th').forEach(th=>th.scope='col');$('cmp-thead').replaceChildren(header);
     const rows=C.comparisonRows(data,pair,{differences:$('cmp-diff').checked,task:$('cmp-task').value});
     const body=$('cmp-tbody');body.replaceChildren();
+    let group='';
     for(const row of rows) {
-      const tr=el('tr');tr.id='cmp-row-'+row.key;
+      if(row.group && row.group!==group){
+        group=row.group;const section=el('tr',undefined,'cmp-group-row');
+        const label=el('th',group);label.colSpan=3;section.append(label);body.append(section);
+      }
+      const tr=el('tr');tr.id='cmp-row-'+row.key;tr.dataset.dimension=row.key;
       const title=el('th',row.label);title.scope='row';tr.append(title);
       row.cells.forEach(cell=>tr.append(renderCell(cell)));body.append(tr);
     }
@@ -69,10 +74,10 @@
     }
     ['a','b'].forEach((side,i)=>{
       $('cmp-search-'+side).value=byId.get(pair[i]).name;
-      $('cmp-kind-'+side).textContent=byId.get(pair[i]).kind+' · '+(byId.get(pair[i]).materials || []).slice(0,3).join(' / ');
+      $('cmp-kind-'+side).textContent=byId.get(pair[i]).roleLabel || byId.get(pair[i]).kind;
     });
     $('cmp-chat-pair').textContent=pair.map(id=>byId.get(id).name).join(' × ');
-    if(byId.get(pair[0]).kind!==byId.get(pair[1]).kind)announce('这两个对象承担不同研究角色。请结合材料与目标比较其分工，不宜直接判断整体优劣。');
+    if((byId.get(pair[0]).roleLabel || byId.get(pair[0]).kind)!==(byId.get(pair[1]).roleLabel || byId.get(pair[1]).kind))announce('这两个对象承担不同研究角色。请结合材料与目标比较其分工，不宜直接判断整体优劣。');
     drawTable();if(updateURL)writeURL();
   }
   for(const [i,side] of ['a','b'].entries()) {
@@ -92,7 +97,7 @@
       choices=C.findPlatforms(data.platforms,query);active=-1;list.replaceChildren();
       choices.forEach((p,j)=>{
         const item=el('li',p.name);item.id='cmp-opt-'+side+'-'+j;item.setAttribute('role','option');item.setAttribute('aria-selected','false');
-        item.setAttribute('aria-disabled',String(p.id===pair[1-i]));item.append(el('small',p.kind+(p.id===pair[1-i]?' · 已在另一侧选择':'')));
+        item.setAttribute('aria-disabled',String(p.id===pair[1-i]));item.append(el('small',(p.roleLabel || p.kind)+(p.id===pair[1-i]?' · 已在另一侧选择':'')));
         item.addEventListener('pointerdown',event=>event.preventDefault());item.addEventListener('click',()=>pick(p.id));list.append(item);
       });
       if(!choices.length)list.append(el('li','没有找到匹配项，请尝试英文名称或别名。'));

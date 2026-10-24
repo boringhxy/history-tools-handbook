@@ -5,16 +5,16 @@ const file = path.join(__dirname, '../comparison/engine.js');
 assert.ok(fs.existsSync(file), 'comparison engine must exist');
 const C = require(file);
 const field = text => ({text, evidence:'资料待补充', sources:[], checkedAt:null});
-const data = {dimensions:[{key:'position',label:'定位'},{key:'input',label:'输入'},{key:'output',label:'输出'}],platforms:[
- {id:'a',name:'识典古籍',aliases:['shidian'],kind:'处理工具',fields:{position:field('古籍阅读'),input:field('图像'),output:field('资料待补充')}},
- {id:'b',name:'DEDU',aliases:['对读'],kind:'处理工具',fields:{position:field('平行文本'),input:field('图像'),output:field('资料待补充')}}]};
+const data = {dimensions:[{key:'role',label:'平台的主要用途',group:'网站角色'},{key:'input_materials',label:'支持处理的自有材料',group:'处理工具'},{key:'output',label:'处理成果与导出方式',group:'处理工具'}],platforms:[
+ {id:'a',name:'识典古籍',aliases:['shidian'],kind:'处理工具',fields:{role:field('古籍阅读'),input_materials:field('图像'),output:field('资料待补充')}},
+ {id:'b',name:'DEDU',aliases:['对读'],kind:'处理工具',fields:{role:field('平行文本'),input_materials:field('图像'),output:field('资料待补充')}}]};
 assert.equal(C.findPlatforms(data.platforms,'SHIDIAN')[0].id,'a');
 assert.equal(C.findPlatforms(data.platforms,'对读')[0].id,'b');
 assert.equal(C.findPlatforms(data.platforms,'不存在').length,0);
 assert.equal(C.validPair(data.platforms,['a','a']),false);
 assert.equal(C.validPair(data.platforms,['a','__proto__']),false);
 assert.equal(C.validPair(data.platforms,['a','b']),true);
-assert.deepEqual(C.comparisonRows(data,['a','b'],{differences:true}).map(x=>x.key),['position']);
+assert.deepEqual(C.comparisonRows(data,['a','b'],{differences:true}).map(x=>x.key),['role']);
 assert.ok(C.comparisonRows(data,['a','b'],{task:'export'}).some(x=>x.key==='output'));
 assert.equal(C.safeURL('javascript:alert(1)'),null);
 assert.equal(C.safeURL('https://example.org'), 'https://example.org/');
@@ -33,3 +33,13 @@ assert.ok(bounded.length<=8&&bounded.reduce((n,m)=>n+m.content.length,0)<=12000)
 assert.ok(bounded.every(m=>m.content.length<=4000));
 assert.equal(longHistory[1].content.length,5000);
 console.log('Task evidence and history bounds: 6 assertions passed');
+
+const framed=JSON.parse(JSON.stringify(data));
+framed.dimensions.splice(1,0,{key:'resource_types',label:'提供的材料类型',group:'材料资源'});
+framed.platforms.forEach(p=>p.fields.resource_types=field('资料待补充'));
+assert.deepEqual(C.comparisonRows(framed,['a','b'],{task:'resources'}).map(r=>r.key),['role','resource_types']);
+assert.ok(!C.comparisonRows(framed,['a','b'],{task:'processing'}).some(r=>r.key==='resource_types'));
+assert.equal(C.comparisonTasks(enriched,['a','b'],{task:'resources'}).length,5);
+assert.equal(C.comparisonTasks(enriched,['a','b'],{task:'processing'}).length,9);
+assert.match(C.report(framed,['a','b'],{}),/材料资源/);
+console.log('Research framework filters and grouped reports: 5 assertions passed');

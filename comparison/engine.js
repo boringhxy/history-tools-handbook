@@ -2,14 +2,19 @@
 (function (root) {
   'use strict';
   const normalize = value => String(value || '').normalize('NFKC').toLocaleLowerCase().replace(/\s+/g, ' ').trim();
+  const commonKeys = ['role','conditions','evidence'];
+  const resourceKeys = ['resource_types','resource_scope','resource_forms','resource_search','resource_access'];
+  const processingKeys = ['input_materials','tools','preparation','workflow','output'];
   const taskKeys = {
-    discovery: ['position','materials','capabilities','conditions','limits','sources'],
-    ocr: ['materials','input','capabilities','review','output','limits','sources'],
-    annotation: ['input','capabilities','review','output','limits','sources'],
-    compare: ['materials','input','capabilities','review','output','limits','sources'],
-    database: ['input','capabilities','conditions','output','collaboration','limits','sources'],
-    analysis: ['materials','input','capabilities','review','output','limits','sources'],
-    export: ['conditions','output','collaboration','limits','sources']
+    resources: [...commonKeys,...resourceKeys],
+    processing: [...commonKeys,...processingKeys],
+    discovery: [...commonKeys,...resourceKeys],
+    ocr: [...commonKeys,...processingKeys],
+    annotation: [...commonKeys,...processingKeys],
+    compare: [...commonKeys,...processingKeys],
+    database: [...commonKeys,...processingKeys],
+    analysis: [...commonKeys,...processingKeys],
+    export: [...commonKeys,'resource_access','output']
   };
   function findPlatforms(platforms, query) {
     const q = normalize(query);
@@ -26,7 +31,7 @@
     })).filter(row => !options.differences || normalize(row.cells[0].text) !== normalize(row.cells[1].text));
   }
   const taskLabels = ['资源发现','自有材料输入','OCR与校订','全文／字段检索','语义／跨语种检索','原页回溯','多文本对读','自定义抽取与标注','个人建库','统计与可视化','协作复核','导出与备份'];
-  const taskIndexes = {discovery:[0,3,4,5],ocr:[1,2,5],annotation:[7,10],compare:[6],database:[8,3],analysis:[9],export:[10,11]};
+  const taskIndexes = {resources:[0,3,4,5,11],processing:[1,2,6,7,8,9,10,11,3],discovery:[0,3,4,5],ocr:[1,2,5],annotation:[7,10],compare:[6],database:[8,3],analysis:[9],export:[10,11]};
   function comparisonTasks(data, pair, options = {}) {
     if (!validPair(data.platforms, pair)) return [];
     const selected = pair.map(id => data.platforms.find(p => p.id === id));
@@ -55,7 +60,10 @@
     if (!validPair(data.platforms, pair)) return '';
     const selected = pair.map(id => data.platforms.find(p => p.id === id));
     const lines = [`平台对比：${selected[0].name} × ${selected[1].name}`, `资料版本：${data.version || ''}；整理日期：${data.updated || '未记录'}`, '功能覆盖不表示性能排名；资料缺失不等于不支持。'];
+    let group = '';
     for (const row of [...comparisonRows(data, pair, options), ...comparisonTasks(data, pair, options)]) {
+      if(row.group && row.group !== group){group=row.group;lines.push(`\n━━ ${group} ━━`);}
+      if(!row.group && group !== '任务细比'){group='任务细比';lines.push('\n━━ 任务细比 ━━');}
       lines.push(`\n【${row.label}】`);
       row.cells.forEach((cell, i) => {
         lines.push(`${selected[i].name}：${cell.text}`, `证据：${cell.evidence}；核对日期：${cell.checkedAt || '未记录'}`);

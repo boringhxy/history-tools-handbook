@@ -26,7 +26,7 @@ python3 -m server.app --port 8765
 - `POST /api/chat`，`Content-Type: application/json` 且精确合法Origin。请求 `{platformIds:[idA,idB],question,material,goal,constraints,history:[{role,content}]}`。平台必须是资料库内两个不同ID；问题最长2000字，material2000、goal1000、constraints1000；history最多8条（4轮），仅user/assistant，每条4000字，总计12000字。历史只作为当前请求数据，不写入磁盘。
 - 成功 `{answer,sources:[{id,label,url,evidence,checkedAt}],checkedAt,remaining,webChecked}`；错误 `{error,message}`，使用400/403/413/415/429/502/503等状态。
 
-只检索所选两个记录。事实来源来自声明级数据以及API实际返回、属于所选官方域名的url_citation注解，模型自行写出的来源不进入来源列表。共享托管域名额外收紧：GitHub等仓库必须匹配所选原始资料中的owner/repository路径（GitLab保留嵌套组前缀），不接受其他仓库或路径穿越；github.io、readthedocs.io、wordpress.com等只认可明确配置的租户主机，根域不能授权全部租户。搜索API的域名过滤较宽，最终来源还须通过该路径/租户复核。提及价格/版本/最新/当前或存在资料缺口时，允许最多一次官方域名web_search；`WEB_SEARCH_ENABLED=0`关闭。返回 `webChecked=true` 要求此次实际有完成的搜索调用；可用搜索不代表每个事实均被实时核验。模型答案仍需人工核查：提示要求五部分、逐事实引用、保留未知项、无强制排名、无未证实互操作、最多两个澄清问题。源网页与history都是不可信数据，提示明确拒绝其中的指令。程序不是事实证明器，不保证模型遵从全部写作要求。
+资料库V2按网站角色、材料资源、处理工具、共同条件四组13项组织，接口将 comparisonDimensions 和两个平台记录共同交给模型。提示明确区分平台现成资源、自有材料输入、公开研究实例与方法建议。只检索所选两个记录。事实来源来自声明级数据以及API实际返回、属于所选官方域名的url_citation注解，模型自行写出的来源不进入来源列表。共享托管域名额外收紧：GitHub等仓库必须匹配所选原始资料中的owner/repository路径（GitLab保留嵌套组前缀），不接受其他仓库或路径穿越；github.io、readthedocs.io、wordpress.com等只认可明确配置的租户主机，根域不能授权全部租户。搜索API的域名过滤较宽，最终来源还须通过该路径/租户复核。提及价格/版本/最新/当前或存在资料缺口时，允许最多一次官方域名web_search；`WEB_SEARCH_ENABLED=0`关闭。返回 `webChecked=true` 要求此次实际有完成的搜索调用；可用搜索不代表每个事实均被实时核验。模型答案仍需人工核查：提示要求五部分、逐事实引用、保留未知项、无强制排名、无未证实互操作、最多两个澄清问题。源网页与history都是不可信数据，提示明确拒绝其中的指令。程序不是事实证明器，不保证模型遵从全部写作要求。
 
 ## 验证与官方API资料
 
