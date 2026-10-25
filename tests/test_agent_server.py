@@ -55,6 +55,32 @@ class AgentServerTests(unittest.TestCase):
         packet=json.loads(self.calls[0]['input'][0]['content'])
         self.assertIn('comparisonDimensions',packet)
 
+    def test_deepseek_uses_non_thinking_and_model_aware_search(self):
+        env=dict(self.env,OPENAI_BASE_URL='https://api.deepseek.com',OPENAI_MODEL='deepseek-flash')
+        agent=self.Agent(self.Config.from_env(env,self.root),provider=self.provider)
+        agent.chat(self.payload(),'deepseek','ip')
+        self.assertEqual(self.calls[-1].get('reasoning'),{'effort':'none'})
+        self.assertNotIn('tools',self.calls[-1])
+        self.assertFalse(agent.status('deepseek','ip')['webSearchAvailable'])
+
+    def test_upstream_http_error_has_safe_actionable_message(self):
+        from urllib.error import HTTPError
+        from server.app import ServiceError
+        def denied(payload):raise HTTPError('https://example.org/responses',402,'private-test-secret',{},None)
+        agent=self.Agent(self.Config.from_env(self.env,self.root),provider=denied)
+        with self.assertRaises(ServiceError) as caught:agent.chat(self.payload(),'denied','ip')
+        self.assertEqual(caught.exception.code,'provider_balance')
+        self.assertIn('余额',caught.exception.message)
+        self.assertNotIn('private-test-secret',caught.exception.message)
+
+    def test_truncated_reasoning_is_not_generic_service_unavailable(self):
+        from server.app import ServiceError
+        def incomplete(payload):return {'status':'incomplete','incomplete_details':{'reason':'max_output_tokens'},'output':[]}
+        agent=self.Agent(self.Config.from_env(self.env,self.root),provider=incomplete)
+        with self.assertRaises(ServiceError) as caught:agent.chat(self.payload(),'truncated','ip')
+        self.assertEqual(caught.exception.code,'model_output_limit')
+        self.assertIn('输出',caught.exception.message)
+
     def test_fail_closed(self):
         for key in ['OPENAI_API_KEY','OPENAI_MODEL','COOKIE_SECRET','APP_DAILY_BUDGET_USD','REQUEST_MAX_COST_USD']:
             env=dict(self.env);env.pop(key)
@@ -93,6 +119,13 @@ class AgentServerTests(unittest.TestCase):
         self.assertFalse(agent.status('fresh','fresh')['available'])
         with __import__('sqlite3').connect(agent.config.db_path) as conn:
             self.assertNotIn('question',' '.join(row[0] for row in conn.execute('SELECT sql FROM sqlite_master WHERE sql IS NOT NULL')))
+
+    def test_deepseek_citation_aliases_are_normalized_and_checked(self):
+        from server.app import extract_result
+        sources=[{'id':1,'label':'Official','url':'https://example.org/docs','evidence':'官方','checkedAt':None}]
+        result={'output':[{'type':'message','content':[{'type':'output_text','text':'事实[n:1]，未知[n:999]，未知[999]','annotations':[]}]}]}
+        answer,_,_=extract_result(result,sources,['example.org'])
+        self.assertEqual(answer,'事实[1]，未知[资料待补充]，未知[资料待补充]')
 
     def test_sources_only_dataset_or_allowed_annotations(self):
         from server.app import extract_result

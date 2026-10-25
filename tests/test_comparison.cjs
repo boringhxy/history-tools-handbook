@@ -41,5 +41,34 @@ assert.deepEqual(C.comparisonRows(framed,['a','b'],{task:'resources'}).map(r=>r.
 assert.ok(!C.comparisonRows(framed,['a','b'],{task:'processing'}).some(r=>r.key==='resource_types'));
 assert.equal(C.comparisonTasks(enriched,['a','b'],{task:'resources'}).length,5);
 assert.equal(C.comparisonTasks(enriched,['a','b'],{task:'processing'}).length,9);
-assert.match(C.report(framed,['a','b'],{}),/材料资源/);
+assert.match(C.report(framed,['a','b'],{}),/查找与获取材料/);
 console.log('Research framework filters and grouped reports: 5 assertions passed');
+assert.deepEqual(C.comparisonRows(framed,['a','b'],{task:'resource_types'}).map(r=>r.key),['resource_types']);
+assert.deepEqual(C.comparisonRows(framed,['a','b'],{task:'input_materials'}).map(r=>r.key),['input_materials']);
+assert.equal(C.comparisonTasks(enriched,['a','b'],{task:'role'}).length,0);
+console.log('Individual dimension selection: 3 assertions passed');
+
+// Reading follows research stages, while capability tags preserve uncertainty.
+const actual=JSON.parse(fs.readFileSync(path.join(__dirname,'../data/platforms.json'),'utf8'));
+const flow=C.workflowDimensions(actual);
+assert.equal(flow.length,13);
+assert.deepEqual(flow.map(d=>d.key),['role','conditions','resource_types','resource_scope','resource_forms','resource_search','resource_access','input_materials','preparation','tools','workflow','output','evidence']);
+assert.equal(new Set(flow.map(d=>d.group)).size,6);
+assert.deepEqual(C.capabilityTags(field('资料待补充'),'tools').map(t=>t.label),['功能待核实']);
+const mixed={text:'可检索文本；OCR须另配上游工具；协作机制尚未核实。',evidence:'官方资料整理',sources:[]};
+assert.deepEqual(C.capabilityTags(mixed,'tools').map(t=>t.label),['OCR需另配','文本检索']);
+assert.deepEqual(C.capabilityTags({text:'准备UTF-8文本。',evidence:'研究方法建议'},'preparation').map(t=>t.label),['准备UTF-8文本']);
+assert.deepEqual(C.capabilityTags({text:'词频与共现分析',evidence:'目录资料'},'tools').map(t=>t.label),['词频统计','共现分析']);
+assert.deepEqual(C.readingParts('第一项。第二项；\n第三项。'),['第一项。','第二项；','第三项。']);
+
+assert.deepEqual(C.capabilityTags({text:'建议另行准备CSV给网络工具。',evidence:'研究方法建议'},'evidence').map(t=>t.label),['人工核查']);
+assert.deepEqual(C.readingParts('流程建议：\n1. 导出；保存。\n2. 检查。','workflow'),['流程建议：','1. 导出；保存。','2. 检查。']);
+
+assert.deepEqual(C.capabilityTags({text:'支持OCR；支持批量导出CSV。',evidence:'官方说明'},'tools').map(t=>t.label),['含OCR','支持批量导出']);
+assert.deepEqual(C.capabilityTags({text:'批量导出格式尚未确认。',evidence:'官方说明'},'output').map(t=>t.label),['批量导出待核实']);
+assert.ok(!C.capabilityTags({text:'数据库可导出CSV。',evidence:'官方说明'},'output').some(t=>t.label==='支持批量导出'));
+assert.deepEqual(C.capabilityTags({text:'未确认有OCR功能。',evidence:'官方说明'},'tools').map(t=>t.label),['OCR待核实']);
+
+assert.deepEqual(C.capabilityTags({text:'不直接等同于已验证跨语种检索。',evidence:'官方说明'},'tools').map(t=>t.label),['跨语种检索待核实']);
+assert.deepEqual(C.capabilityTags({text:'原始图片不应直接等同于可分析语料。',evidence:'官方说明'},'input_materials').map(t=>t.label),['图像材料待核实']);
+console.log('Research workflow and concrete feature tags: 16 assertions passed');

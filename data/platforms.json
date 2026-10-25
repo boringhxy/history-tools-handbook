@@ -72,6 +72,7 @@
     {
       "id": "tool-1",
       "name": "Voyant Tools",
+      "website": "https://voyant-tools.org/",
       "aliases": [
         "Voyant Tools"
       ],
@@ -193,6 +194,7 @@
     {
       "id": "tool-2",
       "name": "MALLET",
+      "website": "https://mimno.github.io/Mallet/",
       "aliases": [
         "MALLET"
       ],
@@ -314,6 +316,7 @@
     {
       "id": "tool-3",
       "name": "AntConc",
+      "website": "https://www.laurenceanthony.net/software/antconc/",
       "aliases": [
         "AntConc"
       ],
@@ -435,6 +438,7 @@
     {
       "id": "tool-4",
       "name": "CQPweb",
+      "website": "https://cqpweb.lancs.ac.uk/",
       "aliases": [
         "CQPweb"
       ],
@@ -557,6 +561,7 @@
     {
       "id": "qgis",
       "name": "QGIS",
+      "website": "https://qgis.org/",
       "aliases": [
         "QGIS",
         "qgis"
@@ -707,6 +712,7 @@
     {
       "id": "tool-6",
       "name": "ArcGIS StoryMaps",
+      "website": "https://storymaps.arcgis.com/",
       "aliases": [
         "ArcGIS StoryMaps"
       ],
@@ -830,6 +836,7 @@
     {
       "id": "tool-7",
       "name": "StoryMapJS",
+      "website": "https://storymap.knightlab.com/",
       "aliases": [
         "StoryMapJS"
       ],
@@ -951,6 +958,7 @@
     {
       "id": "tool-8",
       "name": "Palladio",
+      "website": "https://hdlab.stanford.edu/palladio/",
       "aliases": [
         "Palladio"
       ],
@@ -1073,6 +1081,7 @@
     {
       "id": "gephi",
       "name": "Gephi",
+      "website": "https://gephi.org/",
       "aliases": [
         "Gephi",
         "gephi"
@@ -1220,6 +1229,7 @@
     {
       "id": "tool-10",
       "name": "Cytoscape",
+      "website": "https://cytoscape.org/",
       "aliases": [
         "Cytoscape"
       ],
@@ -1342,6 +1352,7 @@
     {
       "id": "tool-11",
       "name": "TEI",
+      "website": "https://tei-c.org/",
       "aliases": [
         "TEI"
       ],
@@ -1467,6 +1478,7 @@
     {
       "id": "omeka-s",
       "name": "Omeka S",
+      "website": "https://omeka.org/",
       "aliases": [
         "Omeka S",
         "Omeka",
@@ -1618,6 +1630,7 @@
     {
       "id": "tool-13",
       "name": "Scalar",
+      "website": "https://scalar.usc.edu/",
       "aliases": [
         "Scalar"
       ],
@@ -1734,6 +1747,7 @@
     {
       "id": "tool-14",
       "name": "Tableau Public",
+      "website": "https://public.tableau.com/",
       "aliases": [
         "Tableau Public"
       ],
@@ -1854,6 +1868,7 @@
     {
       "id": "tool-15",
       "name": "Flourish",
+      "website": "https://flourish.studio/",
       "aliases": [
         "Flourish"
       ],
@@ -1974,6 +1989,7 @@
     {
       "id": "tool-16",
       "name": "RAWGraphs",
+      "website": "https://www.rawgraphs.io/",
       "aliases": [
         "RAWGraphs"
       ],
@@ -2094,6 +2110,7 @@
     {
       "id": "tool-17",
       "name": "Palmyra",
+      "website": "https://pkudh.org/",
       "aliases": [
         "Palmyra"
       ],
@@ -2209,6 +2226,7 @@
     {
       "id": "wuyudian",
       "name": "吾与点智能数据平台",
+      "website": "https://www.wuyudian.net/",
       "aliases": [
         "吾与点智能数据平台",
         "「吾与点」智能数据平台",
@@ -2301,7 +2319,7 @@
           ]
         },
         "tools": {
-          "text": "可用图像模型抽取信息并人工编辑；不等同于版面校勘工作台。；概述说明知识库检索查询；具体字段索引条件另核。；知识库问答不直接等同于已验证跨语种检索。；以信息抽取和数据组织为重点；不据此宣称版本对读编辑器。；自定义字段、类型、规则、提示语与示例。；数据集、知识库与知识图谱按对应模块组织。；概述列有统计、图表及网络分析；具体成果须复核。；私有项目与团队协作；细粒度审核记录另核。",
+          "text": "可用图像模型抽取信息并人工编辑；不等同于版面校勘工作台；概述说明知识库检索查询；具体字段索引条件另核；知识库问答不直接等同于已验证跨语种检索；以信息抽取和数据组织为重点；不据此宣称版本对读编辑器；自定义字段、类型、规则、提示语与示例；数据集、知识库与知识图谱按对应模块组织；概述列有统计、图表及网络分析；具体成果须复核；私有项目与团队协作；细粒度审核记录另核。",
           "evidence": "官方说明；公开证据不足",
           "checkedAt": "2026-10-19",
           "sources": [
@@ -2376,7 +2394,7 @@
           ]
         },
         "evidence": {
-          "text": "目录功能描述：断句标点、实体识别、关系标注、知识图谱与多格式导出\n目录应用场景：古籍文本精加工、人物地名抽取、历史知识库建设\n目录核实状态：已核实（机构页/站点公告）\n使用限制：自动结果必须人工校订；旧站迁移时需备份项目\n资料状态：旧站公告迁移至 wuyudian.net，旧站计划 2026-12-31 关闭\n核心档案限制：需要账号；模型、积分与存储条件随服务规则变化。旧版标注功能与新版智能数据平台分开描述。；用户手册说明数据库可导出Excel、CSV、JSON、JSONL；表格字段／规则／示例配置可另导出JSON。不要把数据库导出视为完整图谱、标注与全部项目的无损导出。\n研究方法建议·核查：逐条核对同名人物、别称、时间推算、关系方向和否定表述；出处字段须在任务设计时加入。 核实口径：官方资料整理，未登录实测；2026-10-19。\n研究方法建议·衔接（不代表已验证直连）：建议路径：复核后的CSV／JSON → 清洗字段 → DocuXML转换 → DocuSky；节点边表也可另行准备给网络工具。字段和关系映射均需验证。\n资料依据：吾与点：现行用户手册；吾与点：平台概述\n研究方法建议·人工检查：逐条核对同名人物、别称、时间推算、关系方向和否定表述；出处字段须在任务设计时加入。\n研究方法建议·下一步衔接：建议路径：复核后的CSV／JSON → 清洗字段 → DocuXML转换 → DocuSky；节点边表也可另行准备给网络工具。字段和关系映射均需验证。\n资料依据：吾与点：现行用户手册；吾与点：平台概述",
+          "text": "目录功能描述：断句标点、实体识别、关系标注、知识图谱与多格式导出\n目录应用场景：古籍文本精加工、人物地名抽取、历史知识库建设\n目录核实状态：已核实（机构页/站点公告）\n使用限制：自动结果必须人工校订；旧站迁移时需备份项目\n资料状态：旧站公告迁移至 wuyudian.net，旧站计划 2026-12-31 关闭\n核心档案限制：需要账号；模型、积分与存储条件随服务规则变化。旧版标注功能与新版智能数据平台分开描述；用户手册说明数据库可导出Excel、CSV、JSON、JSONL；表格字段／规则／示例配置可另导出JSON。不要把数据库导出视为完整图谱、标注与全部项目的无损导出。\n研究方法建议·核查：逐条核对同名人物、别称、时间推算、关系方向和否定表述；出处字段须在任务设计时加入。 核实口径：官方资料整理，未登录实测；2026-10-19。\n研究方法建议·衔接（不代表已验证直连）：建议路径：复核后的CSV／JSON → 清洗字段 → DocuXML转换 → DocuSky；节点边表也可另行准备给网络工具。字段和关系映射均需验证。\n资料依据：吾与点：现行用户手册；吾与点：平台概述\n研究方法建议·人工检查：逐条核对同名人物、别称、时间推算、关系方向和否定表述；出处字段须在任务设计时加入。\n研究方法建议·下一步衔接：建议路径：复核后的CSV／JSON → 清洗字段 → DocuXML转换 → DocuSky；节点边表也可另行准备给网络工具。字段和关系映射均需验证。\n资料依据：吾与点：现行用户手册；吾与点：平台概述",
           "evidence": "资料整理；研究方法建议",
           "checkedAt": null,
           "sources": [
@@ -2558,6 +2576,7 @@
     {
       "id": "shidian",
       "name": "识典古籍",
+      "website": "https://www.shidianguji.com/",
       "aliases": [
         "识典古籍",
         "识典古籍智能整理系统",
@@ -2622,7 +2641,7 @@
           ]
         },
         "resource_search": {
-          "text": "阅读：分类、时代筛选与古籍检索。；阅读：古籍文本检索；复杂字段组合方式需另核。；本次来源不足以确认语义或跨语种检索。；阅读：图文对照；引用仍需自行核对卷页。",
+          "text": "阅读：分类、时代筛选与古籍检索；阅读：古籍文本检索；复杂字段组合方式需另核；本次来源不足以确认语义或跨语种检索；阅读：图文对照；引用仍需自行核对卷页。",
           "evidence": "官方说明；公开证据不足",
           "checkedAt": "2026-10-19",
           "sources": [
@@ -2655,7 +2674,7 @@
           ]
         },
         "tools": {
-          "text": "整理：OCR、文字校对、标点与实体校订。；整理：官方列有文字对勘；不据此推定自动对齐。；整理：实体校对；自定义类型与关系抽取条件待核。；自定义个人专题数据库的范围与权限未确认。；阅读：观察部类、时代分布；不等于独立统计评测。；整理：任务分发与人机协同；审核轨迹细节待核。",
+          "text": "整理：OCR、文字校对、标点与实体校订；整理：官方列有文字对勘；不据此推定自动对齐；整理：实体校对；自定义类型与关系抽取条件待核；自定义个人专题数据库的范围与权限未确认；阅读：观察部类、时代分布；不等于独立统计评测；整理：任务分发与人机协同；审核轨迹细节待核。",
           "evidence": "官方说明；公开证据不足",
           "checkedAt": "2026-10-19",
           "sources": [
@@ -2710,7 +2729,7 @@
           ]
         },
         "evidence": {
-          "text": "目录功能描述：OCR、版面整理、自动标点、实体处理、校勘与发布衔接\n目录应用场景：馆藏古籍数字化、众包校对、阅读平台内容生产\n目录核实状态：已核实（机构页）\n使用限制：高质量成果仍需版本学与文字学人工复核；注意图像授权\n资料状态：平台持续运行；官网可访问\n核心档案限制：阅读与整理是两个入口。阅读平台公开开放；整理任务、材料上传和发布按实际项目权限确认。；阅读产生带版本说明的摘录；整理产生经校订的文本。批量全文、影像、实体和校订记录的导出格式均需按项目确认。\n研究方法建议·核查：区分粗校与精校；核对异体字、避讳字、缺损、标点及底本。年代筛选不可直接当作精确成书年代。 核实口径：官方资料整理，未登录实测；2026-10-19。\n研究方法建议·衔接（不代表已验证直连）：建议路径：识典摘录／校订文本 → DEDU或DocuSky。先确认取用权限，再携带书名、版本、卷页和原文位置；未验证直连，转换可能丢失字图坐标与校订记录。\n资料依据：北大：阅读与整理平台说明\n研究方法建议·人工检查：区分粗校与精校；核对异体字、避讳字、缺损、标点及底本。年代筛选不可直接当作精确成书年代。\n研究方法建议·下一步衔接：建议路径：识典摘录／校订文本 → DEDU或DocuSky。先确认取用权限，再携带书名、版本、卷页和原文位置；未验证直连，转换可能丢失字图坐标与校订记录。\n资料依据：北大：阅读与整理平台说明",
+          "text": "目录功能描述：OCR、版面整理、自动标点、实体处理、校勘与发布衔接\n目录应用场景：馆藏古籍数字化、众包校对、阅读平台内容生产\n目录核实状态：已核实（机构页）\n使用限制：高质量成果仍需版本学与文字学人工复核；注意图像授权\n资料状态：平台持续运行；官网可访问\n核心档案限制：阅读与整理是两个入口。阅读平台公开开放；整理任务、材料上传和发布按实际项目权限确认；阅读产生带版本说明的摘录；整理产生经校订的文本。批量全文、影像、实体和校订记录的导出格式均需按项目确认。\n研究方法建议·核查：区分粗校与精校；核对异体字、避讳字、缺损、标点及底本。年代筛选不可直接当作精确成书年代。 核实口径：官方资料整理，未登录实测；2026-10-19。\n研究方法建议·衔接（不代表已验证直连）：建议路径：识典摘录／校订文本 → DEDU或DocuSky。先确认取用权限，再携带书名、版本、卷页和原文位置；未验证直连，转换可能丢失字图坐标与校订记录。\n资料依据：北大：阅读与整理平台说明\n研究方法建议·人工检查：区分粗校与精校；核对异体字、避讳字、缺损、标点及底本。年代筛选不可直接当作精确成书年代。\n研究方法建议·下一步衔接：建议路径：识典摘录／校订文本 → DEDU或DocuSky。先确认取用权限，再携带书名、版本、卷页和原文位置；未验证直连，转换可能丢失字图坐标与校订记录。\n资料依据：北大：阅读与整理平台说明",
           "evidence": "资料整理；研究方法建议",
           "checkedAt": null,
           "sources": [
@@ -2888,6 +2907,7 @@
     {
       "id": "tool-20",
       "name": "尚古汇典",
+      "website": "https://www.gujidh.com/",
       "aliases": [
         "尚古汇典"
       ],
@@ -3016,6 +3036,7 @@
     {
       "id": "tool-21",
       "name": "TextIn 古籍OCR",
+      "website": "https://www.textin.com/",
       "aliases": [
         "TextIn 古籍OCR"
       ],
@@ -3138,6 +3159,7 @@
     {
       "id": "transkribus",
       "name": "Transkribus",
+      "website": "https://www.transkribus.org/",
       "aliases": [
         "Transkribus",
         "transkribus"
@@ -3311,6 +3333,7 @@
     {
       "id": "tool-23",
       "name": "ABBYY FineReader",
+      "website": "https://www.abbyy.com/finereader/",
       "aliases": [
         "ABBYY FineReader"
       ],
@@ -3433,6 +3456,7 @@
     {
       "id": "tool-24",
       "name": "Tesseract",
+      "website": "https://github.com/tesseract-ocr/tesseract",
       "aliases": [
         "Tesseract"
       ],
@@ -3554,6 +3578,7 @@
     {
       "id": "markus",
       "name": "MARKUS",
+      "website": "https://dh.chinese-empires.eu/markus/beta/frontPage.html",
       "aliases": [
         "MARKUS"
       ],
@@ -3672,6 +3697,7 @@
     {
       "id": "tool-26",
       "name": "Airtable",
+      "website": "https://www.airtable.com/",
       "aliases": [
         "Airtable"
       ],
@@ -3798,6 +3824,7 @@
     {
       "id": "tool-27",
       "name": "Notion",
+      "website": "https://www.notion.so/",
       "aliases": [
         "Notion"
       ],
@@ -3913,6 +3940,7 @@
     {
       "id": "zotero",
       "name": "Zotero",
+      "website": "https://www.zotero.org/",
       "aliases": [
         "Zotero",
         "佐特罗",
@@ -4058,6 +4086,7 @@
     {
       "id": "openrefine",
       "name": "OpenRefine",
+      "website": "https://openrefine.org/",
       "aliases": [
         "OpenRefine",
         "openrefine"
@@ -4200,6 +4229,7 @@
     {
       "id": "tool-30",
       "name": "晚笑堂画传智能体",
+      "website": "https://pkudh.org/",
       "aliases": [
         "晚笑堂画传智能体"
       ],
@@ -4315,6 +4345,7 @@
     {
       "id": "tool-31",
       "name": "原境·唐风仕女图生成平台",
+      "website": "https://gujiai.pkudh.net/activation/index.html",
       "aliases": [
         "原境·唐风仕女图生成平台"
       ],
@@ -4430,6 +4461,7 @@
     {
       "id": "tool-32",
       "name": "孔子数智大模型",
+      "website": null,
       "aliases": [
         "孔子数智大模型"
       ],
@@ -4529,6 +4561,7 @@
     {
       "id": "tool-33",
       "name": "甲骨文智能体「殷契行止」",
+      "website": "https://www.jgwlbg.org.cn/",
       "aliases": [
         "甲骨文智能体「殷契行止」"
       ],
@@ -4650,6 +4683,7 @@
     {
       "id": "tool-34",
       "name": "抗战史人工智能数据库",
+      "website": "https://www.nanjing.gov.cn/zt/sznjjsqx/cgzs/202509/t20250922_5654194.html",
       "aliases": [
         "抗战史人工智能数据库"
       ],
@@ -4792,6 +4826,7 @@
     {
       "id": "tool-35",
       "name": "博记天下社会经济史文献数据库",
+      "website": "https://www.boji108.com/",
       "aliases": [
         "博记天下社会经济史文献数据库"
       ],
@@ -4934,6 +4969,7 @@
     {
       "id": "tool-36",
       "name": "DeepZang 藏语言AI",
+      "website": null,
       "aliases": [
         "DeepZang 藏语言AI"
       ],
@@ -5032,6 +5068,7 @@
     {
       "id": "tool-37",
       "name": "DAIHUM 数字与AI人文社区",
+      "website": "https://www.daihum.com/",
       "aliases": [
         "DAIHUM 数字与AI人文社区"
       ],
@@ -5162,6 +5199,7 @@
     {
       "id": "tool-38",
       "name": "甲骨缀合与铜器断代AI工具（缀多多/知微缀/吉金识辨）",
+      "website": "https://www.jgwlbg.org.cn/",
       "aliases": [
         "甲骨缀合与铜器断代AI工具（缀多多/知微缀/吉金识辨）"
       ],
@@ -5277,6 +5315,7 @@
     {
       "id": "tool-39",
       "name": "Calli-VA 书法可视分析系统",
+      "website": "https://vis.pku.edu.cn/",
       "aliases": [
         "Calli-VA 书法可视分析系统"
       ],
@@ -5392,6 +5431,7 @@
     {
       "id": "tool-40",
       "name": "云四库智能问答小程序",
+      "website": "https://www.nlc.cn/",
       "aliases": [
         "云四库智能问答小程序"
       ],
@@ -5534,6 +5574,7 @@
     {
       "id": "tool-41",
       "name": "Fxtop 历史汇率查询",
+      "website": "https://fxtop.com/",
       "aliases": [
         "Fxtop 历史汇率查询"
       ],
@@ -5664,6 +5705,7 @@
     {
       "id": "tool-42",
       "name": "KVK 虚拟联合目录",
+      "website": "https://kvk.bibliothek.kit.edu/",
       "aliases": [
         "KVK 虚拟联合目录"
       ],
@@ -5800,6 +5842,7 @@
     {
       "id": "tool-43",
       "name": "Mementoweb 存档网页检索",
+      "website": "https://timetravel.mementoweb.org/",
       "aliases": [
         "Mementoweb 存档网页检索"
       ],
@@ -5942,6 +5985,7 @@
     {
       "id": "tool-44",
       "name": "OpenCat 全球图书馆检索",
+      "website": null,
       "aliases": [
         "OpenCat 全球图书馆检索"
       ],
@@ -6041,6 +6085,7 @@
     {
       "id": "tool-45",
       "name": "Kartenportal 瑞士地图搜索",
+      "website": "https://kartenportal.ch/",
       "aliases": [
         "Kartenportal 瑞士地图搜索"
       ],
@@ -6181,6 +6226,7 @@
     {
       "id": "tool-46",
       "name": "swisscollections 瑞士馆藏检索",
+      "website": "https://swisscollections.ch/",
       "aliases": [
         "swisscollections 瑞士馆藏检索"
       ],
@@ -6319,6 +6365,7 @@
     {
       "id": "tool-47",
       "name": "SWISTOVAL 历史货币换算",
+      "website": "https://swistoval.unibe.ch/rechner/index_ger.html",
       "aliases": [
         "SWISTOVAL 历史货币换算"
       ],
@@ -6449,6 +6496,7 @@
     {
       "id": "tool-48",
       "name": "transcriptiones 手稿转录平台",
+      "website": "https://transcriptiones.ch/",
       "aliases": [
         "transcriptiones 手稿转录平台"
       ],
@@ -6589,6 +6637,7 @@
     {
       "id": "tool-49",
       "name": "台湾数位人文研究平台",
+      "website": "https://dh.ascdc.sinica.edu.tw/member/",
       "aliases": [
         "台湾数位人文研究平台"
       ],
@@ -6732,6 +6781,7 @@
     {
       "id": "docusky",
       "name": "DocuSky",
+      "website": "https://docusky.org.tw/DocuSky/home/",
       "aliases": [
         "DocuSky",
         "台湾大学 DocuSky 数位人文学术研究平台",
@@ -6829,7 +6879,7 @@
           ]
         },
         "tools": {
-          "text": "以整理后的文本建库为主；OCR须另配上游工具。；个人文献集检索、分类与标记组织。；不将传统文本检索等同于跨语种语义搜索。；官方工具说明列有文本比对；对应结构与DEDU分别核验。；文本／语义标记及元数据组织；具体标记工具分别使用。；DocuXML构建个人数据库和文献集。；词频、共现、GIS等由对应工具承担，依输入而定。；多人同步编辑、审核轨迹的现行机制尚未核实。",
+          "text": "以整理后的文本建库为主；OCR须另配上游工具；个人文献集检索、分类与标记组织；不将传统文本检索等同于跨语种语义搜索；官方工具说明列有文本比对；对应结构与DEDU分别核验；文本／语义标记及元数据组织；具体标记工具分别使用；DocuXML构建个人数据库和文献集；词频、共现、GIS等由对应工具承担，依输入而定；多人同步编辑、审核轨迹的现行机制尚未核实。",
           "evidence": "官方说明；公开证据不足",
           "checkedAt": "2026-10-19",
           "sources": [
@@ -6924,7 +6974,7 @@
           ]
         },
         "evidence": {
-          "text": "目录功能描述：个人化材料导入、标注、分析、GIS、网络与工具串接\n目录应用场景：个人专题数据库、教学、文献与档案研究\n目录核实状态：已核实（官网）\n使用限制：导入格式和项目上限需测试；长期保存应另有备份\n资料状态：平台持续可用\n核心档案限制：云端建库需要账号；存储、配额、公开分享及机构版本条件以现行服务规范为准。；优先保存DocuXML源文件、字段字典和分析结果；各分析工具的输出格式不同，不承诺注释、关系和全部配置一次导出。\n研究方法建议·核查：检查文献切分单位、字段映射、分词和标记。比较词频时记录语料规模、筛选范围与归一化方法。 官方资料整理，未登录实测；2026-10-19。\n研究方法建议·衔接（不代表已验证直连）：建议路径：吾与点的CSV／JSON → 核对字段与出处 → 转换DocuXML → DocuSky；类型和多值关系可能在转换中丢失，需抽样核验，未验证自动直连。\n资料依据：DocuSky：工具与教学；DocuSky：DocuXML与工具介接说明；纯文字建库工具\n研究方法建议·人工检查：检查文献切分单位、字段映射、分词和标记。比较词频时记录语料规模、筛选范围与归一化方法。\n研究方法建议·下一步衔接：建议路径：吾与点的CSV／JSON → 核对字段与出处 → 转换DocuXML → DocuSky；类型和多值关系可能在转换中丢失，需抽样核验，未验证自动直连。\n资料依据：DocuSky：工具与教学；DocuSky：DocuXML与工具介接说明；纯文字建库工具",
+          "text": "目录功能描述：个人化材料导入、标注、分析、GIS、网络与工具串接\n目录应用场景：个人专题数据库、教学、文献与档案研究\n目录核实状态：已核实（官网）\n使用限制：导入格式和项目上限需测试；长期保存应另有备份\n资料状态：平台持续可用\n核心档案限制：云端建库需要账号；存储、配额、公开分享及机构版本条件以现行服务规范为准；优先保存DocuXML源文件、字段字典和分析结果；各分析工具的输出格式不同，不承诺注释、关系和全部配置一次导出。\n研究方法建议·核查：检查文献切分单位、字段映射、分词和标记。比较词频时记录语料规模、筛选范围与归一化方法。 官方资料整理，未登录实测；2026-10-19。\n研究方法建议·衔接（不代表已验证直连）：建议路径：吾与点的CSV／JSON → 核对字段与出处 → 转换DocuXML → DocuSky；类型和多值关系可能在转换中丢失，需抽样核验，未验证自动直连。\n资料依据：DocuSky：工具与教学；DocuSky：DocuXML与工具介接说明；纯文字建库工具\n研究方法建议·人工检查：检查文献切分单位、字段映射、分词和标记。比较词频时记录语料规模、筛选范围与归一化方法。\n研究方法建议·下一步衔接：建议路径：吾与点的CSV／JSON → 核对字段与出处 → 转换DocuXML → DocuSky；类型和多值关系可能在转换中丢失，需抽样核验，未验证自动直连。\n资料依据：DocuSky：工具与教学；DocuSky：DocuXML与工具介接说明；纯文字建库工具",
           "evidence": "资料整理；研究方法建议",
           "checkedAt": null,
           "sources": [
@@ -7110,6 +7160,7 @@
     {
       "id": "tool-51",
       "name": "通用型古籍数位人文研究平台",
+      "website": "https://ming.ncl.edu.tw/",
       "aliases": [
         "通用型古籍数位人文研究平台"
       ],
@@ -7253,6 +7304,7 @@
     {
       "id": "tool-52",
       "name": "元引科技引得数字人文平台",
+      "website": null,
       "aliases": [
         "元引科技引得数字人文平台"
       ],
@@ -7353,6 +7405,7 @@
     {
       "id": "tool-53",
       "name": "古籍智能网",
+      "website": null,
       "aliases": [
         "古籍智能网"
       ],
@@ -7451,6 +7504,7 @@
     {
       "id": "tool-54",
       "name": "如意古籍数字化工具平台",
+      "website": null,
       "aliases": [
         "如意古籍数字化工具平台"
       ],
@@ -7549,6 +7603,7 @@
     {
       "id": "tool-55",
       "name": "看典古籍·易校古籍平台",
+      "website": "https://www.kandiangguji.com/yijiaoguji",
       "aliases": [
         "看典古籍·易校古籍平台"
       ],
@@ -7670,6 +7725,7 @@
     {
       "id": "tool-56",
       "name": "籍合网古籍智能整理平台",
+      "website": "https://collation.ancientbooks.cn/index",
       "aliases": [
         "籍合网古籍智能整理平台"
       ],
@@ -7791,6 +7847,7 @@
     {
       "id": "tool-57",
       "name": "学衡数据·古籍文本对勘、古籍标点过录",
+      "website": "https://guji.xueheng.net/",
       "aliases": [
         "学衡数据·古籍文本对勘、古籍标点过录"
       ],
@@ -7907,6 +7964,7 @@
     {
       "id": "tool-58",
       "name": "智慧古籍平台",
+      "website": "https://csab.zju.edu.cn/",
       "aliases": [
         "智慧古籍平台"
       ],
@@ -8028,6 +8086,7 @@
     {
       "id": "tool-59",
       "name": "汉典重光古籍数字化平台",
+      "website": "https://wenyuan.aliyun.com/home",
       "aliases": [
         "汉典重光古籍数字化平台"
       ],
@@ -8150,6 +8209,7 @@
     {
       "id": "tool-60",
       "name": "云聪古籍数字化平台",
+      "website": "https://guji.yuncong-ai.com/",
       "aliases": [
         "云聪古籍数字化平台"
       ],
@@ -8272,6 +8332,7 @@
     {
       "id": "tool-61",
       "name": "古诗文断句",
+      "website": null,
       "aliases": [
         "古诗文断句"
       ],
@@ -8370,6 +8431,7 @@
     {
       "id": "tool-62",
       "name": "中文断词系统",
+      "website": "https://ckipsvr.iis.sinica.edu.tw/",
       "aliases": [
         "中文断词系统"
       ],
@@ -8490,6 +8552,7 @@
     {
       "id": "tool-63",
       "name": "古文献分析平台",
+      "website": "https://pkudh.org/project/ca/",
       "aliases": [
         "古文献分析平台"
       ],
@@ -8606,6 +8669,7 @@
     {
       "id": "tool-64",
       "name": "HiOCR 批量文字识别工具",
+      "website": "https://github.com/maguang/HiOCR",
       "aliases": [
         "HiOCR 批量文字识别工具"
       ],
@@ -8722,6 +8786,7 @@
     {
       "id": "nju-digital",
       "name": "南京大学数智文献处理平台",
+      "website": null,
       "aliases": [
         "南京大学数智文献处理平台",
         "南京大学数智文献处理平台暨近代红色资源库",
@@ -8792,7 +8857,7 @@
           "sources": []
         },
         "resource_search": {
-          "text": "期刊的全文／字段查询、筛选和文章层级需界面核验。；平台整体：语义检索与跨语种检索；期刊模块覆盖待核。；命中结果能否直接定位到原页影像、卷期页码尚未确认。",
+          "text": "期刊的全文／字段查询、筛选和文章层级需界面核验；平台整体：语义检索与跨语种检索；期刊模块覆盖待核；命中结果能否直接定位到原页影像、卷期页码尚未确认。",
           "evidence": "公开证据不足；官方说明",
           "checkedAt": "2026-10-19",
           "sources": [
@@ -8829,7 +8894,7 @@
           ]
         },
         "tools": {
-          "text": "平台整体：OCR增强、语义校正与漏识补全；期刊模块操作待核。；未确认有独立的多文本对读编辑功能。；未确认用户自定义字段、标注或关系抽取。；未确认个人专题库的创建与管理权限。；统计、共现和可视化的期刊模块能力尚未确认。；多人任务分配、复核与修改记录尚未确认。",
+          "text": "平台整体：OCR增强、语义校正与漏识补全；期刊模块操作待核；未确认有独立的多文本对读编辑功能；未确认用户自定义字段、标注或关系抽取；未确认个人专题库的创建与管理权限；统计、共现和可视化的期刊模块能力尚未确认；多人任务分配、复核与修改记录尚未确认。",
           "evidence": "官方说明；公开证据不足",
           "checkedAt": "2026-10-19",
           "sources": [
@@ -8900,7 +8965,7 @@
           ]
         },
         "evidence": {
-          "text": "目录功能描述：近代红色文献汇聚、OCR/结构化、检索与智能处理\n目录应用场景：近代史、革命史专题资料建设与协同研究\n目录核实状态：待核实（截图）\n使用限制：截图无直达链接；访问权限、数据口径和成果引用规则须联系项目方\n资料状态：截图标注近1年有更新、在研；公开入口待核实\n核心档案限制：沿用现有南大平台入口。本次公开页面未显示可读操作界面；账号准入、期刊列表和模块权限尚未实测。；期刊研究目标成果：文章清单、检索日志、卷期页码及原页依据。平台是否提供这些字段和批量下载仍需核验。\n研究方法建议·核查：区别资源未收录、OCR未识别和检索未命中；核对刊名异称、缺卷缺期、转载重复、日期与页码。语义纠错后的正文须回到影像核验。 核实口径：官方资料整理，未登录实测；2026-10-19。\n研究方法建议·衔接（不代表已验证直连）：建议路径：有权取得的文章文本与元数据 → DocuSky；书目 → Zotero。未验证平台直接导出或直连，无法导出时可依法手工登记出处，不承诺取得全文。\n资料依据：南大：平台与资源库发布说明；南大平台入口（本次未取得可读功能界面）\n研究方法建议·人工检查：区别资源未收录、OCR未识别和检索未命中；核对刊名异称、缺卷缺期、转载重复、日期与页码。语义纠错后的正文须回到影像核验。\n研究方法建议·下一步衔接：建议路径：有权取得的文章文本与元数据 → DocuSky；书目 → Zotero。未验证平台直接导出或直连，无法导出时可依法手工登记出处，不承诺取得全文。\n资料依据：南大：平台与资源库发布说明；南大平台入口（本次未取得可读功能界面）",
+          "text": "目录功能描述：近代红色文献汇聚、OCR/结构化、检索与智能处理\n目录应用场景：近代史、革命史专题资料建设与协同研究\n目录核实状态：待核实（截图）\n使用限制：截图无直达链接；访问权限、数据口径和成果引用规则须联系项目方\n资料状态：截图标注近1年有更新、在研；公开入口待核实\n核心档案限制：沿用现有南大平台入口。本次公开页面未显示可读操作界面；账号准入、期刊列表和模块权限尚未实测；期刊研究目标成果：文章清单、检索日志、卷期页码及原页依据。平台是否提供这些字段和批量下载仍需核验。\n研究方法建议·核查：区别资源未收录、OCR未识别和检索未命中；核对刊名异称、缺卷缺期、转载重复、日期与页码。语义纠错后的正文须回到影像核验。 核实口径：官方资料整理，未登录实测；2026-10-19。\n研究方法建议·衔接（不代表已验证直连）：建议路径：有权取得的文章文本与元数据 → DocuSky；书目 → Zotero。未验证平台直接导出或直连，无法导出时可依法手工登记出处，不承诺取得全文。\n资料依据：南大：平台与资源库发布说明；南大平台入口（本次未取得可读功能界面）\n研究方法建议·人工检查：区别资源未收录、OCR未识别和检索未命中；核对刊名异称、缺卷缺期、转载重复、日期与页码。语义纠错后的正文须回到影像核验。\n研究方法建议·下一步衔接：建议路径：有权取得的文章文本与元数据 → DocuSky；书目 → Zotero。未验证平台直接导出或直连，无法导出时可依法手工登记出处，不承诺取得全文。\n资料依据：南大：平台与资源库发布说明；南大平台入口（本次未取得可读功能界面）",
           "evidence": "资料整理；研究方法建议",
           "checkedAt": null,
           "sources": [
@@ -9078,6 +9143,7 @@
     {
       "id": "tool-66",
       "name": "PaddleOCR",
+      "website": "https://www.paddleocr.ai/",
       "aliases": [
         "PaddleOCR"
       ],
@@ -9200,6 +9266,7 @@
     {
       "id": "tool-67",
       "name": "open-guji-cv",
+      "website": "https://github.com/open-guji/open-guji-cv",
       "aliases": [
         "open-guji-cv"
       ],
@@ -9322,6 +9389,7 @@
     {
       "id": "tool-68",
       "name": "open-guji 古籍数字化平台",
+      "website": "https://marketplace.visualstudio.com/items?itemName=open-guji.guji-platform",
       "aliases": [
         "open-guji 古籍数字化平台"
       ],
@@ -9442,6 +9510,7 @@
     {
       "id": "tool-69",
       "name": "Jiayan",
+      "website": "https://github.com/jiaeyan/Jiayan",
       "aliases": [
         "Jiayan"
       ],
@@ -9558,6 +9627,7 @@
     {
       "id": "escriptorium",
       "name": "eScriptorium",
+      "website": "https://escriptorium.eu/",
       "aliases": [
         "eScriptorium",
         "escriptorium"
@@ -9702,6 +9772,7 @@
     {
       "id": "tool-71",
       "name": "Kraken",
+      "website": "https://github.com/mittagessen/kraken",
       "aliases": [
         "Kraken"
       ],
@@ -9822,6 +9893,7 @@
     {
       "id": "tool-72",
       "name": "OCR4all",
+      "website": "https://github.com/OCR4all/OCR4all",
       "aliases": [
         "OCR4all"
       ],
@@ -9942,6 +10014,7 @@
     {
       "id": "tool-73",
       "name": "OCR-D",
+      "website": "https://ocr-d.de/",
       "aliases": [
         "OCR-D"
       ],
@@ -10063,6 +10136,7 @@
     {
       "id": "tool-74",
       "name": "Calamari OCR",
+      "website": "https://github.com/Calamari-OCR/calamari",
       "aliases": [
         "Calamari OCR"
       ],
@@ -10183,6 +10257,7 @@
     {
       "id": "fromthepage",
       "name": "FromThePage",
+      "website": "https://fromthepage.com/",
       "aliases": [
         "FromThePage",
         "fromthepage"
@@ -10353,6 +10428,7 @@
     {
       "id": "tropy",
       "name": "Tropy",
+      "website": "https://www.tropy.org/",
       "aliases": [
         "Tropy",
         "tropy"
@@ -10497,6 +10573,7 @@
     {
       "id": "tool-77",
       "name": "Scripto",
+      "website": "https://scripto.org/",
       "aliases": [
         "Scripto"
       ],
@@ -10618,6 +10695,7 @@
     {
       "id": "recogito",
       "name": "Recogito",
+      "website": "https://recogito.pelagios.org/",
       "aliases": [
         "Recogito",
         "recogito"
@@ -10789,6 +10867,7 @@
     {
       "id": "inception",
       "name": "INCEpTION",
+      "website": "https://inception-project.github.io/",
       "aliases": [
         "INCEpTION",
         "inception"
@@ -10931,6 +11010,7 @@
     {
       "id": "tool-80",
       "name": "doccano",
+      "website": "https://github.com/doccano/doccano",
       "aliases": [
         "doccano"
       ],
@@ -11046,6 +11126,7 @@
     {
       "id": "tool-81",
       "name": "Label Studio",
+      "website": "https://labelstud.io/",
       "aliases": [
         "Label Studio"
       ],
@@ -11174,6 +11255,7 @@
     {
       "id": "tool-82",
       "name": "CollateX",
+      "website": "https://collatex.net/",
       "aliases": [
         "CollateX"
       ],
@@ -11295,6 +11377,7 @@
     {
       "id": "tool-83",
       "name": "Juxta",
+      "website": "https://www.juxtasoftware.org/",
       "aliases": [
         "Juxta"
       ],
@@ -11416,6 +11499,7 @@
     {
       "id": "tei-publisher",
       "name": "TEI Publisher",
+      "website": "https://www.tei-publisher.com/",
       "aliases": [
         "TEI Publisher",
         "tei-publisher"
@@ -11598,6 +11682,7 @@
     {
       "id": "tool-85",
       "name": "EVT",
+      "website": "https://www.dish.unito.it/en/projects/digital-philology/evt-edition-visualization-technology",
       "aliases": [
         "EVT"
       ],
@@ -11721,6 +11806,7 @@
     {
       "id": "mirador",
       "name": "Mirador",
+      "website": "https://projectmirador.org/",
       "aliases": [
         "Mirador",
         "mirador"
@@ -11866,6 +11952,7 @@
     {
       "id": "tool-87",
       "name": "Universal Viewer",
+      "website": "https://universalviewer.io/",
       "aliases": [
         "Universal Viewer"
       ],
@@ -11998,6 +12085,7 @@
     {
       "id": "tool-88",
       "name": "OpenSeadragon",
+      "website": "https://openseadragon.github.io/",
       "aliases": [
         "OpenSeadragon"
       ],
@@ -12121,6 +12209,7 @@
     {
       "id": "archivematica",
       "name": "Archivematica",
+      "website": "https://www.archivematica.org/",
       "aliases": [
         "Archivematica",
         "archivematica"
@@ -12265,6 +12354,7 @@
     {
       "id": "atom",
       "name": "AtoM",
+      "website": "https://www.accesstomemory.org/",
       "aliases": [
         "AtoM",
         "atom"
@@ -12434,6 +12524,7 @@
     {
       "id": "tool-91",
       "name": "ArchivesSpace",
+      "website": "https://archivesspace.org/",
       "aliases": [
         "ArchivesSpace"
       ],
@@ -12555,6 +12646,7 @@
     {
       "id": "tool-92",
       "name": "BitCurator",
+      "website": "https://bitcurator.net/",
       "aliases": [
         "BitCurator"
       ],
@@ -12672,6 +12764,7 @@
     {
       "id": "webrecorder",
       "name": "Webrecorder",
+      "website": "https://webrecorder.net/",
       "aliases": [
         "Webrecorder",
         "webrecorder"
@@ -12847,6 +12940,7 @@
     {
       "id": "elan",
       "name": "ELAN",
+      "website": "https://archive.mpi.nl/tla/elan",
       "aliases": [
         "ELAN",
         "elan"
@@ -13023,6 +13117,7 @@
     {
       "id": "tool-95",
       "name": "OHMS",
+      "website": "https://www.oralhistoryonline.org/",
       "aliases": [
         "OHMS"
       ],
@@ -13147,6 +13242,7 @@
     {
       "id": "heurist",
       "name": "Heurist",
+      "website": "https://heuristnetwork.org/",
       "aliases": [
         "Heurist",
         "heurist"
@@ -13292,6 +13388,7 @@
     {
       "id": "tool-97",
       "name": "nodegoat",
+      "website": "https://nodegoat.net/",
       "aliases": [
         "nodegoat"
       ],
@@ -13419,6 +13516,7 @@
     {
       "id": "catma",
       "name": "CATMA",
+      "website": "https://catma.de/",
       "aliases": [
         "CATMA",
         "catma"
@@ -13576,6 +13674,7 @@
     {
       "id": "tool-99",
       "name": "Chinese Text Project",
+      "website": "https://ctext.org/",
       "aliases": [
         "Chinese Text Project"
       ],
@@ -13718,6 +13817,7 @@
     {
       "id": "tool-100",
       "name": "中国历代人物传记资料库（CBDB）",
+      "website": "https://cbdb.hsites.harvard.edu/",
       "aliases": [
         "中国历代人物传记资料库（CBDB）"
       ],
@@ -13861,6 +13961,7 @@
     {
       "id": "tool-101",
       "name": "中国历史地理信息系统（CHGIS）",
+      "website": "https://chgis.fairbank.fas.harvard.edu/",
       "aliases": [
         "中国历史地理信息系统（CHGIS）"
       ],
@@ -13992,6 +14093,7 @@
     {
       "id": "tool-102",
       "name": "World Historical Gazetteer",
+      "website": "https://whgazetteer.org/",
       "aliases": [
         "World Historical Gazetteer"
       ],
@@ -14127,6 +14229,7 @@
     {
       "id": "tool-103",
       "name": "OpenHistoricalMap",
+      "website": "https://www.openhistoricalmap.org/",
       "aliases": [
         "OpenHistoricalMap"
       ],
@@ -14257,6 +14360,7 @@
     {
       "id": "tool-104",
       "name": "spaCy",
+      "website": "https://spacy.io/",
       "aliases": [
         "spaCy"
       ],
@@ -14372,6 +14476,7 @@
     {
       "id": "tool-105",
       "name": "Stanza",
+      "website": "https://stanfordnlp.github.io/stanza/",
       "aliases": [
         "Stanza"
       ],
@@ -14488,6 +14593,7 @@
     {
       "id": "tool-106",
       "name": "GROBID",
+      "website": "https://github.com/kermitt2/grobid",
       "aliases": [
         "GROBID"
       ],
@@ -14621,6 +14727,7 @@
     {
       "id": "tool-107",
       "name": "Mukurtu CMS",
+      "website": "https://mukurtu.org/",
       "aliases": [
         "Mukurtu CMS"
       ],
@@ -14741,6 +14848,7 @@
     {
       "id": "tool-108",
       "name": "Islandora",
+      "website": "https://www.islandora.ca/",
       "aliases": [
         "Islandora"
       ],
@@ -14861,6 +14969,7 @@
     {
       "id": "tool-109",
       "name": "ResourceSpace",
+      "website": "https://www.resourcespace.com/",
       "aliases": [
         "ResourceSpace"
       ],
@@ -14979,6 +15088,7 @@
     {
       "id": "tool-110",
       "name": "Zooniverse",
+      "website": "https://www.zooniverse.org/",
       "aliases": [
         "Zooniverse"
       ],
@@ -15102,6 +15212,7 @@
     {
       "id": "tool-111",
       "name": "HathiTrust Research Center",
+      "website": "https://www.hathitrust.org/htrc/",
       "aliases": [
         "HathiTrust Research Center"
       ],
@@ -15247,6 +15358,7 @@
     {
       "id": "tool-112",
       "name": "NVivo",
+      "website": "https://lumivero.com/products/nvivo/",
       "aliases": [
         "NVivo"
       ],
@@ -15370,6 +15482,7 @@
     {
       "id": "tool-113",
       "name": "ATLAS.ti",
+      "website": "https://atlasti.com/",
       "aliases": [
         "ATLAS.ti"
       ],
@@ -15494,6 +15607,7 @@
     {
       "id": "tool-114",
       "name": "MAXQDA",
+      "website": "https://www.maxqda.com/",
       "aliases": [
         "MAXQDA"
       ],
@@ -15624,6 +15738,7 @@
     {
       "id": "tool-115",
       "name": "Transana",
+      "website": "https://www.transana.com/",
       "aliases": [
         "Transana"
       ],
@@ -15749,6 +15864,7 @@
     {
       "id": "comparativus",
       "name": "COMPARATIVUS",
+      "website": "https://github.com/dHumanities/markus/tree/master/comparativus",
       "aliases": [
         "COMPARATIVUS"
       ],
@@ -15865,6 +15981,7 @@
     {
       "id": "tool-117",
       "name": "Scrivener",
+      "website": "https://www.literatureandlatte.com/scrivener/overview",
       "aliases": [
         "Scrivener"
       ],
@@ -15986,6 +16103,7 @@
     {
       "id": "tool-118",
       "name": "Epsilon",
+      "website": "https://epsilon.ac.uk/",
       "aliases": [
         "Epsilon"
       ],
@@ -16128,6 +16246,7 @@
     {
       "id": "tool-119",
       "name": "EMLO",
+      "website": "https://emlo.bodleian.ox.ac.uk/",
       "aliases": [
         "EMLO"
       ],
@@ -16265,6 +16384,7 @@
     {
       "id": "yunsiku",
       "name": "云四库",
+      "website": "https://aiysk.net/",
       "aliases": [
         "云四库",
         "Yun Si Ku",
@@ -16438,6 +16558,7 @@
     {
       "id": "dedu",
       "name": "DEDU 对读",
+      "website": "https://dedu.dila.edu.tw/home/",
       "aliases": [
         "DEDU 对读",
         "DEDU",
@@ -16529,7 +16650,7 @@
           ]
         },
         "resource_search": {
-          "text": "可浏览公开对读项目。；跨项目全文或字段组合检索能力未确认。；多语言对读实例不证明语义搜索或自动翻译。",
+          "text": "可浏览公开对读项目；跨项目全文或字段组合检索能力未确认；多语言对读实例不证明语义搜索或自动翻译。",
           "evidence": "官方说明；公开证据不足",
           "checkedAt": "2026-10-19",
           "sources": [
@@ -16570,7 +16691,7 @@
           ]
         },
         "tools": {
-          "text": "官方定位是对读编辑；OCR与图文校订另配上游工具。；表格式文本对应与树状结构导航；自动对齐未确认。；不将对读结构等同于实体／关系自动抽取。；核心成果是对读项目；专题统计库另用建库平台。；以编辑、预览和分享为重点；统计分析另配工具。；官方说明可将项目分享给多个成员协作。",
+          "text": "官方定位是对读编辑；OCR与图文校订另配上游工具；表格式文本对应与树状结构导航；自动对齐未确认；不将对读结构等同于实体／关系自动抽取；核心成果是对读项目；专题统计库另用建库平台；以编辑、预览和分享为重点；统计分析另配工具；官方说明可将项目分享给多个成员协作。",
           "evidence": "官方说明；公开证据不足",
           "checkedAt": "2026-10-19",
           "sources": [
@@ -16657,7 +16778,7 @@
           ]
         },
         "evidence": {
-          "text": "核心档案限制：一般使用者可申请账号；编辑与分享需按项目权限进行。公开项目可作为阅读样例。；官方介绍说明成果资料可带走；现行导出格式、对应结构、注释和再导入完整性未实测，不能仅凭公开分享链接视为完成备份。\n研究方法建议·核查：对应关系是学术判断；译本缺段、重排及一对多关系须说明依据。自动切分、自动对齐与异文自动识别均未确认。 官方资料整理，未登录实测；2026-10-19。\n研究方法建议·衔接（不代表已验证直连）：建议路径：校订文本与出处 → 手工组织DEDU对读结构 → 分享。与DocuSky或识典的直接交换未验证；导出时需逐项核对正文、对应关系和注释。\n资料依据：法鼓：DEDU项目介绍；DEDU：公开项目；DEDU：入口与账号说明\n研究方法建议·人工检查：对应关系是学术判断；译本缺段、重排及一对多关系须说明依据。自动切分、自动对齐与异文自动识别均未确认。\n研究方法建议·下一步衔接：建议路径：校订文本与出处 → 手工组织DEDU对读结构 → 分享。与DocuSky或识典的直接交换未验证；导出时需逐项核对正文、对应关系和注释。\n资料依据：法鼓：DEDU项目介绍；DEDU：公开项目；DEDU：入口与账号说明",
+          "text": "核心档案限制：一般使用者可申请账号；编辑与分享需按项目权限进行。公开项目可作为阅读样例；官方介绍说明成果资料可带走；现行导出格式、对应结构、注释和再导入完整性未实测，不能仅凭公开分享链接视为完成备份。\n研究方法建议·核查：对应关系是学术判断；译本缺段、重排及一对多关系须说明依据。自动切分、自动对齐与异文自动识别均未确认。 官方资料整理，未登录实测；2026-10-19。\n研究方法建议·衔接（不代表已验证直连）：建议路径：校订文本与出处 → 手工组织DEDU对读结构 → 分享。与DocuSky或识典的直接交换未验证；导出时需逐项核对正文、对应关系和注释。\n资料依据：法鼓：DEDU项目介绍；DEDU：公开项目；DEDU：入口与账号说明\n研究方法建议·人工检查：对应关系是学术判断；译本缺段、重排及一对多关系须说明依据。自动切分、自动对齐与异文自动识别均未确认。\n研究方法建议·下一步衔接：建议路径：校订文本与出处 → 手工组织DEDU对读结构 → 分享。与DocuSky或识典的直接交换未验证；导出时需逐项核对正文、对应关系和注释。\n资料依据：法鼓：DEDU项目介绍；DEDU：公开项目；DEDU：入口与账号说明",
           "evidence": "资料整理；研究方法建议",
           "checkedAt": null,
           "sources": [
@@ -16839,6 +16960,7 @@
     {
       "id": "texta",
       "name": "Texta 数字文献学",
+      "website": "https://texta.studio/",
       "aliases": [
         "Texta 数字文献学",
         "Texta",
@@ -17026,7 +17148,7 @@
           ]
         },
         "evidence": {
-          "text": "核心档案限制：这是多个子工具的集合，不是已验证的一体化处理平台；共享项目、账号和数据直连未确认。；官网区分正式版与试运行；未进行上传、登录或处理效果实测。；自动差异不等于版本优劣，相似文本不等于存在直接引用；语料覆盖与年代须另核。\n研究方法建议·核查：依据官网与校勘、溯源说明页，核对日期2026-10-21；矩阵按工具集合的公开能力记录，不代表单一工作台或质量评测。\n研究方法建议·衔接（不代表已验证直连）：建议路径：人工校订文本 → 校勘或溯源 → 人工复核 → 导出并本地保存。与其他平台的自动交换未验证。\n资料依据：Texta：数字文献学工具入口；古籍自动校勘说明；溯源说明",
+          "text": "核心档案限制：这是多个子工具的集合，不是已验证的一体化处理平台；共享项目、账号和数据直连未确认；官网区分正式版与试运行；未进行上传、登录或处理效果实测；自动差异不等于版本优劣，相似文本不等于存在直接引用；语料覆盖与年代须另核。\n研究方法建议·核查：依据官网与校勘、溯源说明页，核对日期2026-10-21；矩阵按工具集合的公开能力记录，不代表单一工作台或质量评测。\n研究方法建议·衔接（不代表已验证直连）：建议路径：人工校订文本 → 校勘或溯源 → 人工复核 → 导出并本地保存。与其他平台的自动交换未验证。\n资料依据：Texta：数字文献学工具入口；古籍自动校勘说明；溯源说明",
           "evidence": "核心档案整理；研究方法建议",
           "checkedAt": "2026-10-21",
           "sources": [

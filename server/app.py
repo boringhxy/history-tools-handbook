@@ -14,9 +14,11 @@ from pathlib import Path
 import re
 import secrets
 import sqlite3
+import sys
 import time
 from urllib.parse import urlsplit, unquote
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError, URLError
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -183,8 +185,22 @@ def extract_result(result,sources,domains):
     if not answer:raise ServiceError(502,'upstream_empty','模型未返回有效回答，本次预留额度仍计入。')
     # Unknown numeric references cannot manufacture source entries.
     valid={str(s['id']) for s in sources}
-    answer=re.sub(r'\[(\d+)\]',lambda m:m[0] if m[1] in valid else '[资料待补充]',answer)
+    answer=re.sub(r'\[(?:n\s*:\s*)?(\d+)\]',lambda m:'['+m[1]+']' if m[1] in valid else '[资料待补充]',answer,flags=re.I)
     return answer,sources,web
+
+def provider_failure(error):
+    suffix='本次预留额度仍计入。'
+    if isinstance(error,HTTPError):
+        if error.code in (401,403):return ServiceError(502,'provider_auth','模型密钥无效或无调用权限，请检查服务端密钥。'+suffix)
+        if error.code==402:return ServiceError(502,'provider_balance','模型平台账户余额不足，请到模型平台检查账户余额。'+suffix)
+        if error.code in (404,405):return ServiceError(502,'provider_endpoint','模型接口地址或接口类型不匹配，请检查服务端接口配置。'+suffix)
+        if error.code==400:return ServiceError(502,'provider_request','模型平台拒绝了请求参数，请核对模型名称与接口兼容性。'+suffix)
+        if error.code==429:return ServiceError(502,'provider_rate_limit','模型平台请求限流，请稍后重试。'+suffix)
+        return ServiceError(502,'provider_http','模型平台返回HTTP错误，请稍后重试。'+suffix)
+    if isinstance(error,TimeoutError) or (isinstance(error,URLError) and isinstance(error.reason,TimeoutError)):
+        return ServiceError(504,'provider_timeout','等待模型回答超时，请稍后重试。'+suffix)
+    if isinstance(error,URLError):return ServiceError(502,'provider_connection','无法连接模型平台，请检查服务端网络和证书配置。'+suffix)
+    return ServiceError(502,'upstream_unavailable','模型服务暂时不可用，本次预留额度仍计入，请稍后重试。')
 
 class Agent:
     def __init__(self,config,provider=None):
@@ -194,11 +210,13 @@ class Agent:
             self.records={p['id']:p for p in dataset['platforms']}
             self.dimensions=dataset.get('dimensions',[])
         except (OSError,ValueError,KeyError):self.records={};self.dimensions=[]
+    def is_deepseek(self):return urlsplit(self.config.base).hostname=='api.deepseek.com'
+    def search_supported(self):return not self.is_deepseek() or self.config.model=='deepseek-v4-pro'
     def status(self,identity,iphash):
         remaining=self.ledger.remaining(identity,iphash) if self.config.enabled else 0
         available=bool(self.config.enabled and self.records and remaining>0)
         message='服务可用，每人每日最多五次。' if available else ('服务尚未配置，请联系管理员。' if not self.config.enabled or not self.records else '今日额度或服务预算已用尽，请明日再试。')
-        return {'available':available,'message':message,'dailyLimit':5,'remaining':remaining,'webSearchAvailable':bool(available and self.config.web)}
+        return {'available':available,'message':message,'dailyLimit':5,'remaining':remaining,'webSearchAvailable':bool(available and self.config.web and self.search_supported())}
     def upstream(self,payload):
         data=json.dumps(payload).encode()
         request=Request(self.config.base+'/responses',data=data,headers={'Authorization':'Bearer '+self.config.key,'Content-Type':'application/json'})
@@ -217,16 +235,25 @@ class Agent:
         domains=sorted({d.lower().strip() for p in selected for d in p.get('officialDomains',[]) if isinstance(d,str) and re.fullmatch(r'[a-zA-Z0-9.-]+',d)})[:100]
         missing=any(f.get('text')=='资料待补充' for p in selected for f in p.get('fields',{}).values())
         search_needed=missing or bool(re.search(r'价格|费用|收费|版本|最新|当前|price|pricing|version|latest',request['question']+' '+request['constraints'],re.I))
-        can_search=bool(self.config.web and domains and search_needed)
+        can_search=bool(self.config.web and domains and search_needed and self.search_supported())
         payload={'model':self.config.model,'store':False,'max_output_tokens':1800,'max_tool_calls':1,'instructions':SYSTEM,'input':[{'role':'user','content':json.dumps({'request':request,'comparisonDimensions':self.dimensions,'records':selected,'sources':sources,'officialSearchAvailable':can_search},ensure_ascii=False)}]}
+        if self.is_deepseek():payload['reasoning']={'effort':'none'}
         if can_search:payload.update(tools=[{'type':'web_search','filters':{'allowed_domains':domains},'search_context_size':'low'}],tool_choice='required',include=['web_search_call.action.sources'])
         remaining=self.ledger.reserve(identity,iphash)
         try:
             result=self.provider(payload)
-            if not isinstance(result,dict) or result.get('status','completed')!='completed':raise ValueError('incomplete')
+            if not isinstance(result,dict):raise ValueError('invalid response')
+            if result.get('status')=='incomplete':
+                code='model_output_limit' if (result.get('incomplete_details') or {}).get('reason')=='max_output_tokens' else 'model_incomplete'
+                message='模型回答达到输出长度限制，未能完成。' if code=='model_output_limit' else '模型未能完成回答。'
+                raise ServiceError(502,code,message+'本次预留额度仍计入。')
+            if result.get('status','completed')!='completed':raise ValueError('model failed')
             answer,sources,web=extract_result(result,sources,domains)
-        except ServiceError:raise
-        except Exception:raise ServiceError(502,'upstream_unavailable','模型服务暂时不可用，本次预留额度仍计入，请稍后重试。') from None
+        except Exception as error:
+            failure=error if isinstance(error,ServiceError) else provider_failure(error)
+            # Category-only diagnostics: no keys, request body, response body or model text.
+            print('model_request_failed code='+failure.code,file=sys.stderr,flush=True)
+            raise failure from None
         return {'answer':answer,'sources':sources,'checkedAt':now().isoformat(),'remaining':remaining,'webChecked':bool(web and can_search)}
 
 def make_server(agent,host='127.0.0.1',port=8765):

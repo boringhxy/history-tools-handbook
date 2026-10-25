@@ -11,6 +11,15 @@
   let serviceAvailable = false, printingState = null;
   const endpoint = (document.querySelector('meta[name="comparison-api-base"]')?.content || '').replace(/\/$/,'');
   function el(tag, text, cls) { const node=document.createElement(tag); if(text !== undefined)node.textContent=text; if(cls)node.className=cls; return node; }
+  function configureDimensionFilter() {
+    const menu=$('cmp-task');const all=el('option','全部比较维度');all.value='';menu.replaceChildren(all);
+    const groups=new Map();
+    for(const dimension of C.workflowDimensions(data)) {
+      let group=groups.get(dimension.group);
+      if(!group){group=el('optgroup');group.label=dimension.group;groups.set(dimension.group,group);menu.append(group);}
+      const option=el('option',dimension.label);option.value=dimension.key;group.append(option);
+    }
+  }
   function announce(text) { $('cmp-notice').textContent=text; }
   function sourceLinks(parent, sources) {
     for(const source of sources || []) {
@@ -18,20 +27,44 @@
       const a=el('a', source.label || '查看来源');a.href=url;a.target='_blank';a.rel='noopener noreferrer';parent.append(a);
     }
   }
-  function renderCell(field) {
-    const td=el('td');td.append(el('p',field.text));
-    const meta=el('p',undefined,'cmp-cell-meta');
-    const evidence=el('span',field.evidence || '资料待补充','cmp-evidence');
-    evidence.dataset.unknown=String(/待|不足/.test(field.evidence || ''));
-    meta.append(evidence,document.createTextNode('核对：'+(field.checkedAt || '日期未记录')));td.append(meta);
-    if(field.sources?.length) {
-      const details=el('details',undefined,'cmp-cell-sources');details.append(el('summary','依据与来源 · '+field.sources.length));sourceLinks(details,field.sources);td.append(details);
+  function renderCell(field,key) {
+    const td=el('td');
+    const tags=el('div',undefined,'cmp-capability-tags');
+    C.capabilityTags(field,key).forEach(tag=>{
+      const badge=el('span',tag.label,'cmp-capability-tag');badge.dataset.kind=tag.kind;tags.append(badge);
+    });
+    const parts=C.readingParts(field.text,key);
+    td.append(el('p',parts[0] || '资料待补充','cmp-cell-lead'));
+    function addPoints(parent,values){
+      const list=el('ul',undefined,'cmp-cell-points');
+      values.forEach(text=>list.append(el('li',text)));parent.append(list);
     }
+    if(parts.length>1)addPoints(td,parts.slice(1,4));
+    if(parts.length>4){
+      const extra=el('details',undefined,'cmp-cell-more');
+      extra.append(el('summary','展开其余 '+(parts.length-4)+' 条说明'));addPoints(extra,parts.slice(4));td.append(extra);
+    }
+    td.append(tags);
+    const details=el('details',undefined,'cmp-cell-sources');
+    details.append(el('summary','依据与来源'+(field.sources?.length?' · '+field.sources.length:'')));
+    const meta=el('p',undefined,'cmp-cell-meta');
+    meta.textContent=(field.evidence || '资料待补充')+' · 核对：'+(field.checkedAt || '日期未记录');
+    details.append(meta);sourceLinks(details,field.sources);td.append(details);
     return td;
   }
   function drawTable() {
     const header=el('tr');header.append(el('th','比较维度'));
-    pair.forEach(id=>header.append(el('th',byId.get(id).name)));
+    pair.forEach(id=>{
+      const platform=byId.get(id),th=el('th');
+      const url=C.safeURL(platform.website);
+      if(url){
+        const link=el('a',platform.name,'cmp-platform-link');
+        link.href=url;link.target='_blank';link.rel='noopener noreferrer';
+        link.title='访问 '+platform.name+' 网站（新标签页）';
+        link.setAttribute('aria-label',link.title);th.append(link);
+      }else th.textContent=platform.name;
+      header.append(th);
+    });
     header.querySelectorAll('th').forEach(th=>th.scope='col');$('cmp-thead').replaceChildren(header);
     const rows=C.comparisonRows(data,pair,{differences:$('cmp-diff').checked,task:$('cmp-task').value});
     const body=$('cmp-tbody');body.replaceChildren();
@@ -43,7 +76,7 @@
       }
       const tr=el('tr');tr.id='cmp-row-'+row.key;tr.dataset.dimension=row.key;
       const title=el('th',row.label);title.scope='row';tr.append(title);
-      row.cells.forEach(cell=>tr.append(renderCell(cell)));body.append(tr);
+      row.cells.forEach(cell=>tr.append(renderCell(cell,row.key)));body.append(tr);
     }
     const tasks=C.comparisonTasks(data,pair,{differences:$('cmp-diff').checked,task:$('cmp-task').value});
     $('cmp-task-details').hidden=tasks.length===0;
@@ -51,7 +84,7 @@
     $('cmp-task-body').replaceChildren();
     for(const row of tasks) {
       const tr=el('tr');const title=el('th',row.label);title.scope='row';tr.append(title);
-      row.cells.forEach(cell=>tr.append(renderCell(cell)));$('cmp-task-body').append(tr);
+      row.cells.forEach(cell=>tr.append(renderCell(cell,row.key)));$('cmp-task-body').append(tr);
     }
     $('cmp-task-summary').textContent='研究任务细比 · '+tasks.length+' 项（含具体条件与证据）';
     $('cmp-task-details').open=Boolean($('cmp-task').value);
@@ -209,5 +242,5 @@
   window.addEventListener('popstate',()=>{const selected=C.selectionFromURL(location.href,data.platforms);if(selected)updatePair(selected,false);});
   window.addEventListener('online',status);window.addEventListener('offline',()=>setService(false,'当前离线，基础对比仍可使用；联网后可重新连接问答。'));
   window.addEventListener('load',()=>{if(location.hash==='#compare')requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'instant'})));},{once:true});
-  updatePair(pair,false);status();
+  configureDimensionFilter();updatePair(pair,false);status();
 })();

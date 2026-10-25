@@ -20,6 +20,14 @@ python3 -m server.app --port 8765
 
 自定义 `OPENAI_BASE_URL` 必须HTTPS（兼容Responses API的可信网关，密钥会发往该地址）；测试时仅在显式 `ALLOW_LOOPBACK_TEST_HTTP=1` 下允许loopback HTTP。禁止上游重定向，防止携带密钥跳转。上游45秒超时、返回体最多2MB；客户端请求体64KB、socket超时15秒。错误不返回上游错误正文和secret。不要把密钥写进前端或浏览器配置。
 
+## DeepSeek 接入
+
+当前支持官方 `https://api.deepseek.com` 的 Responses 接口，配置变量继续使用现有 `OPENAI_*` 名称。使用 `deepseek-flash` 时先设 `WEB_SEARCH_ENABLED=0`；代码会关闭该模型不支持的内置官网搜索。DeepSeek 请求显式设置 `reasoning.effort=none`，使1800输出token预算用于可见回答，避免默认思考占用相同输出预算。此处不代表每一次失败都由思考模式造成。
+
+后端将鉴权、账户余额、接口地址、参数、供应商限流、连接、超时与输出截断分别映射为安全的提示，并在终端仅记录 `model_request_failed code=...` 分类；不输出上游原文、密钥、请求或回答正文。失败的预算预留仍保留，错误提示中“预留计入”并不代表供应商实际扣除了预留金额。
+
+依据：[DeepSeek Responses API](https://api-docs.deepseek.com/api/create-response/) 与 [兼容性说明](https://api-docs.deepseek.com/guides/responses_api/)。
+
 ## 接口
 
 - `GET /api/status` → `{available,message,dailyLimit:5,remaining,webSearchAvailable}`。`remaining` 取匿名额度、IP额度与全局预算可支付请求数的最小值；频率限制单独在提交时校验。

@@ -201,6 +201,8 @@ def declaration(text, sources, evidence='核心档案整理', checked=None):
         text = '；'.join(text)
     if not text:
         return unknown()
+    # Source sentences can already end in a full stop before a joined separator.
+    text = re.sub(r'。\s*；', '；', text)
     return dict(text=text,evidence=evidence,checkedAt=checked,sources=sources)
 
 
@@ -433,7 +435,14 @@ def make_platform(pid, tool, core, focus, focus_baseline=None):
     if core:
         aliases.append(pid)
     aliases = list(dict.fromkeys([name] + aliases))
-    return dict(id=pid, name=name, aliases=aliases, kind=kind_of(tool) if tool else '处理工具',
+    # Additional objects have explicit entry points rather than a catalog row.
+    entry = tool.get('url', '') if tool else {
+        'yunsiku': 'https://aiysk.net/',
+        'dedu': 'https://dedu.dila.edu.tw/home/',
+        'texta': 'https://texta.studio/',
+    }.get(pid, '')
+    website = sources_of([dict(label=name, url=entry)])
+    return dict(id=pid, name=name, website=website[0]['url'] if website else None, aliases=aliases, kind=kind_of(tool) if tool else '处理工具',
                 roleLabel=role_label,
                 materials=core.get('materials', []) if core else tool.get('materials', []),
                 stages=core.get('stages', []) if core else tool.get('stages', []),

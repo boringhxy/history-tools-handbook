@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import re
 from collections import Counter
 from pathlib import Path
 import unittest
@@ -33,6 +34,21 @@ class ComparisonDataTests(unittest.TestCase):
 
     def field(self, pid, key):
         return self.items[pid]['fields'][key]
+
+    def test_comparison_text_has_no_conflicting_join_punctuation(self):
+        text = json.dumps(self.data, ensure_ascii=False)
+        self.assertIsNone(re.search(r'。；|；。|，；|；；|。。', text))
+        docusky = self.field('docusky', 'tools')['text']
+        self.assertIn('OCR须另配上游工具；个人文献集检索', docusky)
+        self.assertTrue(docusky.endswith('尚未核实。'))
+
+    def test_platform_website_links_use_catalog_or_explicit_entry(self):
+        self.assertEqual(self.items['tool-1']['website'], 'https://voyant-tools.org/')
+        self.assertEqual(self.items['tool-2']['website'], 'https://mimno.github.io/Mallet/')
+        self.assertEqual(self.items['dedu']['website'], 'https://dedu.dila.edu.tw/home/')
+        for platform in self.items.values():
+            if platform['website']:
+                self.assertIn(platform['website'], [source['url'] for field in platform['fields'].values() for source in field['sources']])
 
     def test_v2_contract_dimension_order_and_groups(self):
         self.assertEqual(self.data['version'], 2)

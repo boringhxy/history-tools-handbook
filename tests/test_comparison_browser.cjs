@@ -28,16 +28,17 @@ const path = require('node:path');
  assert.equal(await page.locator('#cmp-search-b').inputValue(),'DEDU 对读');
  await page.locator('#cmp-swap').click();assert.equal(await page.locator('#cmp-search-a').inputValue(),'DEDU 对读');
  await page.goBack();await page.waitForTimeout(80);assert.equal(await page.locator('#cmp-search-a').inputValue(),'识典古籍');
+ assert.equal(await page.locator('#cmp-tbody td .cmp-capability-tags').count(),26);
  const groupLabels=await page.locator('#cmp-tbody>.cmp-group-row').allTextContents();
- assert.deepEqual(groupLabels,['网站角色','材料资源','处理工具','共同条件']);
- await page.locator('#cmp-task').selectOption('resources');
- assert.equal(await page.locator('#cmp-row-resource_types').count(),1);
- assert.equal(await page.locator('#cmp-row-input_materials').count(),0);
- await page.locator('#cmp-task').selectOption('processing');
- assert.equal(await page.locator('#cmp-row-resource_types').count(),0);
- assert.equal(await page.locator('#cmp-row-input_materials').count(),1);
- await page.locator('#cmp-task').selectOption('compare');assert.ok((await page.locator('#cmp-table-panel').innerText()).includes('多文本对读'));
- await page.locator('#cmp-task').selectOption('export');assert.ok((await page.locator('#cmp-task-body').innerText()).includes('导出与备份'));
+ assert.deepEqual(groupLabels,['01 确认用途与条件','02 查找与获取材料','03 准备自有材料','04 处理与分析材料','05 导出与保存成果','06 核查依据与限制']);
+ const expectedDimensions=await page.locator('#comparison-platforms-data').evaluate(e=>window.CompareCore.workflowDimensions(JSON.parse(e.textContent)));
+ assert.deepEqual(await page.locator('#cmp-task option').allTextContents(),['全部比较维度',...expectedDimensions.map(d=>d.label)]);
+ for(const dimension of expectedDimensions){
+  await page.locator('#cmp-task').selectOption(dimension.key);
+  assert.equal(await page.locator('#cmp-tbody>tr[data-dimension]').count(),1);
+  assert.equal(await page.locator('#cmp-row-'+dimension.key).count(),1);
+  assert.equal(await page.locator('#cmp-task-details').isVisible(),false);
+ }
  await page.locator('#cmp-diff').check();await page.locator('#cmp-reset-filters').click();assert.equal(await page.locator('#cmp-tbody>tr[data-dimension]').count(),13);
  await page.locator('[data-cmp-example="zotero,tropy"]').click();assert.equal(await page.locator('#cmp-search-a').inputValue(),'Zotero');
  await page.locator('#cmp-share').click();await page.locator('#cmp-copy').click();
