@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+quota.sqlite3
+quota.sqlite3-*
+.env
