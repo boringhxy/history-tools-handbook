@@ -93,6 +93,35 @@ class AgentServerTests(unittest.TestCase):
             self.assertEqual(self.request('GET',path)[0],404)
         self.assertEqual(self.request('POST','/api/chat',self.payload(),False)[0],403)
         self.assertEqual(self.request('POST','/api/chat',self.payload(),'https://evil.example')[0],403)
+
+    def test_self_hosted_fonts_are_served_with_correct_types(self):
+        fonts=self.root/'assets/fonts'
+        fonts.mkdir(parents=True)
+        assets={
+            'fonts.css':(b'@font-face {}','text/css; charset=utf-8'),
+            'noto-sans-sc-123456abcdef.woff2':(b'wOF2test-font','font/woff2'),
+            'notosanssc-OFL.txt':(b'SIL Open Font License','text/plain; charset=utf-8'),
+        }
+        for name,(content,mime) in assets.items():
+            (fonts/name).write_bytes(content)
+            status,headers,body=self.request('GET','/assets/fonts/'+name+'?v=1')
+            self.assertEqual(status,200,name)
+            self.assertEqual(headers['Content-Type'],mime)
+            self.assertEqual(body,content)
+
+    def test_font_routes_do_not_expose_other_files(self):
+        fonts=self.root/'assets/fonts'
+        fonts.mkdir(parents=True)
+        (fonts/'.env').write_text('private')
+        (fonts/'noto-serif-sc-123456abcdef.woff2').symlink_to(self.root/'data/platforms.json')
+        for path in [
+            '/assets/fonts/.env', '/assets/fonts/sources.py',
+            '/assets/fonts/../../../data/platforms.json',
+            '/assets/fonts/%2e%2e/%2e%2e/data/platforms.json',
+            '/assets/fonts/noto-sans-sc-000000000000.woff2',
+            '/assets/fonts/noto-serif-sc-123456abcdef.woff2',
+        ]:
+            self.assertEqual(self.request('GET',path)[0],404,path)
         self.assertFalse(self.calls)
 
     def test_validation_success_cookie_and_payload(self):

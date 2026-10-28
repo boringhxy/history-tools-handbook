@@ -1,5 +1,9 @@
 # 数字人文研究工具指南
 
+## 开源字体（2026-10-28）
+
+正文使用 Noto Sans SC，标题使用 Noto Serif SC，均为 SIL OFL 1.1 开源免费字体，可用于商业网站。字体随网站自行托管。发布或离线复制时，请同时保留 `index.html` 与完整的 `assets/fonts/` 目录及其中的许可证。具体来源、授权和维护说明见 [网站字体](docs/fonts.md)。
+
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-deployed-2ea44f)
 ![Offline](https://img.shields.io/badge/offline-available-1d70bc)
 ![Deploy](https://github.com/boringhxy/history-tools-handbook/actions/workflows/pages.yml/badge.svg)

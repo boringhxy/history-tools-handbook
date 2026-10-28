@@ -31,6 +31,7 @@ jobs:
           node tests/test_navigation.cjs
           mkdir -p _site
           cp index.html .nojekyll CITATION.cff _site/
+          cp -R assets _site/
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static site
