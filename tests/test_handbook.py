@@ -62,5 +62,12 @@ class HandbookChecks(unittest.TestCase):
         for case in ['case-edition','case-periodical','case-extraction']:
             self.assertIn(case,ids)
         self.assertNotRegex(HTML,r'<script[^>]+src=')
-        self.assertNotRegex(HTML,r'<link[^>]+rel="stylesheet"')
+        # Font assets are bundled locally; third-party stylesheets remain forbidden.
+        styles=re.findall(r'<link[^>]+rel="stylesheet"[^>]+href="([^"]+)"',HTML)
+        self.assertEqual(styles,['assets/fonts/fonts.css'])
+        root=Path(__file__).resolve().parents[1]
+        css=(root/styles[0]).read_text()
+        for url in re.findall(r'url\(([^)]+)\)',css):
+            self.assertNotRegex(url,r'^(?:https?:)?//')
+            self.assertEqual((root/'assets/fonts'/url).read_bytes()[:4],b'wOF2')
 if __name__=='__main__': unittest.main()
