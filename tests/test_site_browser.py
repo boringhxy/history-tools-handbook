@@ -26,7 +26,7 @@ def main():
         assert page.locator('.chapter-page').count()==3
         assert page.locator('#home-title').is_visible()
         page.locator('[data-primary-page="catalog"]').click()
-        assert cards()==12
+        assert cards()==0
         layout=[]
         for width in [320,390,768,1440]:
             page.set_viewport_size({'width':width,'height':844 if width<768 else 1000})
@@ -38,8 +38,9 @@ def main():
                 assert page.locator(f'[data-primary-page="{name}"]').get_attribute('aria-current')=='page'
                 assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),(width,name)
                 if name=='catalog':
-                    assert page.locator('.tool-card:visible').first.evaluate('(e)=>getComputedStyle(e).borderRadius')=='0px'
-                    assert page.locator('#print-button').evaluate('(e)=>e.getBoundingClientRect().top>=document.querySelector(".top-nav").getBoundingClientRect().bottom'),(width,'print button obscured')
+                    assert page.locator('#search-input').is_visible()
+                    assert page.locator('#catalog-grid').is_hidden()
+                    assert page.locator('#print-button').is_hidden()
                 elif name=='comparison':
                     assert page.locator('#cmp-tbody tr[data-dimension]').count()==13
                 layout.append({'width':width,'page':name})
@@ -48,12 +49,10 @@ def main():
                     page.evaluate('document.activeElement.blur()')
                     page.screenshot(path=str(args.screenshots/f'{name}-{width}.png'),full_page=False)
         goto('#catalog');counts=[]
-        for number in range(1,11):
-            counts.append(cards())
-            if number<10:page.locator('#catalog-pager [data-page-next]').click()
-        assert counts==[12]*9+[11]
-        assert page.locator('#catalog-pager [data-page-next]').is_disabled()
-        assert page.evaluate('document.activeElement.id')=='catalog-grid'
+        assert cards()==0
+        page.locator('#clear-filters').click();assert cards()==119
+        page.locator('#clear-filters').click();assert cards()==0
+        assert page.locator('#clear-filters').get_attribute('aria-expanded')=='false'
         page.locator('#search-input').fill('zotero');assert cards()==1
         page.locator('#search-input').fill('不存在xyz');assert page.locator('.empty-state').is_visible()
         page.locator('#clear-filters').click();assert cards()==119
@@ -108,18 +107,20 @@ def main():
         page.locator('#print-all').click();page.emulate_media(media='print');assert cards()==119
         page.emulate_media(media='screen');page.evaluate("window.dispatchEvent(new Event('afterprint'))")
         assert before=={'count':page.locator('#catalog-count').inner_text(),'visible':cards(),'query':page.locator('#search-input').input_value()}
-        page.reload(wait_until='networkidle');page.evaluate("window.print=()=>window.dispatchEvent(new Event('beforeprint'))");page.locator('#catalog-pager [data-page-next]').click()
+        page.reload(wait_until='networkidle');page.evaluate("window.print=()=>window.dispatchEvent(new Event('beforeprint'))");page.locator('#clear-filters').click()
         detail=page.locator('#catalog-grid .tool-card:visible details').first
         detail.evaluate('(e)=>e.open=true')
         second_page=page.locator('#catalog-pager [data-page-label]').inner_text()
         page.locator('#print-all').click();page.emulate_media(media='print');assert cards()==119
         page.emulate_media(media='screen');page.evaluate("window.dispatchEvent(new Event('afterprint'))")
         assert page.locator('#catalog-pager [data-page-label]').inner_text()==second_page
-        assert cards()==12 and detail.evaluate('(e)=>e.open')
+        assert cards()==119 and detail.evaluate('(e)=>e.open')
         offline=context.new_page();offline.goto(ROOT.as_uri()+'/index.html',wait_until='networkidle')
         assert offline.locator('#home-title').is_visible()
         offline.locator('[data-primary-page="catalog"]').click()
-        assert offline.locator('#catalog-grid .tool-card:visible').count()==12
+        assert offline.locator('#catalog-grid .tool-card:visible').count()==0
+        offline.locator('#clear-filters').click()
+        assert offline.locator('#catalog-grid .tool-card:visible').count()==119
         offline.locator('[data-primary-page="comparison"]').click();offline.wait_for_selector('#cmp-tbody tr')
         assert '离线' in offline.locator('#cmp-service-status').inner_text()
         offline.close();assert errors==[],errors

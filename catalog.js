@@ -58,18 +58,31 @@
   }
   function applyFilters() {
     const query = normalize(searchInput.value);
+    const visible = expanded || Boolean(query);
+    grid.hidden = !visible;
+    $('catalog-result-count').hidden = !visible;
+    $('catalog-print-tools').hidden = !visible;
+    $('clear-filters').setAttribute('aria-expanded', String(expanded));
+    $('clear-filters').textContent = expanded ? '收起全部' : '展开全部';
+    if (!visible) {
+      matches=[];
+      $('catalog-count').textContent=0;
+      grid.replaceChildren();
+      pager.hidden=true;
+      return;
+    }
     matches = tools.filter(item => {
       const text = normalize([item.name,item.functions,item.scenarios,item.developer,item.language,item.sourceCategory,item.notes,item.layer,...item.stages,...item.materials].join(' '));
       return !query || text.includes(query);
     });
     pageNumber = 1;
     $('catalog-count').textContent = matches.length;
-    grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请换一个关键词，或点击“展示全部卡片”浏览目录。</div>';
+    grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请换一个关键词，或点击“展开全部”浏览目录。</div>';
     showPage();
   }
-  searchInput.addEventListener('input',applyFilters);
+  searchInput.addEventListener('input',()=>{ expanded=false;applyFilters(); });
   $('catalog-filters').addEventListener('submit',event => event.preventDefault());
-  $('clear-filters').addEventListener('click',() => { searchInput.value='';expanded=true;applyFilters(); });
+  $('clear-filters').addEventListener('click',() => { searchInput.value='';expanded=!expanded;applyFilters(); });
   for (const [selector,delta] of [['[data-page-prev]',-1],['[data-page-next]',1]]) {
     pager.querySelector(selector).addEventListener('click',() => {
       pageNumber+=delta;showPage();

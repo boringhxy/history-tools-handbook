@@ -211,8 +211,9 @@
 
     .catalog-searchbar { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:14px; align-items:center; margin:0 0 12px; }
     .catalog-search-field { position:relative; min-width:0; }
-    .catalog-search-field svg { position:absolute; left:18px; top:18px; width:20px; height:20px; color:#73565B; pointer-events:none; }
-    .catalog-search-field input { width:100%; height:56px; border:1px solid #C0A2A4; border-radius:0; background:#FAF9F8; color:#5E5759; padding:12px 18px 12px 50px; font-size:16px; }
+    .catalog-search-field svg { position:absolute; left:18px; top:18px; width:20px; height:20px; color:#E4E4E2; pointer-events:none; }
+    .catalog-search-field input { width:100%; height:56px; border:1px solid #C0A2A4; border-radius:0; background:#5E5759; color:#FAF9F8; padding:12px 18px 12px 50px; color-scheme:dark; font-size:16px; }
+    .catalog-search-field input::placeholder { color:#E4E4E2; opacity:1; }
     .catalog-search-field input:focus { outline:2px solid #73565B; outline-offset:2px; }
     .catalog-searchbar .button { height:56px; padding-inline:24px; background:#73565B; border-color:#73565B; font-size:15px; }
     .catalog-searchbar .button:hover { background:#5E5759; border-color:#5E5759; }
@@ -477,14 +478,14 @@ body[data-current-page="comparison"] { background:#E4E4E2; color:#5E5759; }
 <div class="wrap hero-meta hero-bottom"><span>汇聚119个数字人文平台<small>最新更新：2026-10-21</small></span><span>材料发现 · 整理分析 · 比较考辨</span></div>
   </header></div>
 
-<div class="chapter-page" data-page="catalog" id="catalog"><div class="chapter-toolbar screen-only"><div class="wrap"><button type="button" id="print-button">打印筛选结果</button><button type="button" id="print-all">打印全部目录</button></div></div><section class="section"><div class="wrap">
+<div class="chapter-page" data-page="catalog" id="catalog"><div class="chapter-toolbar screen-only" id="catalog-print-tools" hidden><div class="wrap"><button type="button" id="print-button">打印筛选结果</button><button type="button" id="print-all">打印全部目录</button></div></div><section class="section"><div class="wrap">
       <h2 class="sr-only" id="catalog-title" tabindex="-1">平台目录</h2>
       <form class="catalog-searchbar screen-only" id="catalog-filters" role="search">
         <div class="catalog-search-field"><label class="sr-only" for="search-input">检索平台目录</label><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4.5 4.5"/></svg><input id="search-input" type="search" placeholder="检索工具、功能、材料或研究场景…" autocomplete="off" aria-controls="catalog-grid"></div>
-        <button class="button" type="button" id="clear-filters">展示全部卡片</button>
+        <button class="button" type="button" id="clear-filters" aria-controls="catalog-grid" aria-expanded="false">展开全部</button>
       </form>
-      <p class="catalog-result-count screen-only" role="status" aria-live="polite">共 <strong id="catalog-count">119</strong> 项结果</p>
-      <div class="catalog-grid" id="catalog-grid" tabindex="-1" role="region" aria-label="平台目录结果"><noscript><div class="empty-state">119 项目录需要 JavaScript 进行本地渲染与筛选；数据不会上传到网络。</div></noscript></div><div class="pager screen-only" id="catalog-pager" hidden><button type="button" data-page-prev class="button secondary">上一页</button><span data-page-label role="status" aria-live="polite"></span><button type="button" data-page-next class="button secondary">下一页</button></div>
+      <p id="catalog-result-count" hidden class="catalog-result-count screen-only" role="status" aria-live="polite">共 <strong id="catalog-count">119</strong> 项结果</p>
+      <div class="catalog-grid" id="catalog-grid" hidden tabindex="-1" role="region" aria-label="平台目录结果"><noscript><div class="empty-state">119 项目录需要 JavaScript 进行本地渲染与筛选；数据不会上传到网络。</div></noscript></div><div class="pager screen-only" id="catalog-pager" hidden><button type="button" data-page-prev class="button secondary">上一页</button><span data-page-label role="status" aria-live="polite"></span><button type="button" data-page-next class="button secondary">下一页</button></div>
     </div></section></div>
 
     <div class="chapter-page" data-page="comparison" id="page-comparison" hidden>
@@ -618,18 +619,31 @@ python3 -m server.app --port 8765</code></pre>
   }
   function applyFilters() {
     const query = normalize(searchInput.value);
+    const visible = expanded || Boolean(query);
+    grid.hidden = !visible;
+    $('catalog-result-count').hidden = !visible;
+    $('catalog-print-tools').hidden = !visible;
+    $('clear-filters').setAttribute('aria-expanded', String(expanded));
+    $('clear-filters').textContent = expanded ? '收起全部' : '展开全部';
+    if (!visible) {
+      matches=[];
+      $('catalog-count').textContent=0;
+      grid.replaceChildren();
+      pager.hidden=true;
+      return;
+    }
     matches = tools.filter(item => {
       const text = normalize([item.name,item.functions,item.scenarios,item.developer,item.language,item.sourceCategory,item.notes,item.layer,...item.stages,...item.materials].join(' '));
       return !query || text.includes(query);
     });
     pageNumber = 1;
     $('catalog-count').textContent = matches.length;
-    grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请换一个关键词，或点击“展示全部卡片”浏览目录。</div>';
+    grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请换一个关键词，或点击“展开全部”浏览目录。</div>';
     showPage();
   }
-  searchInput.addEventListener('input',applyFilters);
+  searchInput.addEventListener('input',()=>{ expanded=false;applyFilters(); });
   $('catalog-filters').addEventListener('submit',event => event.preventDefault());
-  $('clear-filters').addEventListener('click',() => { searchInput.value='';expanded=true;applyFilters(); });
+  $('clear-filters').addEventListener('click',() => { searchInput.value='';expanded=!expanded;applyFilters(); });
   for (const [selector,delta] of [['[data-page-prev]',-1],['[data-page-next]',1]]) {
     pager.querySelector(selector).addEventListener('click',() => {
       pageNumber+=delta;showPage();
