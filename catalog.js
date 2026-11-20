@@ -77,6 +77,25 @@
     });
   }
 
+  // Keep the original heading text accessible while revealing visual characters.
+  const coverTitle = $('home-title');
+  const titleTextNodes = [...coverTitle.childNodes].filter(node => node.nodeType===3);
+  let coverCharacter = 0;
+  coverTitle.setAttribute('aria-label', coverTitle.textContent);
+  titleTextNodes.forEach(node => {
+    const fragment=document.createDocumentFragment();
+    for (const character of Array.from(node.textContent)) {
+      const span=document.createElement('span');
+      span.className='hero-character';
+      span.setAttribute('aria-hidden','true');
+      span.style.setProperty('--reveal-delay', `${coverCharacter++ * 85}ms`);
+      span.textContent=character;
+      fragment.append(span);
+    }
+    node.replaceWith(fragment);
+  });
+  document.getElementById('home').classList.add('hero-reveal');
+
   const owners = Object.create(null);
   pages.forEach(page => { owners[page.id]=page.dataset.page;page.querySelectorAll('[id]').forEach(el => { owners[el.id]=page.dataset.page; }); });
   const routeLabels = {home:'首页',catalog:'平台目录',comparison:'平台对比'};
