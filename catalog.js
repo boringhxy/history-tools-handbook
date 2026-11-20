@@ -32,7 +32,7 @@
   function toolCard(item) {
     const url = safeURL(item.url);
     const match = searchMatches.get(item.id);
-    const explanation = match?.kind ? `<p class="tool-match"><span>${escapeHTML(match.kind)}</span>通过“${escapeHTML(match.term)}”找到</p>` : '';
+    const explanation = match?.kind ? `<p class="tool-match"><span>${escapeHTML(match.kind)}</span>${match.kind==='材料提及'?'使用场景或说明中提及':'通过'}“${escapeHTML(match.term)}”${match.kind==='材料提及'?'':'找到'}</p>` : '';
     return `<article class="tool-card">
       <span class="tool-id">NO. ${String(item.id).padStart(3,'0')}</span>
       <h3>${escapeHTML(item.name)}</h3><span class="tool-layer">${escapeHTML(item.layer)}</span>
@@ -63,7 +63,7 @@
   function analyseSearch(query,config={}) {
     const needle=searchClean(query).slice(0,200);
     const topics=(config.topics || []).filter(topic => topic.aliases.some(alias=>needle.includes(searchClean(alias))) || (topic.patterns || []).some(pattern=>new RegExp(pattern,'i').test(needle)));
-    return {needle,topics,contexts:(config.contexts || []).filter(term=>needle.includes(searchClean(term)))};
+    return {needle,topics,contexts:(config.contexts || []).filter(term=>needle.includes(searchClean(term))),materialGuide:(config.materialGuides || []).find(guide=>guide.aliases.some(alias=>searchClean(alias)===needle)) || null};
   }
   function rankCatalogue(records,query,config={}) {
     const plan=analyseSearch(query,config);
@@ -81,7 +81,7 @@
       else if (name.includes(needle)) {score=900;kind='名称命中';term=query;}
       else if (functions.includes(needle)) {score=800;kind='功能命中';term=query;}
       else if (tags.some(tag=>tag===needle)) {score=700;kind='标签匹配';term=query;}
-      else if (text.includes(needle)) {score=600;kind='关键词命中';term=query;}
+      else if (text.includes(needle)) {score=600;kind=plan.materialGuide?'材料提及':'关键词命中';term=query;}
       if (!score && plan.topics.length) {
         // Near synonyms use capability fields; incidental mentions stay related.
         const hits=plan.topics.map(topic=>{
@@ -136,7 +136,16 @@
     grid.querySelectorAll('.tool-card').forEach(card => {card.hidden=false;});
     pager.hidden=true;
   }
+  function showMaterialGuide(plan) {
+    const panel=$('catalog-task-guide');
+    const guide=plan.materialGuide;
+    panel.hidden=!guide;
+    if (!guide) {panel.replaceChildren();return;}
+    panel.innerHTML=`<h3>你想用${escapeHTML(guide.label)}做什么？</h3><p>先选择研究任务，再按功能查找工具。</p><div class="catalog-task-options">${guide.tasks.map(task=>`<button type="button" data-task-query="${escapeHTML(task.query)}">${escapeHTML(task.label)}</button>`).join('')}</div><p class="catalog-task-note">下方原始命中仅表示说明中提及这类材料，不代表平台提供其原文或覆盖全部研究环节。</p>`;
+  }
   function applyFilters() {
+    const plan=analyseSearch(submittedQuery,searchConfig);
+    showMaterialGuide(plan);
     const visible = expanded || Boolean(submittedQuery);
     $('catalog-workspace').hidden=!visible;
     grid.hidden = !visible;
@@ -154,10 +163,9 @@
     const ranked=rankCatalogue(tools,submittedQuery,searchConfig);
     searchMatches=new Map(ranked.map(hit=>[hit.item.id,hit]));
     matches = filterCatalogue(tools,submittedQuery,selections,'',searchConfig);
-    const plan=analyseSearch(submittedQuery,searchConfig);
     const help=$('catalog-search-explanation');
     help.hidden=!submittedQuery;
-    help.textContent=plan.topics.length ? '已关联：'+plan.topics.map(topic=>topic.label).join('、')+'。名称与功能命中优先，相关功能排在后面；可在卡片查看匹配依据。' : '按名称、功能和资料文字检索；多个关键词可用空格分开。';
+    help.textContent=plan.materialGuide ? '介绍中直接提及“'+plan.materialGuide.label+'”的条目（不是该材料的完整工具清单）。' : plan.topics.length ? '已关联：'+plan.topics.map(topic=>topic.label).join('、')+'。名称与功能命中优先，相关功能排在后面；可在卡片查看匹配依据。' : '按名称、功能和资料文字检索；多个关键词可用空格分开。';
     pageNumber = 1;
     $('catalog-count').textContent = matches.length;
     grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请减少筛选条件、换一个关键词，或点击“展开全部”浏览目录。</div>';
@@ -175,6 +183,14 @@
     applyFilters();
   });
   $('catalog-reset-facets').addEventListener('click',()=>{resetSelections();applyFilters();});
+  $('catalog-task-guide').addEventListener('click',event=>{
+    const button=event.target.closest('button[data-task-query]');
+    if (!button) return;
+    searchInput.value=button.dataset.taskQuery;
+    submittedQuery=normalize(searchInput.value);
+    expanded=false;resetSelections();applyFilters();
+    searchInput.focus({preventScroll:true});
+  });
   for (const [selector,delta] of [['[data-page-prev]',-1],['[data-page-next]',1]]) {
     pager.querySelector(selector).addEventListener('click',() => {
       pageNumber+=delta;showPage();

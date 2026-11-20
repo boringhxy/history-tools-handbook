@@ -58,3 +58,16 @@ assert.ok(ctx.filterCatalogue(actual,'关系图谱',{materials:['通用文本']}
 for(const id of Object.keys(searchConfig.tags)) assert.ok(actual.some(item=>String(item.id)===id),'tag target exists: '+id);
 console.log('Synonyms, related-function ranking, natural queries and tag integrity passed');
 for(const query of ['关系图谱','扫描件转文字','日记人物关系','词频统计','地图可视化','史料管理']) console.log(query,ranked(query).slice(0,5).map(hit=>hit.item.name+' ['+hit.kind+': '+hit.term+']').join(' / '));
+
+const diaryPlan=result(ctx.analyseSearch('日记',searchConfig));
+assert.equal(diaryPlan.materialGuide.label,'日记');
+assert.equal(diaryPlan.topics.length,0,'a material alone must not imply a research task');
+assert.ok(ranked('日记').every(hit=>hit.kind==='材料提及'));
+assert.deepEqual(ranked('日记').map(hit=>hit.item.name),['FromThePage','Zooniverse']);
+assert.equal(ctx.analyseSearch('日记 人物关系',searchConfig).materialGuide,null);
+const diaryTasks=diaryPlan.materialGuide.tasks;
+assert.ok(ranked(diaryTasks.find(task=>task.label==='人物关系分析').query).some(hit=>hit.item.name==='Gephi'));
+assert.ok(ranked(diaryTasks.find(task=>task.label==='词频与文本分析').query).some(hit=>hit.item.name==='Voyant Tools'));
+assert.ok(ranked(diaryTasks.find(task=>task.label==='识别与转录').query).some(hit=>hit.item.name==='Transkribus'));
+assert.ok(ranked(diaryTasks.find(task=>task.label==='组织众包转录').query).some(hit=>hit.item.name==='FromThePage'));
+console.log('Material-only guidance and explicit diary task paths passed');
