@@ -154,6 +154,60 @@
         to { opacity:1; clip-path:inset(0 0 0 0); }
       }
     }
+
+    /* Approved archive cover: live text and independent decorative artwork. */
+    .nav-brand { display:none; }
+    .hero-art { display:none; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:24px 60px; margin-top:48px; }
+    .hero-actions a { display:inline-flex; align-items:center; gap:16px; padding-bottom:6px; border-bottom:1px solid #73565B; font:500 20px/1.6 var(--serif); text-decoration:none; }
+    .hero-actions a:hover { border-bottom-width:2px; }
+    @media screen {
+      body[data-current-page="home"] .top-nav { background:#E4E4E2; box-shadow:none; }
+      body[data-current-page="home"] .nav-inner { justify-content:space-between; min-height:76px; border-bottom:1px solid #A69B9C; }
+      body[data-current-page="home"] .nav-brand { display:block; color:#5E5759; font:600 clamp(17px,1.65vw,26px)/1.5 var(--serif); letter-spacing:.05em; }
+      body[data-current-page="home"] .top-nav a { color:#5E5759; font:500 19px/1.6 var(--serif); padding:10px 24px; margin:10px 0; }
+      body[data-current-page="home"] .top-nav a[aria-current="page"] { color:#FAF9F8; background:#73565B; }
+      .hero { min-height:calc(100svh - 76px); padding:64px 0 120px; overflow:hidden; border:0; }
+      .hero-grid { display:grid; grid-template-columns:52% 48%; align-items:center; min-width:0; }
+      .home-copy { position:relative; z-index:2; padding:0; width:100%; }
+      .hero h1 { color:#73565B; font-size:clamp(44px,6.1vw,94px); font-weight:600; line-height:1.25; margin:30px 0 26px; letter-spacing:.025em; }
+      .hero .kicker { color:#5E5759; font-family:var(--serif); font-size:clamp(14px,1.55vw,24px); letter-spacing:.015em; }
+      .hero-lead { font-family:var(--serif); font-size:clamp(16px,1.35vw,21px); max-width:34em; }
+      .hero-art { display:block; position:relative; z-index:1; width:116%; margin-left:-10%; }
+      .hero-art::before { content:""; position:absolute; z-index:-1; width:135%; aspect-ratio:1; left:-8%; top:50%; transform:translateY(-50%); border-radius:50%; background:radial-gradient(ellipse at 65% 40%,#DDC9CC 0%,#DDC9CC99 65%,#DDC9CC55 100%); }
+      .hero-art img { display:block; width:100%; height:auto; }
+      .hero-cross { position:absolute; width:23px; height:23px; color:#B29A9C; }
+      .hero-cross::before,.hero-cross::after { content:""; position:absolute; background:currentColor; }
+      .hero-cross::before { width:1px; height:23px; left:11px; }
+      .hero-cross::after { height:1px; width:23px; top:11px; }
+      .cross-one { top:0; left:12%; }.cross-two { bottom:0; right:5%; }
+      .hero-bottom { justify-content:space-between; align-items:center; bottom:24px; padding-top:16px; font:500 16px/1.7 var(--serif); border-top:1px solid #A69B9C; }
+      .hero-meta span::before { content:none; }
+      .hero-meta small { display:block; font:12px/1.7 var(--sans); color:#73565B; }
+      body[data-current-page="home"] main { padding-bottom:0; min-height:0; }
+    }
+    @media(max-width:900px) {
+      body[data-current-page="home"] .top-nav a { padding:10px 14px; font-size:16px; }
+      .hero-actions { gap:24px; margin-top:30px; }
+      .hero-actions a { font-size:17px; }
+    }
+    @media(max-width:680px) {
+      body[data-current-page="home"] .nav-inner { flex-wrap:wrap; gap:4px; padding-top:12px; }
+      body[data-current-page="home"] .nav-brand { width:100%; text-align:center; font-size:18px; }
+      body[data-current-page="home"] .top-nav a { margin:0; padding:8px 10px; font-size:15px; }
+      .hero { padding:38px 0 24px; min-height:calc(100svh - 100px); display:block; }
+      .hero-grid { grid-template-columns:1fr; }
+      .hero h1 { font-size:clamp(38px,10vw,60px); margin:22px 0; }
+      .hero .kicker { font-size:12px; }
+      .hero-lead { font-size:16px; }
+      .hero-actions { gap:28px; margin-top:24px; }
+      .hero-actions a { font-size:16px; gap:8px; }
+      .hero-art { width:min(100%,440px); margin:30px auto 20px; }
+      .hero-art::before { width:120%; left:5%; }
+      .hero-bottom { position:relative; left:auto; bottom:auto; transform:none; font-size:13px; margin-top:10px; gap:14px; }
+      .hero-meta small { font-size:11px; }
+    }
+    @media print { .hero-art,.hero-actions,.nav-brand { display:none; } }
 </style>
   <!-- COMPARISON_STYLE_BEGIN -->
 <style id="comparison-styles">
