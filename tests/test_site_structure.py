@@ -20,7 +20,7 @@ class SiteStructureTests(unittest.TestCase):
         html=(ROOT/'index.html').read_text()
         home=re.search(r'<div class="chapter-page" data-page="home".*?</header></div>',html,re.S)
         self.assertIsNotNone(home)
-        for text in ['数字人文<br>研究工具指南','从手上的史料出发，找到合适的工具，了解具体的处理方法。','汇聚119个数字人文平台','最新更新：2026-10-21']:
+        for text in ['数字人文<br>研究工具指南','从手上的史料出发，找到合适的工具，了解具体的处理方法。','汇聚119个数字人文平台','最新更新：2026-11-20']:
             self.assertIn(text,home[0])
 
     def test_archived_content_has_complete_navigation(self):

@@ -151,17 +151,31 @@
   root.querySelectorAll('[data-cmp-example]').forEach(button=>button.addEventListener('click',()=>updatePair(button.dataset.cmpExample.split(','))));
   $('cmp-diff').addEventListener('change',drawTable);$('cmp-task').addEventListener('change',drawTable);
   $('cmp-reset-filters').addEventListener('click',()=>{$('cmp-diff').checked=false;$('cmp-task').value='';drawTable();});
-  function tab(view,focus=false) {
-    root.querySelector('.cmp-workspace').dataset.mobileView=view;
-    ['table','chat'].forEach(name=>{const button=$('cmp-tab-'+name);button.setAttribute('aria-selected',String(name===view));button.tabIndex=name===view?0:-1;});
-    if(focus)$('cmp-tab-'+view).focus();
-  }
-  ['table','chat'].forEach(name=>{
-    $('cmp-tab-'+name).addEventListener('click',()=>tab(name));
-    $('cmp-tab-'+name).addEventListener('keydown',event=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();tab(event.key==='Home'?'table':event.key==='End'?'chat':name==='table'?'chat':'table',true);}});
+  const aiDrawer=$('cmp-chat-panel');
+  const aiTriggers=[...root.querySelectorAll('[data-cmp-open-ai]')];
+  let aiOpener=null;
+  function closeAI() { if(aiDrawer.open)aiDrawer.close(); }
+  aiTriggers.forEach(button=>button.addEventListener('click',()=>{
+    if(aiDrawer.open)return;
+    aiOpener=button;
+    aiDrawer.showModal();
+    document.body.classList.add('cmp-ai-open');
+  }));
+  $('cmp-ai-close').addEventListener('click',closeAI);
+  aiDrawer.addEventListener('click',event=>{
+    if(event.target!==aiDrawer)return;
+    const rect=aiDrawer.getBoundingClientRect();
+    if(event.clientX<rect.left || event.clientX>rect.right || event.clientY<rect.top || event.clientY>rect.bottom)closeAI();
   });
+  aiDrawer.addEventListener('close',()=>{
+    document.body.classList.remove('cmp-ai-open');
+    if(document.body.dataset.currentPage==='comparison')aiOpener?.focus({preventScroll:true});
+  });
+  function closeOnNavigation() { if(location.hash!=='#compare')closeAI(); }
+  window.addEventListener('hashchange',closeOnNavigation);
+  window.addEventListener('popstate',closeOnNavigation);
   function jump(key) {
-    $('cmp-task').value='';$('cmp-diff').checked=false;drawTable();tab('table');
+    $('cmp-task').value='';$('cmp-diff').checked=false;drawTable();closeAI();
     const row=$('cmp-row-'+key);if(row){row.classList.add('cmp-highlight');row.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>row.classList.remove('cmp-highlight'),2500);}
   }
   function addMessage(role,text,result) {
