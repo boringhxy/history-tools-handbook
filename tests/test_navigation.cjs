@@ -17,3 +17,21 @@ assert.deepEqual(result(ctx.pageWindow(0,3,12)),{page:1,pages:1,start:0,end:0});
 assert.deepEqual(result(ctx.pageWindow(25,0,6)),{page:1,pages:5,start:0,end:6});
 assert.deepEqual(result(ctx.routeTarget('',{home:'home',catalog:'catalog'})),{id:'home',page:'home'});
 console.log('Routing and pagination: 9 assertions passed');
+
+const fixtures=[
+  {name:'古籍 OCR',stages:['识别','清洗'],materials:['古籍'],layer:'核心平台',verificationLabel:'已核实'},
+  {name:'手稿 OCR',stages:['识别'],materials:['手稿'],layer:'核心平台',verificationLabel:'待核实'},
+  {name:'古籍分析',stages:['分析'],materials:['古籍'],layer:'辅助工具与技术底座',verificationLabel:'已核实'}
+];
+const names=rows=>result(rows.map(row=>row.name));
+assert.deepEqual(names(ctx.filterCatalogue(fixtures,'ocr',{})),['古籍 OCR','手稿 OCR']);
+assert.deepEqual(names(ctx.filterCatalogue(fixtures,'OCR',{materials:['古籍']})),['古籍 OCR']);
+assert.deepEqual(names(ctx.filterCatalogue(fixtures,'',{materials:['古籍','手稿']})),['古籍 OCR','手稿 OCR','古籍分析']);
+assert.deepEqual(names(ctx.filterCatalogue(fixtures,'',{materials:['古籍'],stages:['识别'],verificationLabel:['已核实']})),['古籍 OCR']);
+assert.deepEqual(names(ctx.filterCatalogue(fixtures,'',{materials:['手稿'],verificationLabel:['已核实']})),[]);
+assert.deepEqual(names(ctx.filterCatalogue(fixtures,'OCR',{materials:['古籍']},'materials')),['古籍 OCR','手稿 OCR']);
+assert.equal(ctx.filterCatalogue(fixtures,'',{}).length,3);
+const actual=JSON.parse(readFileSync(join(__dirname,'../data/catalog.json'),'utf8'));
+assert.equal(ctx.filterCatalogue(actual,'OCR',{}).length,22);
+assert.ok(ctx.filterCatalogue(actual,'OCR',{materials:['古籍'],stages:['识别']}).every(row=>row.materials.includes('古籍')&&row.stages.includes('识别')));
+console.log('Catalogue search and combined facets: 9 assertions passed');

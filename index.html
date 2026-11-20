@@ -230,6 +230,56 @@
     .catalog-search-example { display:flex; flex-wrap:wrap; gap:4px 14px; margin:0 0 28px; color:#5E5759; font-size:14px; line-height:1.8; }
     .catalog-search-example strong { color:#73565B; font-weight:600; }
     .catalog-search-example b { color:#73565B; font-weight:600; }
+
+    /* Catalogue workspace: quiet paper surfaces and a clear filtering rail. */
+    body[data-current-page="catalog"] { background:#F0EEED; }
+    #catalog>.section { padding-top:28px; }
+    .catalog-searchbar { gap:12px; margin-bottom:14px; }
+    .catalog-search-field input { border-color:#5E5759; border-radius:8px; box-shadow:inset 0 1px 2px #0000000a; }
+    .catalog-searchbar .button { border-radius:8px; min-width:120px; }
+    .catalog-search-example { padding:0 2px; margin-bottom:32px; color:#736A6D; font-size:14px; }
+    .catalog-search-example strong { padding-right:14px; border-right:1px solid #CFC1C4; }
+    .catalog-browse-tools { margin-bottom:16px; }
+    .catalog-browse-tools button { border:0; border-radius:5px; padding:7px 12px; background:#E6DDE0; font-size:14px; }
+    .catalog-workspace { display:grid; grid-template-columns:228px minmax(0,1fr); gap:30px; align-items:start; }
+    .catalog-facets { position:sticky; top:92px; max-height:calc(100svh - 112px); overflow-y:auto; background:#FAF9F8; border:1px solid #DED6D7; border-radius:10px; padding:20px 18px; scrollbar-width:thin; }
+    .catalog-facets summary { cursor:pointer; display:flex; justify-content:space-between; align-items:center; color:#5E5759; font:600 19px/1.6 var(--serif); list-style:none; }
+    .catalog-facets summary::-webkit-details-marker { display:none; }
+    .catalog-facets summary span { font:12px/1.6 var(--sans); color:#887B80; }
+    .catalog-facet-tools { display:flex; justify-content:space-between; align-items:center; gap:8px; margin:12px 0 4px; font-size:12px; color:#887B80; }
+    .catalog-facet-tools button { background:none; border:0; padding:4px 0; color:#73565B; font-size:12px; text-decoration:underline; text-underline-offset:3px; }
+    .catalog-facet-tools button:disabled { opacity:.4; cursor:default; text-decoration:none; }
+    .catalog-facet-group { min-width:0; margin:0; padding:20px 0 16px; border:0; border-top:1px solid #E8E1E2; }
+    .catalog-facet-group legend { float:left; width:100%; margin:0 0 12px; padding:0; color:#73565B; font-size:14px; font-weight:600; }
+    .catalog-facet-option { clear:both; display:grid; grid-template-columns:15px minmax(0,1fr) auto; align-items:start; gap:8px; padding:6px 0; cursor:pointer; font-size:13px; line-height:1.6; color:#5E5759; }
+    .catalog-facet-option input { accent-color:#73565B; width:14px; height:14px; margin:4px 0 0; }
+    .catalog-facet-option small { color:#8B8084; font-size:12px; font-variant-numeric:tabular-nums; padding:1px 5px; border-radius:4px; background:#F0EBEC; }
+    .catalog-facet-option:has(input:checked) { color:#73565B; font-weight:600; }
+    .catalog-facet-option:has(input:disabled) { opacity:.45; cursor:default; }
+    .catalog-results { min-width:0; }
+    .catalog-results-head { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; min-height:34px; padding-bottom:14px; margin-bottom:18px; border-bottom:1px solid #D6CCCF; }
+    .catalog-results-head .catalog-result-count { margin:0; font-size:14px; }
+    .catalog-results-head strong { color:#73565B; font-weight:600; }
+    .catalog-print-tools { display:flex; gap:16px; }
+    .catalog-print-tools button { border:0; padding:4px 0; background:none; color:#81737A; font-size:12px; }
+    .catalog-print-tools button:hover { color:#73565B; text-decoration:underline; }
+    #catalog-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+    #catalog-grid .tool-card { padding:25px; border:1px solid #DED6D7; border-radius:10px; background:#FAF9F8; box-shadow:0 2px 8px #5E575906; transition:box-shadow .2s,border-color .2s; }
+    #catalog-grid .tool-card:hover { border-color:#BDA6AE; box-shadow:0 8px 24px #5E57590c; }
+    #catalog-grid .tool-id { color:#9B858E; font-size:11px; letter-spacing:.12em; margin-bottom:7px; }
+    #catalog-grid .tool-card h3 { color:#5E5759; font-size:23px; margin-bottom:10px; }
+    #catalog-grid .tool-layer { align-self:flex-start; margin-bottom:16px; padding:3px 8px; border-radius:4px; background:#EFE6E9; color:#73565B; font-size:11px; font-weight:500; }
+    #catalog-grid .tool-card>p { font-size:14px; color:#6B6266; line-height:1.9; margin-bottom:18px; }
+    #catalog-grid .tool-card dl { gap:7px 10px; font-size:13px; margin-bottom:18px; }
+    #catalog-grid .tool-card dt { color:#9A8B92; }
+    #catalog-grid .tool-card dd { color:#655C61; }
+    #catalog-grid .tool-card summary { font-size:12px; }
+    #catalog-grid .tool-footer { margin-top:auto; padding-top:15px; border-color:#E4DCDD; font-size:12px; }
+    #catalog-grid .verification { border:0; border-radius:4px; background:#EEE7E9; font-size:11px; }
+    @media(max-width:1000px) { .catalog-workspace { grid-template-columns:205px minmax(0,1fr); gap:20px; } #catalog-grid .tool-card { padding:20px; } }
+    @media(max-width:820px) { .catalog-workspace { grid-template-columns:1fr; gap:20px; } .catalog-facets { position:static; max-height:none; padding:16px 20px; } #catalog-facet-groups { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 28px; } .catalog-facets summary::after { content:"⌄"; font:16px var(--sans); } .catalog-facets summary span { margin-left:auto; margin-right:12px; } }
+    @media(max-width:540px) { #catalog-grid { grid-template-columns:1fr; gap:16px; } #catalog-facet-groups { grid-template-columns:1fr; } #catalog-grid .tool-card h3 { font-size:21px; } .catalog-search-example { font-size:13px; } }
+    @media print { .catalog-workspace { display:block; } #catalog-grid { display:block; } #catalog-grid .tool-card { border-radius:0; box-shadow:none; } .catalog-results-head { border:0; } }
 </style>
   <!-- COMPARISON_STYLE_BEGIN -->
 <style id="comparison-styles">
@@ -485,7 +535,7 @@ body[data-current-page="comparison"] { background:#E4E4E2; color:#5E5759; }
 <div class="wrap hero-meta hero-bottom"><span>汇聚119个数字人文平台<small>最新更新：2026-10-21</small></span><span>材料发现 · 整理分析 · 比较考辨</span></div>
   </header></div>
 
-<div class="chapter-page" data-page="catalog" id="catalog"><div class="chapter-toolbar screen-only" id="catalog-print-tools" hidden><div class="wrap"><button type="button" id="print-button">打印筛选结果</button><button type="button" id="print-all">打印全部目录</button></div></div><section class="section"><div class="wrap">
+<div class="chapter-page" data-page="catalog" id="catalog"><section class="section"><div class="wrap">
       <h2 class="sr-only" id="catalog-title" tabindex="-1">平台目录</h2>
       <div class="catalog-browse-tools screen-only"><button type="button" id="clear-filters" aria-controls="catalog-grid" aria-expanded="false">展开全部</button></div>
       <form class="catalog-searchbar screen-only" id="catalog-filters" role="search">
@@ -493,8 +543,18 @@ body[data-current-page="comparison"] { background:#E4E4E2; color:#5E5759; }
         <button class="button" type="submit" id="catalog-search-submit">点击搜索</button>
       </form>
       <p class="catalog-search-example screen-only"><strong>检索案例</strong><span>想找能识别古籍扫描件的工具？输入 <b>OCR</b>，再点击搜索。</span></p>
-      <p id="catalog-result-count" hidden class="catalog-result-count screen-only" role="status" aria-live="polite">共 <strong id="catalog-count">119</strong> 项结果</p>
+      <div class="catalog-workspace" id="catalog-workspace" hidden>
+        <aside class="catalog-facets screen-only" aria-label="筛选平台目录">
+          <details open><summary>筛选条件 <span>可多选</span></summary>
+            <div class="catalog-facet-tools"><span id="catalog-filter-summary">全部条件</span><button type="button" id="catalog-reset-facets" disabled>重置筛选</button></div>
+            <div id="catalog-facet-groups"></div>
+          </details>
+        </aside>
+        <div class="catalog-results">
+          <div class="catalog-results-head"><p id="catalog-result-count" hidden class="catalog-result-count screen-only" role="status" aria-live="polite">共 <strong id="catalog-count">119</strong> 项结果</p><div class="catalog-print-tools screen-only" id="catalog-print-tools" hidden><button type="button" id="print-button">打印结果</button><button type="button" id="print-all">打印全部</button></div></div>
       <div class="catalog-grid" id="catalog-grid" hidden tabindex="-1" role="region" aria-label="平台目录结果"><noscript><div class="empty-state">119 项目录需要 JavaScript 进行本地渲染与筛选；数据不会上传到网络。</div></noscript></div><div class="pager screen-only" id="catalog-pager" hidden><button type="button" data-page-prev class="button secondary">上一页</button><span data-page-label role="status" aria-live="polite"></span><button type="button" data-page-next class="button secondary">下一页</button></div>
+        </div>
+      </div>
     </div></section></div>
 
     <div class="chapter-page" data-page="comparison" id="page-comparison" hidden>
@@ -575,6 +635,14 @@ python3 -m server.app --port 8765</code></pre>
   const grid = $('catalog-grid');
   const searchInput = $('search-input');
   let expanded = false;
+  let submittedQuery = '';
+  const selections = {stages:[],materials:[],layer:[],verificationLabel:[]};
+  const facetGroups = [
+    {key:'stages',label:'研究环节',values:['采集','识别','清洗','标注','建库','分析','出版','保存']},
+    {key:'materials',label:'材料类型',values:['古籍','手稿','近现代文献','档案照片','地图','通用文本','音视频','网页','口述史']},
+    {key:'layer',label:'平台层级',values:['核心平台','文史哲专业扩展平台','史料数据库与检索资源','辅助工具与技术底座','专题智能体与实验性项目','待核实或访问受限']},
+    {key:'verificationLabel',label:'核实状态',values:['已核实','部分核实','待核实']}
+  ];
   const pager = $('catalog-pager');
   const pages = [...document.querySelectorAll('[data-page]')];
   let matches = tools, pageNumber = 1, printAll = false, printState = null;
@@ -614,21 +682,39 @@ python3 -m server.app --port 8765</code></pre>
     page = Math.max(1,Math.min(pages,Math.floor(Number(page)||1)));
     return {page,pages,start:(page-1)*size,end:Math.min(page*size,length)};
   }
+  function filterCatalogue(records, query, selections = {}, omitKey = '') {
+    const clean = value => String(value ?? '').normalize('NFKC').toLocaleLowerCase('zh-CN').replace(/\s+/g,' ').trim();
+    const needle = clean(query);
+    return records.filter(item => {
+      const text = clean([item.name,item.functions,item.scenarios,item.developer,item.language,item.sourceCategory,item.notes,item.layer,...(item.stages || []),...(item.materials || [])].join(' '));
+      if (needle && !text.includes(needle)) return false;
+      return Object.entries(selections).every(([key,values]) => !values.length || key===omitKey || values.some(value => Array.isArray(item[key]) ? item[key].includes(value) : item[key]===value));
+    });
+  }
   // CHAPTER_UTILITIES_END
 
+  function renderFacets() {
+    const focused = document.activeElement?.id;
+    $('catalog-facet-groups').innerHTML = facetGroups.map(group => {
+      const candidates = filterCatalogue(tools,submittedQuery,selections,group.key);
+      return `<fieldset class="catalog-facet-group"><legend>${group.label}</legend>${group.values.map((value,index) => {
+        const checked = selections[group.key].includes(value);
+        const count = candidates.filter(item => Array.isArray(item[group.key]) ? item[group.key].includes(value) : item[group.key]===value).length;
+        return `<label class="catalog-facet-option"><input type="checkbox" id="facet-${group.key}-${index}" data-facet="${group.key}" value="${escapeHTML(value)}"${checked?' checked':''}${!count&&!checked?' disabled':''}><span>${escapeHTML(value)}</span><small aria-label="${count} 项">${count}</small></label>`;
+      }).join('')}</fieldset>`;
+    }).join('');
+    const selectedCount=Object.values(selections).reduce((sum,values)=>sum+values.length,0);
+    $('catalog-reset-facets').disabled=!selectedCount;
+    $('catalog-filter-summary').textContent=selectedCount?`已选 ${selectedCount} 项`:'全部条件';
+    if (focused?.startsWith('facet-')) $(focused)?.focus({preventScroll:true});
+  }
   function showPage() {
-    const unpaged = expanded || Boolean(normalize(searchInput.value));
-    const range = pageWindow(matches.length,pageNumber,unpaged ? Math.max(matches.length,1) : 12);
-    pageNumber = range.page;
-    [...grid.querySelectorAll('.tool-card')].forEach((card,index) => { card.hidden=index<range.start || index>=range.end; });
-    pager.hidden = unpaged || matches.length <= 12;
-    pager.querySelector('[data-page-label]').textContent = `第 ${range.page} / ${range.pages} 页 · ${matches.length?range.start+1:0}—${range.end} / ${matches.length} 项`;
-    pager.querySelector('[data-page-prev]').disabled = range.page===1;
-    pager.querySelector('[data-page-next]').disabled = range.page===range.pages;
+    grid.querySelectorAll('.tool-card').forEach(card => {card.hidden=false;});
+    pager.hidden=true;
   }
   function applyFilters() {
-    const query = normalize(searchInput.value);
-    const visible = expanded || Boolean(query);
+    const visible = expanded || Boolean(submittedQuery);
+    $('catalog-workspace').hidden=!visible;
     grid.hidden = !visible;
     $('catalog-result-count').hidden = !visible;
     $('catalog-print-tools').hidden = !visible;
@@ -641,17 +727,24 @@ python3 -m server.app --port 8765</code></pre>
       pager.hidden=true;
       return;
     }
-    matches = tools.filter(item => {
-      const text = normalize([item.name,item.functions,item.scenarios,item.developer,item.language,item.sourceCategory,item.notes,item.layer,...item.stages,...item.materials].join(' '));
-      return !query || text.includes(query);
-    });
+    matches = filterCatalogue(tools,submittedQuery,selections);
     pageNumber = 1;
     $('catalog-count').textContent = matches.length;
-    grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请换一个关键词，或点击“展开全部”浏览目录。</div>';
+    grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请减少筛选条件、换一个关键词，或点击“展开全部”浏览目录。</div>';
     showPage();
+    renderFacets();
   }
-  $('catalog-filters').addEventListener('submit',event => { event.preventDefault();expanded=false;applyFilters(); });
-  $('clear-filters').addEventListener('click',() => { searchInput.value='';expanded=!expanded;applyFilters(); });
+  function resetSelections() { Object.keys(selections).forEach(key=>{selections[key]=[];}); }
+  $('catalog-filters').addEventListener('submit',event => { event.preventDefault();submittedQuery=normalize(searchInput.value);expanded=false;applyFilters(); });
+  $('clear-filters').addEventListener('click',() => { searchInput.value='';submittedQuery='';resetSelections();expanded=!expanded;applyFilters(); });
+  $('catalog-facet-groups').addEventListener('change',event=>{
+    const input=event.target;
+    if (!Object.hasOwn(selections,input.dataset.facet)) return;
+    const values=selections[input.dataset.facet];
+    selections[input.dataset.facet]=input.checked?[...new Set([...values,input.value])]:values.filter(value=>value!==input.value);
+    applyFilters();
+  });
+  $('catalog-reset-facets').addEventListener('click',()=>{resetSelections();applyFilters();});
   for (const [selector,delta] of [['[data-page-prev]',-1],['[data-page-next]',1]]) {
     pager.querySelector(selector).addEventListener('click',() => {
       pageNumber+=delta;showPage();

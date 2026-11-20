@@ -5,6 +5,14 @@
   const grid = $('catalog-grid');
   const searchInput = $('search-input');
   let expanded = false;
+  let submittedQuery = '';
+  const selections = {stages:[],materials:[],layer:[],verificationLabel:[]};
+  const facetGroups = [
+    {key:'stages',label:'研究环节',values:['采集','识别','清洗','标注','建库','分析','出版','保存']},
+    {key:'materials',label:'材料类型',values:['古籍','手稿','近现代文献','档案照片','地图','通用文本','音视频','网页','口述史']},
+    {key:'layer',label:'平台层级',values:['核心平台','文史哲专业扩展平台','史料数据库与检索资源','辅助工具与技术底座','专题智能体与实验性项目','待核实或访问受限']},
+    {key:'verificationLabel',label:'核实状态',values:['已核实','部分核实','待核实']}
+  ];
   const pager = $('catalog-pager');
   const pages = [...document.querySelectorAll('[data-page]')];
   let matches = tools, pageNumber = 1, printAll = false, printState = null;
@@ -44,21 +52,39 @@
     page = Math.max(1,Math.min(pages,Math.floor(Number(page)||1)));
     return {page,pages,start:(page-1)*size,end:Math.min(page*size,length)};
   }
+  function filterCatalogue(records, query, selections = {}, omitKey = '') {
+    const clean = value => String(value ?? '').normalize('NFKC').toLocaleLowerCase('zh-CN').replace(/\s+/g,' ').trim();
+    const needle = clean(query);
+    return records.filter(item => {
+      const text = clean([item.name,item.functions,item.scenarios,item.developer,item.language,item.sourceCategory,item.notes,item.layer,...(item.stages || []),...(item.materials || [])].join(' '));
+      if (needle && !text.includes(needle)) return false;
+      return Object.entries(selections).every(([key,values]) => !values.length || key===omitKey || values.some(value => Array.isArray(item[key]) ? item[key].includes(value) : item[key]===value));
+    });
+  }
   // CHAPTER_UTILITIES_END
 
+  function renderFacets() {
+    const focused = document.activeElement?.id;
+    $('catalog-facet-groups').innerHTML = facetGroups.map(group => {
+      const candidates = filterCatalogue(tools,submittedQuery,selections,group.key);
+      return `<fieldset class="catalog-facet-group"><legend>${group.label}</legend>${group.values.map((value,index) => {
+        const checked = selections[group.key].includes(value);
+        const count = candidates.filter(item => Array.isArray(item[group.key]) ? item[group.key].includes(value) : item[group.key]===value).length;
+        return `<label class="catalog-facet-option"><input type="checkbox" id="facet-${group.key}-${index}" data-facet="${group.key}" value="${escapeHTML(value)}"${checked?' checked':''}${!count&&!checked?' disabled':''}><span>${escapeHTML(value)}</span><small aria-label="${count} 项">${count}</small></label>`;
+      }).join('')}</fieldset>`;
+    }).join('');
+    const selectedCount=Object.values(selections).reduce((sum,values)=>sum+values.length,0);
+    $('catalog-reset-facets').disabled=!selectedCount;
+    $('catalog-filter-summary').textContent=selectedCount?`已选 ${selectedCount} 项`:'全部条件';
+    if (focused?.startsWith('facet-')) $(focused)?.focus({preventScroll:true});
+  }
   function showPage() {
-    const unpaged = expanded || Boolean(normalize(searchInput.value));
-    const range = pageWindow(matches.length,pageNumber,unpaged ? Math.max(matches.length,1) : 12);
-    pageNumber = range.page;
-    [...grid.querySelectorAll('.tool-card')].forEach((card,index) => { card.hidden=index<range.start || index>=range.end; });
-    pager.hidden = unpaged || matches.length <= 12;
-    pager.querySelector('[data-page-label]').textContent = `第 ${range.page} / ${range.pages} 页 · ${matches.length?range.start+1:0}—${range.end} / ${matches.length} 项`;
-    pager.querySelector('[data-page-prev]').disabled = range.page===1;
-    pager.querySelector('[data-page-next]').disabled = range.page===range.pages;
+    grid.querySelectorAll('.tool-card').forEach(card => {card.hidden=false;});
+    pager.hidden=true;
   }
   function applyFilters() {
-    const query = normalize(searchInput.value);
-    const visible = expanded || Boolean(query);
+    const visible = expanded || Boolean(submittedQuery);
+    $('catalog-workspace').hidden=!visible;
     grid.hidden = !visible;
     $('catalog-result-count').hidden = !visible;
     $('catalog-print-tools').hidden = !visible;
@@ -71,17 +97,24 @@
       pager.hidden=true;
       return;
     }
-    matches = tools.filter(item => {
-      const text = normalize([item.name,item.functions,item.scenarios,item.developer,item.language,item.sourceCategory,item.notes,item.layer,...item.stages,...item.materials].join(' '));
-      return !query || text.includes(query);
-    });
+    matches = filterCatalogue(tools,submittedQuery,selections);
     pageNumber = 1;
     $('catalog-count').textContent = matches.length;
-    grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请换一个关键词，或点击“展开全部”浏览目录。</div>';
+    grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请减少筛选条件、换一个关键词，或点击“展开全部”浏览目录。</div>';
     showPage();
+    renderFacets();
   }
-  $('catalog-filters').addEventListener('submit',event => { event.preventDefault();expanded=false;applyFilters(); });
-  $('clear-filters').addEventListener('click',() => { searchInput.value='';expanded=!expanded;applyFilters(); });
+  function resetSelections() { Object.keys(selections).forEach(key=>{selections[key]=[];}); }
+  $('catalog-filters').addEventListener('submit',event => { event.preventDefault();submittedQuery=normalize(searchInput.value);expanded=false;applyFilters(); });
+  $('clear-filters').addEventListener('click',() => { searchInput.value='';submittedQuery='';resetSelections();expanded=!expanded;applyFilters(); });
+  $('catalog-facet-groups').addEventListener('change',event=>{
+    const input=event.target;
+    if (!Object.hasOwn(selections,input.dataset.facet)) return;
+    const values=selections[input.dataset.facet];
+    selections[input.dataset.facet]=input.checked?[...new Set([...values,input.value])]:values.filter(value=>value!==input.value);
+    applyFilters();
+  });
+  $('catalog-reset-facets').addEventListener('click',()=>{resetSelections();applyFilters();});
   for (const [selector,delta] of [['[data-page-prev]',-1],['[data-page-next]',1]]) {
     pager.querySelector(selector).addEventListener('click',() => {
       pageNumber+=delta;showPage();

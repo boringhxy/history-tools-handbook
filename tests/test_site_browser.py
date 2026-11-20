@@ -100,6 +100,12 @@ def main():
         assert 'print-comparison' not in (page.locator('body').get_attribute('class') or '')
         assert page.locator('#compare details').evaluate_all('(els)=>els.map(e=>e.open)')==comparison_details
         goto('#catalog');page.locator('#search-input').fill('OCR');page.locator('#catalog-search-submit').click()
+        assert cards()==22
+        assert page.locator('#catalog-workspace').is_visible()
+        page.locator('#facet-materials-0').check()
+        assert 0<cards()<22
+        assert page.locator('#catalog-grid .tool-card:visible').evaluate_all('(cards)=>cards.every(card=>card.textContent.includes("古籍"))')
+        page.locator('#catalog-reset-facets').click();assert cards()==22
         before={'count':page.locator('#catalog-count').inner_text(),'visible':cards(),'query':page.locator('#search-input').input_value()}
         page.evaluate("window.print=()=>window.dispatchEvent(new Event('beforeprint'))")
         page.locator('#print-button').click();page.emulate_media(media='print')
