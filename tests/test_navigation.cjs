@@ -71,3 +71,8 @@ assert.ok(ranked(diaryTasks.find(task=>task.label==='词频与文本分析').que
 assert.ok(ranked(diaryTasks.find(task=>task.label==='识别与转录').query).some(hit=>hit.item.name==='Transkribus'));
 assert.ok(ranked(diaryTasks.find(task=>task.label==='组织众包转录').query).some(hit=>hit.item.name==='FromThePage'));
 console.log('Material-only guidance and explicit diary task paths passed');
+
+assert.equal(searchConfig.discovery.topics.length,6);
+for(const topic of searchConfig.discovery.topics) assert.ok(ranked(topic.query).length>0,'discovery topic returns tools: '+topic.label);
+for(const material of searchConfig.discovery.materials) assert.ok(ctx.analyseSearch(material,searchConfig).materialGuide,'material shortcut has a task guide: '+material);
+console.log('Discovery topic and material shortcuts resolve successfully');

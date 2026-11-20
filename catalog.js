@@ -136,6 +136,11 @@
     grid.querySelectorAll('.tool-card').forEach(card => {card.hidden=false;});
     pager.hidden=true;
   }
+  function renderDiscovery() {
+    const discovery=searchConfig.discovery;
+    const panel=$('catalog-discovery');
+    panel.innerHTML=`<h3>${escapeHTML(discovery.title)}</h3><p class="catalog-discovery-lead">${escapeHTML(discovery.description)}</p><div class="catalog-topic-grid">${discovery.topics.map(topic=>`<button type="button" data-discovery-query="${escapeHTML(topic.query)}"><strong>${escapeHTML(topic.label)}</strong><span>${escapeHTML(topic.description)}</span></button>`).join('')}</div><div class="catalog-material-shortcuts"><span>从材料开始</span><div>${discovery.materials.map(material=>`<button type="button" data-discovery-query="${escapeHTML(material)}">${escapeHTML(material)}</button>`).join('')}</div></div>`;
+  }
   function showMaterialGuide(plan) {
     const panel=$('catalog-task-guide');
     const guide=plan.materialGuide;
@@ -147,6 +152,7 @@
     const plan=analyseSearch(submittedQuery,searchConfig);
     showMaterialGuide(plan);
     const visible = expanded || Boolean(submittedQuery);
+    $('catalog-discovery').hidden=visible;
     $('catalog-workspace').hidden=!visible;
     grid.hidden = !visible;
     $('catalog-result-count').hidden = !visible;
@@ -183,6 +189,14 @@
     applyFilters();
   });
   $('catalog-reset-facets').addEventListener('click',()=>{resetSelections();applyFilters();});
+  $('catalog-discovery').addEventListener('click',event=>{
+    const button=event.target.closest('button[data-discovery-query]');
+    if (!button) return;
+    searchInput.value=button.dataset.discoveryQuery;
+    submittedQuery=normalize(searchInput.value);
+    expanded=false;resetSelections();applyFilters();
+    searchInput.focus({preventScroll:true});
+  });
   $('catalog-task-guide').addEventListener('click',event=>{
     const button=event.target.closest('button[data-task-query]');
     if (!button) return;
@@ -261,5 +275,5 @@
     printState.details.forEach(([node,open]) => {node.open=open;});
     printState=null;printAll=false;
   });
-  applyFilters();showRoute();
+  renderDiscovery();applyFilters();showRoute();
 })();
