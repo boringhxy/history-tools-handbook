@@ -3,7 +3,8 @@
   const $ = id => document.getElementById(id);
   const tools = JSON.parse($('tool-catalog-data').textContent);
   const grid = $('catalog-grid');
-  const controls = ['search-input','layer-filter','stage-filter','material-filter','verification-filter'].map($);
+  const searchInput = $('search-input');
+  let expanded = false;
   const pager = $('catalog-pager');
   const pages = [...document.querySelectorAll('[data-page]')];
   let matches = tools, pageNumber = 1, printAll = false, printState = null;
@@ -46,29 +47,29 @@
   // CHAPTER_UTILITIES_END
 
   function showPage() {
-    const range = pageWindow(matches.length,pageNumber,12);
+    const unpaged = expanded || Boolean(normalize(searchInput.value));
+    const range = pageWindow(matches.length,pageNumber,unpaged ? Math.max(matches.length,1) : 12);
     pageNumber = range.page;
     [...grid.querySelectorAll('.tool-card')].forEach((card,index) => { card.hidden=index<range.start || index>=range.end; });
-    pager.hidden = matches.length <= 12;
+    pager.hidden = unpaged || matches.length <= 12;
     pager.querySelector('[data-page-label]').textContent = `第 ${range.page} / ${range.pages} 页 · ${matches.length?range.start+1:0}—${range.end} / ${matches.length} 项`;
     pager.querySelector('[data-page-prev]').disabled = range.page===1;
     pager.querySelector('[data-page-next]').disabled = range.page===range.pages;
   }
   function applyFilters() {
-    const [search,layer,stage,material,verification] = controls.map(control => control.value);
-    const query = normalize(search);
+    const query = normalize(searchInput.value);
     matches = tools.filter(item => {
       const text = normalize([item.name,item.functions,item.scenarios,item.developer,item.language,item.sourceCategory,item.notes,item.layer,...item.stages,...item.materials].join(' '));
-      return (!query || text.includes(query)) && (!layer || item.layer===layer) && (!stage || item.stages.includes(stage)) && (!material || item.materials.includes(material)) && (!verification || item.verificationLabel===verification);
+      return !query || text.includes(query);
     });
     pageNumber = 1;
     $('catalog-count').textContent = matches.length;
-    grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请减少筛选条件，或清除筛选后重新检索。</div>';
+    grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请换一个关键词，或点击“展示全部卡片”浏览目录。</div>';
     showPage();
   }
-  controls.forEach(control => control.addEventListener(control.tagName==='INPUT'?'input':'change',applyFilters));
+  searchInput.addEventListener('input',applyFilters);
   $('catalog-filters').addEventListener('submit',event => event.preventDefault());
-  $('clear-filters').addEventListener('click',() => { controls.forEach(control => { control.value=''; });applyFilters();controls[0].focus(); });
+  $('clear-filters').addEventListener('click',() => { searchInput.value='';expanded=true;applyFilters(); });
   for (const [selector,delta] of [['[data-page-prev]',-1],['[data-page-next]',1]]) {
     pager.querySelector(selector).addEventListener('click',() => {
       pageNumber+=delta;showPage();

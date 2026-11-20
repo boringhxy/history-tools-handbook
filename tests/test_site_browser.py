@@ -56,9 +56,10 @@ def main():
         assert page.evaluate('document.activeElement.id')=='catalog-grid'
         page.locator('#search-input').fill('zotero');assert cards()==1
         page.locator('#search-input').fill('不存在xyz');assert page.locator('.empty-state').is_visible()
-        page.locator('#clear-filters').click();assert cards()==12
-        for selector,value in [('#layer-filter','核心平台'),('#stage-filter','识别'),('#material-filter','古籍'),('#verification-filter','已核实')]:page.locator(selector).select_option(value)
-        assert int(page.locator('#catalog-count').inner_text())==3
+        page.locator('#clear-filters').click();assert cards()==119
+        assert page.locator('#catalog-pager').is_hidden()
+        page.locator('#search-input').fill('古籍')
+        assert cards()==int(page.locator('#catalog-count').inner_text())>0
         page.locator('#search-input').press('Enter');assert page.url.endswith('#catalog')
         page.locator('#clear-filters').click()
         goto('#unknown');assert page.url.endswith('#home')
@@ -107,7 +108,7 @@ def main():
         page.locator('#print-all').click();page.emulate_media(media='print');assert cards()==119
         page.emulate_media(media='screen');page.evaluate("window.dispatchEvent(new Event('afterprint'))")
         assert before=={'count':page.locator('#catalog-count').inner_text(),'visible':cards(),'query':page.locator('#search-input').input_value()}
-        page.locator('#clear-filters').click();page.locator('#catalog-pager [data-page-next]').click()
+        page.reload(wait_until='networkidle');page.evaluate("window.print=()=>window.dispatchEvent(new Event('beforeprint'))");page.locator('#catalog-pager [data-page-next]').click()
         detail=page.locator('#catalog-grid .tool-card:visible details').first
         detail.evaluate('(e)=>e.open=true')
         second_page=page.locator('#catalog-pager [data-page-label]').inner_text()

@@ -208,6 +208,20 @@
       .hero-meta small { font-size:11px; }
     }
     @media print { .hero-art,.hero-actions,.nav-brand { display:none; } }
+
+    .catalog-searchbar { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:14px; align-items:center; margin:0 0 12px; }
+    .catalog-search-field { position:relative; min-width:0; }
+    .catalog-search-field svg { position:absolute; left:18px; top:18px; width:20px; height:20px; color:#73565B; pointer-events:none; }
+    .catalog-search-field input { width:100%; height:56px; border:1px solid #C0A2A4; border-radius:0; background:#FAF9F8; color:#5E5759; padding:12px 18px 12px 50px; font-size:16px; }
+    .catalog-search-field input:focus { outline:2px solid #73565B; outline-offset:2px; }
+    .catalog-searchbar .button { height:56px; padding-inline:24px; background:#73565B; border-color:#73565B; font-size:15px; }
+    .catalog-searchbar .button:hover { background:#5E5759; border-color:#5E5759; }
+    .catalog-result-count { margin:0 0 20px; color:#5E5759; font-size:13px; }
+    @media(max-width:480px) {
+      .catalog-searchbar { grid-template-columns:minmax(0,1fr); gap:10px; }
+      .catalog-searchbar .button { height:44px; width:100%; }
+      .catalog-search-field input { font-size:16px; }
+    }
 </style>
   <!-- COMPARISON_STYLE_BEGIN -->
 <style id="comparison-styles">
@@ -465,16 +479,11 @@ body[data-current-page="comparison"] { background:#E4E4E2; color:#5E5759; }
 
 <div class="chapter-page" data-page="catalog" id="catalog"><div class="chapter-toolbar screen-only"><div class="wrap"><button type="button" id="print-button">打印筛选结果</button><button type="button" id="print-all">打印全部目录</button></div></div><section class="section"><div class="wrap">
       <h2 class="sr-only" id="catalog-title" tabindex="-1">平台目录</h2>
-      <form class="filter-panel screen-only" id="catalog-filters" role="search">
-        <div class="filter-grid">
-          <div class="field search-field"><label for="search-input">关键词</label><input id="search-input" type="search" placeholder="搜索工具名、功能、材料、机构或场景…" autocomplete="off"></div>
-          <div class="field"><label for="layer-filter">层级</label><select id="layer-filter"><option value="">全部层级</option><option>核心平台</option><option>文史哲专业扩展平台</option><option>史料数据库与检索资源</option><option>辅助工具与技术底座</option><option>专题智能体与实验性项目</option><option>待核实或访问受限</option></select></div>
-          <div class="field"><label for="stage-filter">生命周期</label><select id="stage-filter"><option value="">全部环节</option><option>采集</option><option>识别</option><option>清洗</option><option>标注</option><option>建库</option><option>分析</option><option>出版</option><option>保存</option></select></div>
-          <div class="field"><label for="material-filter">材料类型</label><select id="material-filter"><option value="">全部材料</option><option>古籍</option><option>手稿</option><option>近现代文献</option><option>档案照片</option><option>地图</option><option>网页</option><option>口述史</option><option>音视频</option><option>通用文本</option></select></div>
-          <div class="field"><label for="verification-filter">核实状态</label><select id="verification-filter"><option value="">全部状态</option><option>已核实</option><option>部分核实</option><option>待核实</option></select></div>
-        </div>
-        <div class="filter-actions"><div class="count-line" aria-live="polite">匹配 <strong id="catalog-count">119</strong> / 119 项</div><button class="button secondary" type="button" id="clear-filters">清除筛选</button></div>
+      <form class="catalog-searchbar screen-only" id="catalog-filters" role="search">
+        <div class="catalog-search-field"><label class="sr-only" for="search-input">检索平台目录</label><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4.5 4.5"/></svg><input id="search-input" type="search" placeholder="检索工具、功能、材料或研究场景…" autocomplete="off" aria-controls="catalog-grid"></div>
+        <button class="button" type="button" id="clear-filters">展示全部卡片</button>
       </form>
+      <p class="catalog-result-count screen-only" role="status" aria-live="polite">共 <strong id="catalog-count">119</strong> 项结果</p>
       <div class="catalog-grid" id="catalog-grid" tabindex="-1" role="region" aria-label="平台目录结果"><noscript><div class="empty-state">119 项目录需要 JavaScript 进行本地渲染与筛选；数据不会上传到网络。</div></noscript></div><div class="pager screen-only" id="catalog-pager" hidden><button type="button" data-page-prev class="button secondary">上一页</button><span data-page-label role="status" aria-live="polite"></span><button type="button" data-page-next class="button secondary">下一页</button></div>
     </div></section></div>
 
@@ -554,7 +563,8 @@ python3 -m server.app --port 8765</code></pre>
   const $ = id => document.getElementById(id);
   const tools = JSON.parse($('tool-catalog-data').textContent);
   const grid = $('catalog-grid');
-  const controls = ['search-input','layer-filter','stage-filter','material-filter','verification-filter'].map($);
+  const searchInput = $('search-input');
+  let expanded = false;
   const pager = $('catalog-pager');
   const pages = [...document.querySelectorAll('[data-page]')];
   let matches = tools, pageNumber = 1, printAll = false, printState = null;
@@ -597,29 +607,29 @@ python3 -m server.app --port 8765</code></pre>
   // CHAPTER_UTILITIES_END
 
   function showPage() {
-    const range = pageWindow(matches.length,pageNumber,12);
+    const unpaged = expanded || Boolean(normalize(searchInput.value));
+    const range = pageWindow(matches.length,pageNumber,unpaged ? Math.max(matches.length,1) : 12);
     pageNumber = range.page;
     [...grid.querySelectorAll('.tool-card')].forEach((card,index) => { card.hidden=index<range.start || index>=range.end; });
-    pager.hidden = matches.length <= 12;
+    pager.hidden = unpaged || matches.length <= 12;
     pager.querySelector('[data-page-label]').textContent = `第 ${range.page} / ${range.pages} 页 · ${matches.length?range.start+1:0}—${range.end} / ${matches.length} 项`;
     pager.querySelector('[data-page-prev]').disabled = range.page===1;
     pager.querySelector('[data-page-next]').disabled = range.page===range.pages;
   }
   function applyFilters() {
-    const [search,layer,stage,material,verification] = controls.map(control => control.value);
-    const query = normalize(search);
+    const query = normalize(searchInput.value);
     matches = tools.filter(item => {
       const text = normalize([item.name,item.functions,item.scenarios,item.developer,item.language,item.sourceCategory,item.notes,item.layer,...item.stages,...item.materials].join(' '));
-      return (!query || text.includes(query)) && (!layer || item.layer===layer) && (!stage || item.stages.includes(stage)) && (!material || item.materials.includes(material)) && (!verification || item.verificationLabel===verification);
+      return !query || text.includes(query);
     });
     pageNumber = 1;
     $('catalog-count').textContent = matches.length;
-    grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请减少筛选条件，或清除筛选后重新检索。</div>';
+    grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请换一个关键词，或点击“展示全部卡片”浏览目录。</div>';
     showPage();
   }
-  controls.forEach(control => control.addEventListener(control.tagName==='INPUT'?'input':'change',applyFilters));
+  searchInput.addEventListener('input',applyFilters);
   $('catalog-filters').addEventListener('submit',event => event.preventDefault());
-  $('clear-filters').addEventListener('click',() => { controls.forEach(control => { control.value=''; });applyFilters();controls[0].focus(); });
+  $('clear-filters').addEventListener('click',() => { searchInput.value='';expanded=true;applyFilters(); });
   for (const [selector,delta] of [['[data-page-prev]',-1],['[data-page-next]',1]]) {
     pager.querySelector(selector).addEventListener('click',() => {
       pageNumber+=delta;showPage();
