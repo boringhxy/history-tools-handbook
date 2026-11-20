@@ -139,7 +139,9 @@
   function renderDiscovery() {
     const discovery=searchConfig.discovery;
     const panel=$('catalog-discovery');
-    panel.innerHTML=`<h3>${escapeHTML(discovery.title)}</h3><p class="catalog-discovery-lead">${escapeHTML(discovery.description)}</p><div class="catalog-topic-grid">${discovery.topics.map(topic=>`<button type="button" data-discovery-query="${escapeHTML(topic.query)}"><strong>${escapeHTML(topic.label)}</strong><span>${escapeHTML(topic.description)}</span></button>`).join('')}</div><div class="catalog-material-shortcuts"><span>从材料开始</span><div>${discovery.materials.map(material=>`<button type="button" data-discovery-query="${escapeHTML(material)}">${escapeHTML(material)}</button>`).join('')}</div></div>`;
+    $('catalog-entry-title').textContent=discovery.title;
+    $('catalog-entry-description').textContent=discovery.description;
+    panel.innerHTML=`<div class="catalog-section-caption"><span>按研究任务查找</span><small>点击主题开始检索</small></div><div class="catalog-topic-grid">${discovery.topics.map(topic=>`<button type="button" data-discovery-query="${escapeHTML(topic.query)}"><strong>${escapeHTML(topic.label)}</strong><span>${escapeHTML(topic.description)}</span></button>`).join('')}</div><div class="catalog-material-shortcuts"><span>从材料开始</span><div>${discovery.materials.map(material=>`<button type="button" data-discovery-query="${escapeHTML(material)}">${escapeHTML(material)}</button>`).join('')}</div></div>`;
   }
   function showMaterialGuide(plan) {
     const panel=$('catalog-task-guide');
@@ -153,6 +155,7 @@
     showMaterialGuide(plan);
     const visible = expanded || Boolean(submittedQuery);
     $('catalog-discovery').hidden=visible;
+    $('catalog-entry-heading').hidden=visible;
     $('catalog-workspace').hidden=!visible;
     grid.hidden = !visible;
     $('catalog-result-count').hidden = !visible;

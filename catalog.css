@@ -1,0 +1,216 @@
+/* Local catalogue design draft: paper, plum, and one continuous reading axis. */
+@media screen {
+  body[data-current-page="catalog"] {
+    --catalog-paper: #F5F2F0;
+    --catalog-surface: #FFFDFA;
+    --catalog-ink: #493E45;
+    --catalog-muted: #867780;
+    --catalog-accent: #69515D;
+    --catalog-line: #E1D8DD;
+    background: var(--catalog-paper);
+    color: var(--catalog-ink);
+  }
+  #catalog > .section > .wrap {
+    width: min(1120px, calc(100% - 64px));
+  }
+  #catalog > .section { padding: 42px 0 60px; }
+  #catalog .catalog-entry { width: 100%; margin: 0; }
+  #catalog .catalog-entry-heading { margin: 0 0 24px; }
+  #catalog .catalog-entry-heading h3 {
+    margin: 0 0 9px;
+    font: 550 clamp(25px, 2.7vw, 34px)/1.5 var(--serif);
+    letter-spacing: .025em;
+    color: var(--catalog-ink);
+  }
+  #catalog .catalog-entry-heading p {
+    margin: 0;
+    color: var(--catalog-muted);
+    font-size: 14px;
+    line-height: 1.9;
+  }
+  #catalog .catalog-browse-tools { margin: 0 0 10px; }
+  #catalog .catalog-browse-tools button {
+    padding: 2px 0 4px;
+    border: 0;
+    border-bottom: 1px solid #C6B2BD;
+    border-radius: 0;
+    background: transparent;
+    color: var(--catalog-accent);
+    font-size: 13px;
+  }
+  #catalog .catalog-browse-tools button:hover,
+  #catalog .catalog-browse-tools button[aria-expanded="true"] {
+    color: var(--catalog-ink);
+    background: transparent;
+    border-bottom-color: var(--catalog-accent);
+  }
+  #catalog .catalog-searchbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 6px;
+    border: 1px solid #5B4552;
+    border-radius: 10px;
+    background: var(--catalog-accent);
+    box-shadow: 0 4px 12px #69515D0A;
+  }
+  #catalog .catalog-searchbar:focus-within {
+    outline: 2px solid #C6AFBC;
+    outline-offset: 3px;
+  }
+  #catalog .catalog-search-field input {
+    height: 52px;
+    padding: 10px 14px 10px 45px;
+    border: 0;
+    border-radius: 5px;
+    outline: none;
+    background: transparent;
+    color: #FFFDFA;
+    box-shadow: none;
+    font-size: 16px;
+  }
+  #catalog .catalog-search-field input::placeholder { color: #DDD0D8; }
+  #catalog .catalog-search-field svg {
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #DDD0D8;
+    width: 19px;
+    height: 19px;
+  }
+  #catalog .catalog-searchbar .button {
+    width: auto;
+    min-width: 108px;
+    height: 48px;
+    margin: 0;
+    padding: 10px 22px;
+    border: 0;
+    border-radius: 6px;
+    background: #D8C6D0;
+    color: #4C3943;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  #catalog .catalog-searchbar .button:hover { background: #E7D8E0; }
+  #catalog .catalog-searchbar .button:focus-visible {
+    outline-color: #FFFDFA;
+    outline-offset: 2px;
+  }
+  #catalog .catalog-search-example {
+    gap: 4px 12px;
+    margin: 13px 0 28px;
+    padding: 0;
+    color: var(--catalog-muted);
+    font-size: 13px;
+  }
+  #catalog .catalog-search-example strong {
+    padding: 0;
+    border: 0;
+    color: var(--catalog-accent);
+    font-weight: 500;
+  }
+  #catalog .catalog-discovery { width: 100%; margin: 0; padding: 0; text-align: left; }
+  #catalog .catalog-section-caption {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    color: var(--catalog-accent);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  #catalog .catalog-section-caption small {
+    color: var(--catalog-muted);
+    font-size: 12px;
+    font-weight: 400;
+  }
+  #catalog .catalog-topic-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    margin: 12px 0 0;
+    overflow: hidden;
+    border: 1px solid var(--catalog-line);
+    border-radius: 12px;
+    background: var(--catalog-surface);
+  }
+  #catalog .catalog-topic-grid button {
+    min-height: 104px;
+    padding: 21px 25px;
+    border: 0;
+    border-right: 1px solid var(--catalog-line);
+    border-bottom: 1px solid var(--catalog-line);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    text-align: left;
+  }
+  #catalog .catalog-topic-grid button:nth-child(2n) { border-right: 0; }
+  #catalog .catalog-topic-grid button:nth-last-child(-n+2) { border-bottom: 0; }
+  #catalog .catalog-topic-grid button:hover { background: #F3ECEF; box-shadow: none; }
+  #catalog .catalog-topic-grid button:focus-visible { outline-offset: -4px; }
+  #catalog .catalog-topic-grid strong {
+    margin-bottom: 5px;
+    color: var(--catalog-ink);
+    font: 550 18px/1.55 var(--serif);
+    letter-spacing: .015em;
+  }
+  #catalog .catalog-topic-grid button > span {
+    color: var(--catalog-muted);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  #catalog .catalog-material-shortcuts {
+    justify-content: flex-start;
+    gap: 12px 22px;
+    margin-top: 22px;
+    padding: 0;
+    border: 0;
+  }
+  #catalog .catalog-material-shortcuts > span { color: var(--catalog-muted); }
+  #catalog .catalog-material-shortcuts > div { gap: 8px; justify-content: flex-start; }
+  #catalog .catalog-material-shortcuts button {
+    padding: 5px 15px;
+    border: 1px solid #DCCDD5;
+    border-radius: 20px;
+    background: transparent;
+    color: var(--catalog-accent);
+    font-size: 13px;
+  }
+  #catalog .catalog-material-shortcuts button:hover {
+    border-color: #B89CAA;
+    background: #EDE2E8;
+  }
+  #catalog .catalog-facets,
+  #catalog-grid .tool-card {
+    border-color: var(--catalog-line);
+    background: var(--catalog-surface);
+    box-shadow: none;
+  }
+  #catalog-grid .tool-card h3 { color: var(--catalog-ink); }
+  #catalog-grid .tool-layer, #catalog-grid .verification { background: #EEE5EA; }
+  #catalog-grid .tool-card > p.tool-match { background: #F3EDF0; border-left-color: #C3A9B6; }
+  #catalog .catalog-task-guide { border-color: var(--catalog-line); background: #F1E9ED; }
+  #catalog .catalog-task-options button { background: var(--catalog-surface); border-color: #D8C5CF; }
+  #catalog .catalog-task-options button:hover { background: var(--catalog-accent); color: #FFFDFA; }
+
+}
+@media screen and (max-width: 680px) {
+  #catalog > .section > .wrap { width: calc(100% - 32px); }
+  #catalog > .section { padding: 28px 0 38px; }
+  #catalog .catalog-entry-heading { margin-bottom: 20px; }
+  #catalog .catalog-entry-heading h3 { font-size: 27px; }
+  #catalog .catalog-searchbar { grid-template-columns: minmax(0, 1fr) auto; padding: 5px; }
+  #catalog .catalog-searchbar .button { min-width: 88px; height: 46px; padding: 9px 13px; }
+  #catalog .catalog-search-field input { height: 48px; padding-left: 36px; }
+  #catalog .catalog-search-field svg { left: 9px; width: 17px; }
+  #catalog .catalog-search-example { margin-bottom: 24px; }
+  #catalog .catalog-topic-grid { grid-template-columns: 1fr; }
+  #catalog .catalog-topic-grid button { min-height: 90px; padding: 18px 20px; border-right: 0; border-bottom: 1px solid var(--catalog-line); }
+  #catalog .catalog-topic-grid button:nth-last-child(2) { border-bottom: 1px solid var(--catalog-line); }
+  #catalog .catalog-topic-grid button:last-child { border-bottom: 0; }
+  #catalog .catalog-material-shortcuts { gap: 10px; margin-top: 20px; }
+  #catalog .catalog-material-shortcuts > span { width: 100%; }
+}

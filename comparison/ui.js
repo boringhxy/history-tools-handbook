@@ -108,10 +108,8 @@
     }
     ['a','b'].forEach((side,i)=>{
       $('cmp-search-'+side).value=byId.get(pair[i]).name;
-      $('cmp-kind-'+side).textContent=byId.get(pair[i]).roleLabel || byId.get(pair[i]).kind;
     });
     $('cmp-chat-pair').textContent=pair.map(id=>byId.get(id).name).join(' × ');
-    if((byId.get(pair[0]).roleLabel || byId.get(pair[0]).kind)!==(byId.get(pair[1]).roleLabel || byId.get(pair[1]).kind))announce('这两个对象承担不同研究角色。请结合材料与目标比较其分工，不宜直接判断整体优劣。');
     drawTable();if(updateURL)writeURL();
   }
   for(const [i,side] of ['a','b'].entries()) {

@@ -24,6 +24,8 @@ def main():
     catalog=json.loads((ROOT/'data/catalog.json').read_text())
     style='<style id="comparison-styles">\n'+(ROOT/'comparison/styles.css').read_text()+'\n</style>'
     html=replace_block(html,'COMPARISON_STYLE',style,'</head>')
+    catalog_style='<style id="catalog-design-styles">\n'+(ROOT/'catalog.css').read_text()+'\n</style>'
+    html=replace_block(html,'CATALOG_STYLE',catalog_style,'</head>')
     html=replace_block(html,'COMPARISON_VIEW',(ROOT/'comparison/view.html').read_text(),'</main>')
     catalog_data='<script type="application/json" id="tool-catalog-data">'+json.dumps(catalog,ensure_ascii=False,separators=(',',':')).replace('<','\\u003c')+'</script>'
     html=replace_block(html,'CATALOG_DATA',catalog_data,'</body>')
