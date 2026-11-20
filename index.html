@@ -223,6 +223,13 @@
       .catalog-searchbar .button { height:44px; width:100%; }
       .catalog-search-field input { font-size:16px; }
     }
+
+    .catalog-browse-tools { display:flex; justify-content:flex-start; margin:0 0 18px; }
+    .catalog-browse-tools button { padding:7px 16px; border:1px solid #73565B; border-radius:0; background:transparent; color:#73565B; font-size:14px; cursor:pointer; }
+    .catalog-browse-tools button:hover,.catalog-browse-tools button[aria-expanded="true"] { background:#73565B; color:#FAF9F8; }
+    .catalog-search-example { display:flex; flex-wrap:wrap; gap:4px 14px; margin:0 0 28px; color:#5E5759; font-size:14px; line-height:1.8; }
+    .catalog-search-example strong { color:#73565B; font-weight:600; }
+    .catalog-search-example b { color:#73565B; font-weight:600; }
 </style>
   <!-- COMPARISON_STYLE_BEGIN -->
 <style id="comparison-styles">
@@ -480,10 +487,12 @@ body[data-current-page="comparison"] { background:#E4E4E2; color:#5E5759; }
 
 <div class="chapter-page" data-page="catalog" id="catalog"><div class="chapter-toolbar screen-only" id="catalog-print-tools" hidden><div class="wrap"><button type="button" id="print-button">打印筛选结果</button><button type="button" id="print-all">打印全部目录</button></div></div><section class="section"><div class="wrap">
       <h2 class="sr-only" id="catalog-title" tabindex="-1">平台目录</h2>
+      <div class="catalog-browse-tools screen-only"><button type="button" id="clear-filters" aria-controls="catalog-grid" aria-expanded="false">展开全部</button></div>
       <form class="catalog-searchbar screen-only" id="catalog-filters" role="search">
         <div class="catalog-search-field"><label class="sr-only" for="search-input">检索平台目录</label><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4.5 4.5"/></svg><input id="search-input" type="search" placeholder="检索工具、功能、材料或研究场景…" autocomplete="off" aria-controls="catalog-grid"></div>
-        <button class="button" type="button" id="clear-filters" aria-controls="catalog-grid" aria-expanded="false">展开全部</button>
+        <button class="button" type="submit" id="catalog-search-submit">点击搜索</button>
       </form>
+      <p class="catalog-search-example screen-only"><strong>检索案例</strong><span>想找能识别古籍扫描件的工具？输入 <b>OCR</b>，再点击搜索。</span></p>
       <p id="catalog-result-count" hidden class="catalog-result-count screen-only" role="status" aria-live="polite">共 <strong id="catalog-count">119</strong> 项结果</p>
       <div class="catalog-grid" id="catalog-grid" hidden tabindex="-1" role="region" aria-label="平台目录结果"><noscript><div class="empty-state">119 项目录需要 JavaScript 进行本地渲染与筛选；数据不会上传到网络。</div></noscript></div><div class="pager screen-only" id="catalog-pager" hidden><button type="button" data-page-prev class="button secondary">上一页</button><span data-page-label role="status" aria-live="polite"></span><button type="button" data-page-next class="button secondary">下一页</button></div>
     </div></section></div>
@@ -641,8 +650,7 @@ python3 -m server.app --port 8765</code></pre>
     grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请换一个关键词，或点击“展开全部”浏览目录。</div>';
     showPage();
   }
-  searchInput.addEventListener('input',()=>{ expanded=false;applyFilters(); });
-  $('catalog-filters').addEventListener('submit',event => event.preventDefault());
+  $('catalog-filters').addEventListener('submit',event => { event.preventDefault();expanded=false;applyFilters(); });
   $('clear-filters').addEventListener('click',() => { searchInput.value='';expanded=!expanded;applyFilters(); });
   for (const [selector,delta] of [['[data-page-prev]',-1],['[data-page-next]',1]]) {
     pager.querySelector(selector).addEventListener('click',() => {

@@ -80,8 +80,7 @@
     grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请换一个关键词，或点击“展开全部”浏览目录。</div>';
     showPage();
   }
-  searchInput.addEventListener('input',()=>{ expanded=false;applyFilters(); });
-  $('catalog-filters').addEventListener('submit',event => event.preventDefault());
+  $('catalog-filters').addEventListener('submit',event => { event.preventDefault();expanded=false;applyFilters(); });
   $('clear-filters').addEventListener('click',() => { searchInput.value='';expanded=!expanded;applyFilters(); });
   for (const [selector,delta] of [['[data-page-prev]',-1],['[data-page-next]',1]]) {
     pager.querySelector(selector).addEventListener('click',() => {

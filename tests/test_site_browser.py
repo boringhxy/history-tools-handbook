@@ -53,11 +53,12 @@ def main():
         page.locator('#clear-filters').click();assert cards()==119
         page.locator('#clear-filters').click();assert cards()==0
         assert page.locator('#clear-filters').get_attribute('aria-expanded')=='false'
-        page.locator('#search-input').fill('zotero');assert cards()==1
-        page.locator('#search-input').fill('不存在xyz');assert page.locator('.empty-state').is_visible()
+        page.locator('#search-input').fill('zotero');assert cards()==0
+        page.locator('#catalog-search-submit').click();assert cards()==1
+        page.locator('#search-input').fill('不存在xyz');page.locator('#catalog-search-submit').click();assert page.locator('.empty-state').is_visible()
         page.locator('#clear-filters').click();assert cards()==119
         assert page.locator('#catalog-pager').is_hidden()
-        page.locator('#search-input').fill('古籍')
+        page.locator('#search-input').fill('古籍');page.locator('#catalog-search-submit').click()
         assert cards()==int(page.locator('#catalog-count').inner_text())>0
         page.locator('#search-input').press('Enter');assert page.url.endswith('#catalog')
         page.locator('#clear-filters').click()
@@ -98,7 +99,7 @@ def main():
         page.emulate_media(media='screen');page.evaluate("window.dispatchEvent(new Event('afterprint'))")
         assert 'print-comparison' not in (page.locator('body').get_attribute('class') or '')
         assert page.locator('#compare details').evaluate_all('(els)=>els.map(e=>e.open)')==comparison_details
-        goto('#catalog');page.locator('#search-input').fill('OCR')
+        goto('#catalog');page.locator('#search-input').fill('OCR');page.locator('#catalog-search-submit').click()
         before={'count':page.locator('#catalog-count').inner_text(),'visible':cards(),'query':page.locator('#search-input').input_value()}
         page.evaluate("window.print=()=>window.dispatchEvent(new Event('beforeprint'))")
         page.locator('#print-button').click();page.emulate_media(media='print')
