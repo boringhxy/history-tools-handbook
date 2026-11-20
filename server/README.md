@@ -6,7 +6,7 @@
 python3 -m server.app --port 8765
 ```
 
-访问 http://127.0.0.1:8765 。未配置时页面仍可用，问答返回真实的 503 状态。服务只发布 `/`、`/index.html`、`/api/status`、`/api/chat`，不会发布目录、JSON源资料、环境文件或 Python 源码。前端所需资料由 HTML 构建过程内嵌，服务端独立读取 `data/platforms.json`。
+访问 http://127.0.0.1:8765 。未配置时页面仍可用，问答返回真实的 503 状态。服务只发布 `/`、`/index.html`、`/api/status`、`/api/chat`、指定字体资源与 `/assets/images/hero-archive.webp`，不会发布目录、JSON源资料、环境文件或 Python 源码。前端所需资料由 HTML 构建过程内嵌，服务端独立读取 `data/platforms.json`。
 
 ## 配置与部署
 

@@ -301,6 +301,9 @@ def make_server(agent,host='127.0.0.1',port=8765):
             elif path in ('/','/index.html'):
                 try:self.respond(200,(agent.config.root/'index.html').read_bytes(),'text/html; charset=utf-8')
                 except OSError:self.error(ServiceError(503,'missing_page','页面尚未准备好。'))
+            elif path=='/assets/images/hero-archive.webp':
+                try:self.respond(200,(agent.config.root/'assets/images/hero-archive.webp').read_bytes(),'image/webp')
+                except OSError:self.error(ServiceError(404,'not_found','未找到资源。'))
             elif re.fullmatch(r'/assets/fonts/(?:fonts\.css|noto-(?:sans|serif)-sc-[0-9a-f]{12}\.woff2|noto(?:sans|serif)sc-OFL\.txt|sources\.json)',path):
                 fonts=(agent.config.root/'assets/fonts').resolve()
                 asset=(fonts/path.rsplit('/',1)[-1]).resolve()
