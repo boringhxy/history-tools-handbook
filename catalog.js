@@ -2,6 +2,8 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const tools = JSON.parse($('tool-catalog-data').textContent);
+  const searchConfig = JSON.parse($('catalog-search-data').textContent);
+  let searchMatches = new Map();
   const grid = $('catalog-grid');
   const searchInput = $('search-input');
   let expanded = false;
@@ -29,10 +31,13 @@
   }
   function toolCard(item) {
     const url = safeURL(item.url);
+    const match = searchMatches.get(item.id);
+    const explanation = match?.kind ? `<p class="tool-match"><span>${escapeHTML(match.kind)}</span>通过“${escapeHTML(match.term)}”找到</p>` : '';
     return `<article class="tool-card">
       <span class="tool-id">NO. ${String(item.id).padStart(3,'0')}</span>
       <h3>${escapeHTML(item.name)}</h3><span class="tool-layer">${escapeHTML(item.layer)}</span>
       <p>${escapeHTML(item.functions)}</p>
+      ${explanation}
       <dl><dt>开发者</dt><dd>${escapeHTML(item.developer || '未注明')}</dd><dt>类别</dt><dd>${escapeHTML(item.sourceCategory || '未分类')}</dd><dt>材料</dt><dd>${escapeHTML(item.materials.join('、'))}</dd><dt>环节</dt><dd>${escapeHTML(item.stages.join('、'))}</dd><dt>场景</dt><dd>${escapeHTML(item.scenarios)}</dd></dl>
       ${item.notes ? `<details><summary>注意事项与更新</summary><p>${escapeHTML(item.notes)}</p><p>${escapeHTML(item.updated)}</p></details>` : ''}
       <div class="tool-footer"><span class="verification${item.verificationLabel==='待核实'?' wait':''}">${escapeHTML(item.verificationLabel)}</span>${url ? `<a href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">项目来源 ↗</a>` : '<span>暂无可靠链接</span>'}</div>
@@ -52,21 +57,70 @@
     page = Math.max(1,Math.min(pages,Math.floor(Number(page)||1)));
     return {page,pages,start:(page-1)*size,end:Math.min(page*size,length)};
   }
-  function filterCatalogue(records, query, selections = {}, omitKey = '') {
-    const clean = value => String(value ?? '').normalize('NFKC').toLocaleLowerCase('zh-CN').replace(/\s+/g,' ').trim();
-    const needle = clean(query);
-    return records.filter(item => {
-      const text = clean([item.name,item.functions,item.scenarios,item.developer,item.language,item.sourceCategory,item.notes,item.layer,...(item.stages || []),...(item.materials || [])].join(' '));
-      if (needle && !text.includes(needle)) return false;
-      return Object.entries(selections).every(([key,values]) => !values.length || key===omitKey || values.some(value => Array.isArray(item[key]) ? item[key].includes(value) : item[key]===value));
+  function searchClean(value) {
+    return String(value ?? '').normalize('NFKC').toLocaleLowerCase('zh-CN').replace(/\s+/g,' ').trim();
+  }
+  function analyseSearch(query,config={}) {
+    const needle=searchClean(query).slice(0,200);
+    const topics=(config.topics || []).filter(topic => topic.aliases.some(alias=>needle.includes(searchClean(alias))) || (topic.patterns || []).some(pattern=>new RegExp(pattern,'i').test(needle)));
+    return {needle,topics,contexts:(config.contexts || []).filter(term=>needle.includes(searchClean(term)))};
+  }
+  function rankCatalogue(records,query,config={}) {
+    const plan=analyseSearch(query,config);
+    const ranked=[];
+    records.forEach((item,index)=>{
+      const name=searchClean(item.name);
+      const functions=searchClean(item.functions);
+      const tags=(item.searchTags || config.tags?.[String(item.id)] || []).map(searchClean);
+      const primary=searchClean([item.name,item.functions,item.sourceCategory,...tags].join(' '));
+      const text=searchClean([item.name,item.functions,item.scenarios,item.developer,item.language,item.sourceCategory,item.notes,item.layer,...(item.stages || []),...(item.materials || [])].join(' '));
+      const needle=plan.needle;
+      let score=0,kind='',term='';
+      if (!needle) { ranked.push({item,score:0,kind:'',term:'',index});return; }
+      if (name===needle) {score=1000;kind='名称命中';term=query;}
+      else if (name.includes(needle)) {score=900;kind='名称命中';term=query;}
+      else if (functions.includes(needle)) {score=800;kind='功能命中';term=query;}
+      else if (tags.some(tag=>tag===needle)) {score=700;kind='标签匹配';term=query;}
+      else if (text.includes(needle)) {score=600;kind='关键词命中';term=query;}
+      if (!score && plan.topics.length) {
+        // Near synonyms use capability fields; incidental mentions stay related.
+        const hits=plan.topics.map(topic=>{
+          const direct=topic.terms.find(candidate=>{
+            const clean=searchClean(candidate);
+            return primary.includes(clean) && !(primary.includes(clean+'前处理') && !functions.includes(clean));
+          });
+          if (direct) return {score:500,kind:topic.aliases.some(alias=>searchClean(alias)===needle)?'同义关联':'任务关联',term:direct};
+          const related=(topic.related || []).find(candidate=>primary.includes(searchClean(candidate)));
+          if (related) return {score:200,kind:'相关功能',term:related};
+          const mention=topic.terms.find(candidate=>text.includes(searchClean(candidate)));
+          return mention?{score:150,kind:'相关提及',term:mention}:null;
+        });
+        if (hits.every(Boolean)) {
+          const weakest=hits.reduce((a,b)=>a.score<b.score?a:b);
+          ({score,kind,term}=weakest);
+        }
+      }
+      // Plain multi-keyword requests use AND rather than unrelated single words.
+      if (!score && !plan.topics.length) {
+        const words=needle.split(/[\s，,、；;]+/).filter(Boolean);
+        if (words.length>1 && words.every(word=>text.includes(word)||tags.some(tag=>tag.includes(word)))) {score=400;kind='组合匹配';term=words.join('、');}
+      }
+      if (score) {
+        score+=plan.contexts.filter(context=>text.includes(searchClean(context))).length*10;
+        ranked.push({item,score,kind,term,index});
+      }
     });
+    return ranked.sort((a,b)=>b.score-a.score||a.index-b.index);
+  }
+  function filterCatalogue(records,query,selections={},omitKey='',config={}) {
+    return rankCatalogue(records,query,config).map(hit=>hit.item).filter(item=>Object.entries(selections).every(([key,values])=>!values.length||key===omitKey||values.some(value=>Array.isArray(item[key])?item[key].includes(value):item[key]===value)));
   }
   // CHAPTER_UTILITIES_END
 
   function renderFacets() {
     const focused = document.activeElement?.id;
     $('catalog-facet-groups').innerHTML = facetGroups.map(group => {
-      const candidates = filterCatalogue(tools,submittedQuery,selections,group.key);
+      const candidates = filterCatalogue(tools,submittedQuery,selections,group.key,searchConfig);
       return `<fieldset class="catalog-facet-group"><legend>${group.label}</legend>${group.values.map((value,index) => {
         const checked = selections[group.key].includes(value);
         const count = candidates.filter(item => Array.isArray(item[group.key]) ? item[group.key].includes(value) : item[group.key]===value).length;
@@ -97,7 +151,13 @@
       pager.hidden=true;
       return;
     }
-    matches = filterCatalogue(tools,submittedQuery,selections);
+    const ranked=rankCatalogue(tools,submittedQuery,searchConfig);
+    searchMatches=new Map(ranked.map(hit=>[hit.item.id,hit]));
+    matches = filterCatalogue(tools,submittedQuery,selections,'',searchConfig);
+    const plan=analyseSearch(submittedQuery,searchConfig);
+    const help=$('catalog-search-explanation');
+    help.hidden=!submittedQuery;
+    help.textContent=plan.topics.length ? '已关联：'+plan.topics.map(topic=>topic.label).join('、')+'。名称与功能命中优先，相关功能排在后面；可在卡片查看匹配依据。' : '按名称、功能和资料文字检索；多个关键词可用空格分开。';
     pageNumber = 1;
     $('catalog-count').textContent = matches.length;
     grid.innerHTML = matches.length ? matches.map(toolCard).join('') : '<div class="empty-state"><strong>没有匹配条目</strong><br>请减少筛选条件、换一个关键词，或点击“展开全部”浏览目录。</div>';

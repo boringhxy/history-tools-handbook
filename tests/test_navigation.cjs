@@ -35,3 +35,26 @@ const actual=JSON.parse(readFileSync(join(__dirname,'../data/catalog.json'),'utf
 assert.equal(ctx.filterCatalogue(actual,'OCR',{}).length,22);
 assert.ok(ctx.filterCatalogue(actual,'OCR',{materials:['古籍'],stages:['识别']}).every(row=>row.materials.includes('古籍')&&row.stages.includes('识别')));
 console.log('Catalogue search and combined facets: 9 assertions passed');
+
+const searchConfig=JSON.parse(readFileSync(join(__dirname,'../data/catalog-search.json'),'utf8'));
+const ranked=(q,records=actual)=>result(ctx.rankCatalogue(records,q,searchConfig));
+const relationship=ranked('关系图谱');
+for(const name of ['Gephi','Palladio','Cytoscape']) assert.ok(relationship.some(hit=>hit.item.name===name),name);
+assert.ok(relationship.findIndex(hit=>hit.item.name==='Gephi') < relationship.findIndex(hit=>hit.item.id===18));
+assert.ok(relationship.find(hit=>hit.item.id===25)?.kind==='相关功能');
+assert.ok(!ranked('关系图谱',[{id:999,name:'纯实体识别',functions:'识别人名和地名'}]).length);
+assert.ok(ranked('扫描件转文字').some(hit=>hit.item.name==='TextIn 古籍OCR'));
+assert.ok(ranked('日记人物关系').some(hit=>hit.item.name==='Gephi'));
+assert.ok(ranked('我想画人物之间的关系').some(hit=>hit.item.name==='Palladio'));
+assert.ok(ranked('我想统计日记词频').some(hit=>hit.item.name==='Voyant Tools'));
+assert.ok(ranked('地图可视化').some(hit=>hit.item.name==='QGIS'));
+assert.ok(ranked('史料管理').some(hit=>hit.item.name==='Tropy'));
+assert.equal(ranked('Gephi')[0].item.name,'Gephi');
+assert.equal(ranked('ＧＥＰＨＩ')[0].item.name,'Gephi');
+assert.equal(ranked('不存在xyz').length,0);
+assert.equal(ranked('').length,119);
+assert.equal(ranked('关系图谱',[{id:999,name:'关系图谱',functions:''},actual.find(item=>item.name==='Gephi')])[0].item.id,999);
+assert.ok(ctx.filterCatalogue(actual,'关系图谱',{materials:['通用文本']},'',searchConfig).every(item=>item.materials.includes('通用文本')));
+for(const id of Object.keys(searchConfig.tags)) assert.ok(actual.some(item=>String(item.id)===id),'tag target exists: '+id);
+console.log('Synonyms, related-function ranking, natural queries and tag integrity passed');
+for(const query of ['关系图谱','扫描件转文字','日记人物关系','词频统计','地图可视化','史料管理']) console.log(query,ranked(query).slice(0,5).map(hit=>hit.item.name+' ['+hit.kind+': '+hit.term+']').join(' / '));

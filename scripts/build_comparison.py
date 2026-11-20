@@ -27,6 +27,9 @@ def main():
     html=replace_block(html,'COMPARISON_VIEW',(ROOT/'comparison/view.html').read_text(),'</main>')
     catalog_data='<script type="application/json" id="tool-catalog-data">'+json.dumps(catalog,ensure_ascii=False,separators=(',',':')).replace('<','\\u003c')+'</script>'
     html=replace_block(html,'CATALOG_DATA',catalog_data,'</body>')
+    search_config=json.loads((ROOT/'data/catalog-search.json').read_text())
+    search_data='<script type="application/json" id="catalog-search-data">'+json.dumps(search_config,ensure_ascii=False,separators=(',',':')).replace('<','\\u003c')+'</script>'
+    html=replace_block(html,'CATALOG_SEARCH_DATA',search_data,'<!-- CATALOG_RUNTIME_BEGIN -->')
     catalog_code=(ROOT/'catalog.js').read_text()
     if re.search(r'</script',catalog_code,re.I):raise ValueError('Unsafe script delimiter in catalog.js')
     html=replace_block(html,'CATALOG_RUNTIME','<script>\n'+catalog_code+'\n</script>','</body>')
